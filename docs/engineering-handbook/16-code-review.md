@@ -24,6 +24,7 @@ Garantir, antes do merge:
 |----------|------------------|
 | **Funcional** | Faz o que deveria nos casos limite e de borda? |
 | **Clareza** | Outro dev entende em 15 min sem oral? |
+| **Nomenclatura** | Identificadores internos em português conforme [03](03-padroes-de-codigo.md#92-nomenclatura-de-código-em-português)? |
 | **Testes** | ≥ 90% cobertura + casos relevantes + mutation/TaaC onde aplicável? |
 | **Segurança** | Least privilege, sem segredo, input validado, sem PII em log? |
 | **Performance** | Aguenta volume esperado e 10× sem surpresa? |
@@ -51,7 +52,7 @@ flowchart LR
 
 1. Autor preenche template [`templates/pr.md`](templates/pr.md).
 2. CI deve estar **verde** (lint, testes, coverage, scans).
-3. IA pode **pré-revisar** (skill `revisar-pr`) — não substitui humano.
+3. IA pode **pré-revisar** (skill `revisar-codigo`) — não substitui humano.
 4. Revisor usa checklist da stack + dimensões acima.
 5. Comentários com severidade clara (§5).
 6. Aprovação explícita; merge só com DoD atendida.
@@ -201,7 +202,7 @@ Cada PR deve ser **revisável isoladamente**, com links para os irmãos.
 |------------|-----|
 | Template PR | [`templates/pr.md`](templates/pr.md) |
 | Registro de review | [`templates/code-review.md`](templates/code-review.md) |
-| Skill IA | `revisar-pr` (derivada deste capítulo) |
+| Skill IA | `revisar-codigo` (derivada deste capítulo) |
 | DoD | [18 — Definition of Done](18-definition-of-done.md) |
 
 ---

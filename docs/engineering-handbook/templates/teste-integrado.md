@@ -59,7 +59,7 @@ tests/
 ```python
 CORRELATION_ID = "taac-{nome}-001"
 
-def test_happy_path():
+def test_deve_executar_caminho_feliz():
     event = {"correlation_id": CORRELATION_ID, ...}
     # assert logs/métricas rastreáveis por CORRELATION_ID em hml
 ```

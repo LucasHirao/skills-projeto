@@ -432,18 +432,18 @@ HttpOperator(
 
 ```python
 # tests/dags/test_vendas_carga_diaria.py
-def test_dag_loads(dag_bag):
+def test_dag_deve_carregar_sem_erro(dag_bag):
     dag = dag_bag.get_dag("datalake_vendas_carga_diaria")
     assert dag is not None
     assert len(dag.tasks) > 0
 
-def test_dag_structure(dag_bag):
+def test_dag_deve_ter_estrutura_esperada(dag_bag):
     dag = dag_bag.get_dag("datalake_vendas_carga_diaria")
     assert dag.max_active_runs == 1
     assert dag.catchup is False
     assert "validar_lote_entrada" in dag.task_ids
 
-def test_no_import_cycles(dag_bag):
+def test_dag_nao_deve_ter_ciclos(dag_bag):
     assert len(dag_bag.import_errors) == 0
 ```
 

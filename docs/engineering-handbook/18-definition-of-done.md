@@ -13,7 +13,7 @@ Uma tarefa só está **pronta** quando todos os itens **aplicáveis** abaixo est
 - [ ] Implementação segue o capítulo da stack no [Engineering Handbook](.)
 - [ ] Lógica de negócio **fora** de handler/DAG/Terraform indevida
 - [ ] Lint e format aplicados; estilo do módulo vizinho
-- [ ] Nomes explícitos; arquivos coesos por responsabilidade
+- [ ] Nomes explícitos em **português** para código interno; exceções documentadas (contrato/SDK/legado)
 
 ### 1.2 Testes
 

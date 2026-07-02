@@ -259,4 +259,4 @@ Template de review: [`templates/code-review.md`](templates/code-review.md).
 - [13 — Observabilidade](13-observabilidade.md) — métricas de latência e duração
 - [16 — Code review](16-code-review.md)
 - [18 — Definition of Done](18-definition-of-done.md)
-- Skill: `revisar-performance` (derivada deste capítulo)
+- Skill: `revisar-desempenho` (derivada deste capítulo)

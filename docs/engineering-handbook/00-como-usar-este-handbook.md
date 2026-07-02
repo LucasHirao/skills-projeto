@@ -1,6 +1,6 @@
 ﻿# 00 — Como usar este handbook
 
-> **Versão:** 1.0 · **Idioma:** português BR (código e identificadores em inglês) · **Modelo:** multi-repo · **Observabilidade:** Datadog
+> **Versão:** 1.1 · **Idioma:** português BR (identificadores internos em português; termos técnicos oficiais em inglês quando necessário) · **Modelo:** multi-repo · **Observabilidade:** Datadog
 
 ---
 
@@ -75,7 +75,7 @@ O handbook é a **fonte de verdade** para padrões técnicos de squads de dados 
 4. **Opinionado, não dogmático** — trade-offs estão explícitos; decisão local válida quando registrada.
 5. **Operável por padrão** — se não tem log, métrica e alerta Datadog, não está pronto para produção crítica.
 6. **Testável por padrão** — regra de negócio fora de DAG, handler e Terraform; cobertura ≥ 90%.
-7. **Português na prosa, inglês no código** — nomes de variáveis, classes e recursos AWS em inglês.
+7. **Português na prosa e nos identificadores internos** — classes, funções, variáveis e testes em português; contratos externos, SDKs e tags técnicas permanecem conforme ferramenta.
 8. **Evolução contínua** — feedback vira PR neste repositório; não acumular "padrão oral".
 
 ---
@@ -321,6 +321,10 @@ Mudanças breaking nos padrões devem:
 1. Ser comunicadas em `#engenharia` (ou canal do time)
 2. Incluir período de convivência quando possível
 3. Atualizar [18-definition-of-done.md](18-definition-of-done.md) se critérios mudarem
+
+### 10.4 Código interno em português
+
+Identificadores criados pelo time (classes, funções, variáveis, testes, `task_id`, models dbt após prefixo) em **português**. Detalhes: [03 — Padrões de código](03-padroes-de-codigo.md#92-nomenclatura-de-código-em-português).
 
 ---
 

@@ -109,7 +109,7 @@ Alvo < 300 linhas; extrair quando passar de 400.
 
 | ID | Decisão | Detalhe |
 |----|---------|---------|
-| COD-01 | Inglês em identificadores | PT-BR só em docs e comentários de negócio quando necessário |
+| COD-01 | Português em identificadores internos | PT-BR em classes, funções, variáveis, testes e models; exceções em [§9.2](#92-nomenclatura-de-código-em-português) |
 | COD-02 | Type hints Python 3.11+ | Obrigatório em código novo |
 | COD-03 | Formatter/linter no CI | black/ruff ou equivalente; Checkstyle/Spotless Java |
 | COD-04 | Sem wildcard import | `from x import *` proibido |
@@ -193,16 +193,94 @@ Ver [06-terraform.md](06-terraform.md) — módulos por capacidade.
 
 ## 9. Convenções de código
 
-### 9.1 Naming
+### 9.1 Convenções de formato
 
 | Elemento | Convenção | Exemplo |
 |----------|-----------|---------|
-| Módulo Python | snake_case | `calculo_desconto.py` |
-| Classe | PascalCase | `PedidoService` |
-| Função | snake_case / camelCase Java | `calcular_total` |
-| Constante | UPPER_SNAKE | `MAX_RETRY` |
-| Boolean | prefixo is/has/can | `is_eligible` |
-| Teste | `test_{comportamento}` | `test_rejeita_valor_negativo` |
+| Módulo Python | snake_case | `processamento_lote.py` |
+| Classe | PascalCase | `ProcessarArquivoUseCase` |
+| Função / método | snake_case (Python) / camelCase (Java) | `validar_lote_entrada` / `validarLoteEntrada` |
+| Constante | UPPER_SNAKE | `MAX_TENTATIVAS` |
+| Boolean (Python) | prefixo `eh_` / `tem_` / `pode_` | `eh_valido` |
+| Boolean (Java) | prefixo `is`/`has`/`can` ou `eh` em domínio | `ehElegivel` |
+| Teste Python | `test_deve_*_quando_*` | `test_deve_rejeitar_lote_quando_schema_invalido` |
+| Teste Java | `deve*Quando*` | `deveRejeitarLoteQuandoSchemaInvalido` |
+
+### 9.2 Nomenclatura de código em português
+
+Neste projeto, a preferência é que identificadores criados pelo time sejam escritos em português, desde que isso não conflite com contratos externos, frameworks, bibliotecas, APIs públicas ou padrões corporativos obrigatórios.
+
+#### Exemplos esperados
+
+- `ProcessarArquivoUseCase`
+- `ValidarLoteEntrada`
+- `RepositorioMetadadosArquivo`
+- `ClienteArmazenamentoS3`
+- `ErroContratoInvalido`
+- `processar_lote`
+- `validar_arquivo_entrada`
+- `normalizar_registros`
+- `publicar_resultado`
+- `deve_rejeitar_lote_quando_schema_invalido`
+
+#### Exemplos a evitar em código novo interno
+
+- `ProcessFileUseCase`
+- `ValidateInputBatch`
+- `FileMetadataRepository`
+- `process_batch`
+- `validate_input_file`
+- `should_reject_batch_when_schema_invalid`
+
+#### Exceções
+
+- APIs externas;
+- SDKs;
+- nomes exigidos por framework (`@RestController`, `handler`, métodos JPA);
+- contratos públicos existentes (versionar antes de renomear);
+- schemas externos;
+- tags técnicas (`env`, `service`, `correlation_id`, `version`);
+- comandos (`pytest`, `dbt build`);
+- palavras reservadas da linguagem;
+- recursos cujo padrão corporativo/AWS exige inglês;
+- repositório legado com padrão inglês consolidado — documentar exceção no PR ou ADR.
+
+#### Exemplo Python
+
+```python
+class ProcessarArquivoUseCase:
+    def __init__(self, repositorio_metadados, armazenamento_s3):
+        self.repositorio_metadados = repositorio_metadados
+        self.armazenamento_s3 = armazenamento_s3
+
+    def executar(self, comando: ProcessarArquivoComando) -> ResultadoProcessamento:
+        validar_comando(comando)
+        registros = self.armazenamento_s3.ler_registros(comando.chave_arquivo)
+        registros_normalizados = normalizar_registros(registros)
+        self.repositorio_metadados.salvar_resultado(comando.id_lote, registros_normalizados)
+        return ResultadoProcessamento(status="PROCESSADO")
+```
+
+#### Exemplo Java
+
+```java
+public class ProcessarArquivoUseCase {
+
+    private final RepositorioMetadadosArquivo repositorioMetadados;
+    private final ArmazenamentoArquivo armazenamentoArquivo;
+
+    public ResultadoProcessamento executar(ProcessarArquivoComando comando) {
+        validarComando(comando);
+
+        var registros = armazenamentoArquivo.lerRegistros(comando.chaveArquivo());
+        var registrosNormalizados = normalizadorRegistros.normalizar(registros);
+
+        repositorioMetadados.salvarResultado(comando.idLote(), registrosNormalizados);
+
+        return ResultadoProcessamento.processado();
+    }
+}
+```
 
 ### 9.2 Funções
 
@@ -230,12 +308,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 logger.info(
-    "order_total_calculated",
+    "total_pedido_calculado",
     extra={
         "correlation_id": ctx.correlation_id,
-        "operation": "calculate_order_total",
+        "operation": "calcular_total_pedido",
         "status": "SUCCESS",
-        "order_id_hash": hash_id(order_id),
+        "pedido_id_hash": hash_id(pedido_id),
         "duration_ms": elapsed,
     },
 )
@@ -307,21 +385,21 @@ def totalizar_aprovados(registros: list[RegistroVenda]) -> Decimal:
 
 # application/processar_arquivo.py
 class ProcessarArquivoUseCase:
-    def __init__(self, reader: ArquivoReaderPort):
-        self._reader = reader
+    def __init__(self, leitor: PortaLeitorArquivo):
+        self._leitor = leitor
 
-    def execute(self, cmd: ProcessarArquivoCommand) -> ProcessarArquivoResult:
-        registros = self._reader.read_vendas(cmd.bucket, cmd.key)
+    def executar(self, comando: ProcessarArquivoComando) -> ResultadoProcessamento:
+        registros = self._leitor.ler_vendas(comando.bucket, comando.chave)
         total = totalizar_aprovados(registros)
-        return ProcessarArquivoResult(total=total)
+        return ResultadoProcessamento(total=total)
 
 # handler.py
 def handler(event, context):
-    cmd = ProcessarArquivoCommand.from_event(event)
+    comando = ProcessarArquivoComando.a_partir_do_evento(event)
     correlation_id = event.get("correlation_id", context.aws_request_id)
     with log_context(correlation_id=correlation_id):
-        result = use_case.execute(cmd)
-    return result.to_response()
+        resultado = caso_de_uso.executar(comando)
+    return resultado.para_resposta()
 ```
 
 ### 12.2 Spring — controller
@@ -339,8 +417,8 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<PedidoResponse> criar(@Valid @RequestBody CriarPedidoRequest req) {
-        var pedido = criarPedido.execute(req.toCommand());
-        return ResponseEntity.status(HttpStatus.CREATED).body(PedidoResponse.from(pedido));
+        var pedido = criarPedido.executar(req.paraComando());
+        return ResponseEntity.status(HttpStatus.CREATED).body(PedidoResponse.de(pedido));
     }
 }
 ```
@@ -357,7 +435,7 @@ def test_process():
 **Bom:**
 
 ```python
-def test_totalizar_aprovados_soma_apenas_aprovados():
+def test_deve_totalizar_apenas_registros_aprovados():
     registros = [
         RegistroVenda(valor=Decimal("10"), status=Status.APROVADO),
         RegistroVenda(valor=Decimal("5"), status=Status.CANCELADO),
@@ -503,7 +581,7 @@ R: Sampling via config; não flood indexing Datadog.
 
 ## 19. Guia júnior
 
-Escreva o teste **antes** de mover lógica para domain. Se o teste precisa de boto3, a lógica está na camada errada. Use nomes longos e claros — ninguém penaliza `calculate_total_approved_orders`.
+Escreva o teste **antes** de mover lógica para domain. Se o teste precisa de boto3, a lógica está na camada errada. Use nomes longos e claros em português — ex.: `test_deve_rejeitar_lote_quando_schema_invalido`.
 
 ---
 

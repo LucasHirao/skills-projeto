@@ -118,7 +118,7 @@ Guia para integração em squads de **dados e backend** em ambiente **multi-repo
 - [ ] Leu 16 completo + capítulo stack do PR
 - [ ] Sabe aprovar exceção de DoD (quando e quem)
 - [ ] Conhece dashboards Datadog do domínio
-- [ ] Skill `revisar-pr` testada (opcional)
+- [ ] Skill `revisar-codigo` testada (opcional)
 
 ---
 

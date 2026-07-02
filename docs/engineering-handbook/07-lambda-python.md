@@ -216,7 +216,7 @@ _use_case = ProcessarArquivoUseCase()
 def handler(event: dict, context: LambdaContext) -> dict:
     correlation_id = event.get("correlation_id") or context.aws_request_id
     logger.append_keys(correlation_id=correlation_id)
-    resultado = _use_case.execute(event)
+    resultado = _use_case.executar(evento)
     metrics.add_metric(name="RegistrosProcessados", unit="Count", value=resultado.qtd)
     return {"status": "OK", "processados": resultado.qtd}
 ```
@@ -245,9 +245,9 @@ class ErroRecuperavel(Exception):
 class ErroContrato(Exception):
     """Payload inválido — não retry."""
 
-def execute(self, event: dict) -> Resultado:
+def executar(self, evento: dict) -> Resultado:
     try:
-        payload = EventoEntrada.model_validate(event)
+        payload = EventoEntrada.model_validate(evento)
     except ValidationError as e:
         raise ErroContrato(str(e)) from e
     ...
@@ -256,7 +256,7 @@ def execute(self, event: dict) -> Resultado:
 ### Teste unitário — bom
 
 ```python
-def test_filtrar_aprovados_remove_cancelados():
+def test_deve_filtrar_apenas_registros_aprovados():
     registros = [
         RegistroVenda("1", 10.0, "APROVADO"),
         RegistroVenda("2", 5.0, "CANCELADO"),

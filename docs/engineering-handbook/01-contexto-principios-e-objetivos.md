@@ -243,7 +243,7 @@ Metas de **direção** — cada squad adapta ao contexto com baseline no onboard
 | D4 | Python para Lambda e Glue; Java para APIs transacionais | Adotado | Exceção via ADR |
 | D5 | Airflow para orquestração batch | Adotado | Datasets para dependências entre DAGs |
 | D6 | dbt para camada analítica transformada | Adotado | Staging → marts |
-| D7 | Handbook em PT-BR; código em inglês | Adotado | Consistência global |
+| D7 | Handbook em PT-BR; identificadores internos em português | Adotado | Legibilidade do time e consistência |
 | D8 | Placeholder `{nome-projeto}` em exemplos | Adotado | Evita acoplamento a produto único |
 | D9 | DoD unificada | Adotado | [18-definition-of-done.md](18-definition-of-done.md) |
 | D10 | IA assistiva com revisão humana obrigatória | Adotado | [19-padroes-para-uso-de-ia.md](19-padroes-para-uso-de-ia.md) |
@@ -338,7 +338,7 @@ Handbook longo mas versionado > wiki curta e obsoleta. Trilhas de leitura em [00
 | Tópico | Convenção |
 |--------|-----------|
 | Idioma prosa | Português BR |
-| Código | Inglês (nomes, commits técnicos) |
+| Código | Português para identificadores internos; inglês para contratos/SDKs/tags técnicas |
 | Projeto | `{nome-projeto}` em exemplos |
 | Branch | `feature/`, `fix/`, `docs/` + ticket |
 | Commit | Imperativo, referência ticket: `feat(dbt): add fct_pedidos` |

@@ -219,12 +219,13 @@ flowchart LR
 
 | Tipo | Padrão | Exemplo |
 |------|--------|---------|
-| Staging | `stg_{fonte}__{entidade}.sql` | `stg_vendas__pedidos.sql` |
-| Intermediate | `int_{dominio}__{descricao}.sql` | `int_vendas__pedidos_enriquecidos.sql` |
-| Fact | `fct_{dominio}_{evento}.sql` | `fct_vendas_pedidos.sql` |
-| Dimension | `dim_{dominio}_{entidade}.sql` | `dim_vendas_cliente.sql` |
+| Staging | `stg_{fonte}__{entidade}.sql` | `stg_{nome-projeto}__arquivos_recebidos.sql` |
+| Intermediate | `int_{dominio}_{descricao}.sql` | `int_{nome-projeto}__arquivos_validados.sql` |
+| Fact | `fct_{dominio}_{evento}.sql` | `fct_{nome-projeto}_processamentos.sql` |
+| Dim | `dim_{dominio}_{entidade}.sql` | `dim_{nome-projeto}_tipo_arquivo.sql` |
+| Mart | `mart_{dominio}_{uso}.sql` | `mart_{nome-projeto}_acompanhamento_processamento.sql` |
 
-Duplo underscore `__` separa fonte/domínio de entidade.
+Duplo underscore `__` separa fonte/domínio de entidade. **Models internos** usam nomes em português após o prefixo técnico (`stg_`, `int_`, etc.).
 
 ### 10.2 Colunas
 

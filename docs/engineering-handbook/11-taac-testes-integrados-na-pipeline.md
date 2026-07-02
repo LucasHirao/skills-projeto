@@ -184,7 +184,7 @@ time.sleep(60)
 # (isso é unitário)
 
 # ❌ Sem cleanup
-def test_cria_tabela():
+def test_deve_criar_tabela():
     dynamodb.create_table(...)  # fica lixo
 
 # ❌ E2E duplicando cada TaaC em prod
@@ -200,7 +200,7 @@ def test_cria_tabela():
 import pytest
 
 @pytest.mark.taac
-def test_handler_grava_metadados_no_dynamodb(dynamodb_table, lambda_context):
+def test_handler_deve_gravar_metadados_no_dynamodb(dynamodb_table, lambda_context):
     from handler import handler
 
     event = evento_s3_exemplo()
@@ -236,7 +236,7 @@ class PedidoApiIT {
 
 ```python
 @pytest.mark.contract
-def test_resposta_pedido_respeita_openapi(openapi_spec, pedido_response_fixture):
+def test_resposta_deve_respeitar_openapi(openapi_spec, pedido_response_fixture):
     schema = openapi_spec["components"]["schemas"]["PedidoResponse"]
     validate(instance=pedido_response_fixture, schema=schema)
 ```

@@ -212,16 +212,21 @@ Skills e rules para agentes são **derivados** do handbook — não a fonte de v
 | Gatilho | Skill sugerida |
 |---------|----------------|
 | Tarefa repetida com checklist longo | `criar-dag-airflow`, `criar-lambda-python`, etc. |
-| Review especializado | `revisar-pr`, `revisar-performance` |
+| Review especializado | `revisar-codigo`, `revisar-desempenho` |
 | Capítulo 00–20 estável | Extrair resumo acionável |
 
-### 7.2 Estrutura de skill (Cursor / Agent)
+### 7.1 Estrutura de skill (Claude / Devin)
+
+Artefatos versionados neste repositório:
 
 ```
-.agents/skills/{nome-skill}/
-  SKILL.md          # Objetivo, quando usar, passos, links handbook
-  (opcional) exemplos/
+claude/skills/{nome-skill}/SKILL.md    # Claude Code — copiar para .claude/skills/
+devin/skills/{nome-skill}/SKILL.md     # Devin — copiar para .agents/skills/
+devin/playbooks/{nome}.md              # Prompts amplos multi-repo
+claude/regras/*.md                     # Regras curtas operacionais
 ```
+
+Mapa completo: [artefatos-ia.md](artefatos-ia.md).
 
 Conteúdo mínimo do `SKILL.md`:
 
@@ -237,7 +242,7 @@ Conteúdo mínimo do `SKILL.md`:
 - [ ] Capítulo do handbook revisado por tech lead
 - [ ] Skill referencia handbook por link — não duplica prosa longa
 - [ ] Checklist DoD recortado e testado em 1 PR piloto
-- [ ] Skill versionada no repo `orientacoes` (`.agents/skills/`)
+- [ ] Skill versionada em `claude/skills/` ou `devin/skills/` neste repo
 - [ ] Feedback do piloto vira PR no handbook primeiro; skill atualizada depois
 
 ### 7.4 Rules (`.cursor/rules/` ou equivalente)
@@ -261,10 +266,9 @@ Mudança de padrão: **sempre** handbook primeiro; skills seguem em PR separado.
 | Ferramenta | Comece por |
 |------------|------------|
 | Cursor Agent | README do repo + capítulo stack + este doc |
-| Claude Code | `CLAUDE.md` no repo (se existir) apontando para handbook |
+| Claude Code | `claude/CLAUDE.md` + `claude/skills/` (sincronizar com `.claude/skills/`) |
+| Devin | `devin/AGENTS.md` + `devin/skills/` e `devin/playbooks/` |
 | CI | Mesma DoD — IA não bypassa coverage/security |
-
----
 
 ## 9. Referências
 
@@ -272,4 +276,4 @@ Mudança de padrão: **sempre** handbook primeiro; skills seguem em PR separado.
 - [16 — Code review](16-code-review.md)
 - [18 — Definition of Done](18-definition-of-done.md)
 - [20 — Onboarding técnico](20-onboarding-tecnico.md)
-- Templates: [`templates/`](templates/)
+- [Mapa artefatos IA](artefatos-ia.md) — sincronização handbook ↔ Claude/Devin

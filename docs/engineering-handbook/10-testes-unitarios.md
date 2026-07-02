@@ -136,7 +136,7 @@ tests/unit/              # unit tests dbt quando aplicável
 | Padrão de nome | Exemplo |
 |----------------|---------|
 | Python | `test_deve_rejeitar_valor_negativo` |
-| Java | `deve_persistir_pedido_valido` |
+| Java | `deveRejeitarLoteQuandoSchemaInvalido` |
 | Comportamento | `deve_retornar_vazio_quando_lista_nula` |
 
 ---
@@ -179,7 +179,7 @@ mock_repo.salvar.assert_called_once_with(exact_internal_object)
 assert obj._cache == {}
 
 # ❌ I/O real em unit/
-def test_salva_no_s3():
+def test_deve_salvar_no_s3():
     s3.put_object(...)  # → TaaC
 
 # ❌ assert True
@@ -223,7 +223,7 @@ def test_normalizar_status_none():
 ### Airflow integridade DAG — bom
 
 ```python
-def test_dag_sem_ciclos(dag_bag):
+def test_dag_nao_deve_ter_ciclos(dag_bag):
     dag = dag_bag.get_dag("datalake_vendas_carga_diaria")
     assert dag is not None
     assert not dag.test_cycle()
