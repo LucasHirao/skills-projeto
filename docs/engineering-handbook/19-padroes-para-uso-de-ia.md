@@ -15,6 +15,7 @@ O agente deve ler, nesta ordem:
 3. [18 — Definition of Done](18-definition-of-done.md)
 4. Este capítulo (19)
 5. Templates em [`templates/`](templates/)
+6. [21 — Agentes e prompts](21-agentes-e-prompts.md) — ao preparar ou revisar prompts (não na implementação direta)
 
 **Não** pedir para “implementar tudo” sem apontar repo, path e capítulo.
 

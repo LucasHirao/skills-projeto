@@ -48,6 +48,13 @@ SKILLS=(
   "melhorar-observabilidade"
   "criar-documentacao"
   "investigar-falha"
+  "preparar-prompt-tecnico"
+  "revisar-prompt-tecnico"
+)
+
+PROMPT_SKILLS=(
+  "preparar-prompt-tecnico"
+  "revisar-prompt-tecnico"
 )
 
 validate_link_in_file() {
@@ -102,9 +109,18 @@ validate_all_links() {
     grep -q "## Nomenclatura de código" "${CLAUDE}/skills/${s}/SKILL.md" \
       || fail "seção Nomenclatura ausente em claude/skills/${s}/SKILL.md"
   done
+
+  for s in "${PROMPT_SKILLS[@]}"; do
+    grep -q "## Fonte de verdade" "${CLAUDE}/skills/${s}/SKILL.md" \
+      || fail "seção Fonte de verdade ausente em claude/skills/${s}/SKILL.md"
+    grep -q "21-agentes-e-prompts.md" "${CLAUDE}/skills/${s}/SKILL.md" \
+      || fail "capítulo 21 ausente em claude/skills/${s}/SKILL.md"
+  done
 }
 
 [[ -d "${HANDBOOK}" ]] || { echo "ERRO: handbook não encontrado: ${HANDBOOK}" >&2; exit 1; }
+[[ -f "${HANDBOOK}/21-agentes-e-prompts.md" ]] \
+  || { echo "ERRO: capítulo 21 ausente no handbook" >&2; exit 1; }
 [[ -d "${CLAUDE}" ]] || { echo "ERRO: pasta claude/ não encontrada" >&2; exit 1; }
 
 for r in "${REGRAS[@]}"; do

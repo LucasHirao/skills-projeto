@@ -10,6 +10,7 @@ Configuração do agente **Devin** derivada do [Manual de Engenharia](../docs/en
 | Mapa IA | [artefatos-ia.md](../docs/engineering-handbook/artefatos-ia.md) |
 | DoD | [18 — Definition of Done](../docs/engineering-handbook/18-definition-of-done.md) |
 | Uso de IA | [19 — Padrões para uso de IA](../docs/engineering-handbook/19-padroes-para-uso-de-ia.md) |
+| Agentes | [21 — Agentes e prompts](../docs/engineering-handbook/21-agentes-e-prompts.md) |
 
 **Regra:** mudança de padrão → PR no handbook primeiro; `devin/` atualizado depois.
 
@@ -19,7 +20,7 @@ Configuração do agente **Devin** derivada do [Manual de Engenharia](../docs/en
 devin/
   AGENTS.md              # Modelo para repos de código
   skills/                # 13 skills (fonte versionada)
-  playbooks/             # 8 prompts amplos multi-repo
+  playbooks/             # 10 prompts (incl. preparar/revisar prompt)
   sincronizar-devin.sh   # Copia skills → .agents/skills/
 ```
 
@@ -53,9 +54,18 @@ Copia `devin/skills/*` → `.agents/skills/`. Copie [`AGENTS.md`](AGENTS.md) par
 
 `criar-dag-airflow` · `criar-modelo-dbt` · `criar-modulo-terraform` · `criar-lambda-python` · `criar-api-spring-boot` · `criar-job-glue` · `criar-testes-unitarios` · `criar-taac` · `revisar-codigo` · `revisar-desempenho` · `melhorar-observabilidade` · `criar-documentacao` · `investigar-falha`
 
-## Playbooks (8)
+## Playbooks (10)
 
-[`implementar-feature.md`](playbooks/implementar-feature.md) · [`revisar-pr.md`](playbooks/revisar-pr.md) · [`criar-pipeline-airflow-dbt.md`](playbooks/criar-pipeline-airflow-dbt.md) · [`criar-componente-aws.md`](playbooks/criar-componente-aws.md) · [`criar-taac.md`](playbooks/criar-taac.md) · [`investigar-falha-pipeline.md`](playbooks/investigar-falha-pipeline.md) · [`melhorar-observabilidade.md`](playbooks/melhorar-observabilidade.md) · [`revisar-desempenho.md`](playbooks/revisar-desempenho.md)
+**Agentes:** [`preparar-feature-para-implementacao.md`](playbooks/preparar-feature-para-implementacao.md) · [`revisar-prompt-de-implementacao.md`](playbooks/revisar-prompt-de-implementacao.md)
+
+**Implementação e operação:** [`implementar-feature.md`](playbooks/implementar-feature.md) · [`revisar-pr.md`](playbooks/revisar-pr.md) · [`criar-pipeline-airflow-dbt.md`](playbooks/criar-pipeline-airflow-dbt.md) · [`criar-componente-aws.md`](playbooks/criar-componente-aws.md) · [`criar-taac.md`](playbooks/criar-taac.md) · [`investigar-falha-pipeline.md`](playbooks/investigar-falha-pipeline.md) · [`melhorar-observabilidade.md`](playbooks/melhorar-observabilidade.md) · [`revisar-desempenho.md`](playbooks/revisar-desempenho.md)
+
+## Fluxo preparador → revisor → implementação
+
+1. Pedido informal → playbook `preparar-feature-para-implementacao`
+2. Confiança < 90% → perguntas objetivas (não gerar prompt de implementação)
+3. Playbook `revisar-prompt-de-implementacao` → sem bloqueios 🔴
+4. Skill de stack ou `implementar-feature` com contexto mínimo do briefing
 
 ## Manutenção
 

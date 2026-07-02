@@ -87,10 +87,20 @@ EXPECTED_PLAYBOOKS=(
   investigar-falha-pipeline.md
   melhorar-observabilidade.md
   revisar-desempenho.md
+  preparar-feature-para-implementacao.md
+  revisar-prompt-de-implementacao.md
+)
+
+PROMPT_PLAYBOOKS=(
+  preparar-feature-para-implementacao.md
+  revisar-prompt-de-implementacao.md
 )
 
 [[ -d "${HANDBOOK}" ]] || { echo "ERRO: handbook não encontrado" >&2; exit 1; }
 [[ -f "${DEVIN}/AGENTS.md" ]] || { echo "ERRO: devin/AGENTS.md não encontrado" >&2; exit 1; }
+
+[[ -f "${HANDBOOK}/21-agentes-e-prompts.md" ]] \
+  || { echo "ERRO: capítulo 21 ausente no handbook" >&2; exit 1; }
 
 log "Validando links..."
 validate_markdown_file "${DEVIN}/README.md"
@@ -116,6 +126,16 @@ for pb in "${EXPECTED_PLAYBOOKS[@]}"; do
   validate_markdown_file "${playbook}"
   grep -q "## Nomenclatura de código" "${playbook}" \
     || fail "seção Nomenclatura ausente em devin/playbooks/${pb}"
+done
+
+for pb in "${PROMPT_PLAYBOOKS[@]}"; do
+  playbook="${PLAYBOOKS_DIR}/${pb}"
+  grep -q "## Fonte de verdade" "${playbook}" \
+    || fail "seção Fonte de verdade ausente em devin/playbooks/${pb}"
+  grep -q "21-agentes-e-prompts.md" "${playbook}" \
+    || fail "capítulo 21 ausente em devin/playbooks/${pb}"
+  grep -q "03-padroes-de-codigo.md" "${playbook}" \
+    || fail "capítulo 03 ausente em devin/playbooks/${pb}"
 done
 
 if [[ "${LINK_ERRORS}" -gt 0 ]]; then

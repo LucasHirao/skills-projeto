@@ -4,7 +4,7 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 
 **Regra:** handbook primeiro; artefatos depois. Não duplicar capítulos inteiros nas skills.
 
-**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) é pré-leitura obrigatória em **todas** as skills Claude e Devin, com seção fixa **Nomenclatura de código** (identificadores internos em português). Os playbooks Devin incluem a mesma orientação antes do prompt.
+**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) é pré-leitura obrigatória em **todas** as skills Claude e Devin, com seção fixa **Nomenclatura de código** (identificadores internos em português). Os playbooks Devin incluem a mesma orientação antes do prompt. [21 — Agentes e prompts](21-agentes-e-prompts.md) governa a camada preparador/revisor.
 
 ---
 
@@ -41,6 +41,7 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 | [18 — Definition of Done](18-definition-of-done.md) | Todas as skills (checklist DoD) | Todas as skills e playbooks |
 | [19 — Padrões para uso de IA](19-padroes-para-uso-de-ia.md) | [claude/regras/06-uso-de-ia.md](../../claude/regras/06-uso-de-ia.md), [claude/CLAUDE.md](../../claude/CLAUDE.md) | [devin/AGENTS.md](../../devin/AGENTS.md) |
 | [20 — Onboarding técnico](20-onboarding-tecnico.md) | [claude/README.md](../../claude/README.md) | [devin/README.md](../../devin/README.md) |
+| [21 — Agentes e prompts](21-agentes-e-prompts.md) | [preparar-prompt-tecnico](../../claude/skills/preparar-prompt-tecnico/SKILL.md), [revisar-prompt-tecnico](../../claude/skills/revisar-prompt-tecnico/SKILL.md) | [preparar-feature-para-implementacao.md](../../devin/playbooks/preparar-feature-para-implementacao.md), [revisar-prompt-de-implementacao.md](../../devin/playbooks/revisar-prompt-de-implementacao.md) |
 | Templates | [criar-documentacao](../../claude/skills/criar-documentacao/SKILL.md) | [criar-documentacao](../../devin/skills/criar-documentacao/SKILL.md), playbooks |
 
 ---
@@ -57,6 +58,8 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 | [investigar-falha-pipeline.md](../../devin/playbooks/investigar-falha-pipeline.md) | 13, 14, 16 |
 | [melhorar-observabilidade.md](../../devin/playbooks/melhorar-observabilidade.md) | 13, 15 |
 | [revisar-desempenho.md](../../devin/playbooks/revisar-desempenho.md) | 14, 03 |
+| [preparar-feature-para-implementacao.md](../../devin/playbooks/preparar-feature-para-implementacao.md) | 21, 03, 18, 19 |
+| [revisar-prompt-de-implementacao.md](../../devin/playbooks/revisar-prompt-de-implementacao.md) | 21, 03, 18, 17 |
 
 ---
 

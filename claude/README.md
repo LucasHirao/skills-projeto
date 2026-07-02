@@ -47,9 +47,22 @@ Identificadores **internos** em português. Exceções: contratos externos, SDKs
 4. **Revisar** skill em PR com humano
 5. **Testar** em feature piloto antes de considerar estável
 
-## Skills (13)
+## Skills (15)
 
-`criar-dag-airflow` · `criar-modelo-dbt` · `criar-modulo-terraform` · `criar-lambda-python` · `criar-api-spring-boot` · `criar-job-glue` · `criar-testes-unitarios` · `criar-taac` · `revisar-codigo` · `revisar-desempenho` · `melhorar-observabilidade` · `criar-documentacao` · `investigar-falha`
+**Agentes (preparar/revisar prompt):** `preparar-prompt-tecnico` · `revisar-prompt-tecnico`
+
+**Implementação e operação:** `criar-dag-airflow` · `criar-modelo-dbt` · `criar-modulo-terraform` · `criar-lambda-python` · `criar-api-spring-boot` · `criar-job-glue` · `criar-testes-unitarios` · `criar-taac` · `revisar-codigo` · `revisar-desempenho` · `melhorar-observabilidade` · `criar-documentacao` · `investigar-falha`
+
+Guia de agentes: [21 — Agentes e prompts](../docs/engineering-handbook/21-agentes-e-prompts.md).
+
+## Fluxo preparador → revisor → implementação
+
+1. Pedido vago → Skill `preparar-prompt-tecnico` → briefing técnico
+2. Confiança < 90% → perguntas antes do prompt final
+3. Skill `revisar-prompt-tecnico` → sem bloqueios 🔴
+4. Skill de stack com contexto mínimo do briefing
+
+Não use agentes preparador/revisor para implementar código diretamente.
 
 ## Fonte de verdade
 
