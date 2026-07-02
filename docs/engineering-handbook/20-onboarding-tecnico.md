@@ -11,7 +11,7 @@ Guia para integração em squads de **dados e backend** em ambiente **multi-repo
 | Item | Ação |
 |------|------|
 | Acesso | Repositórios Git, AWS (via SSO), Datadog, CI, Slack do time |
-| Repo de padrões | Clone `orientacoes` — este handbook |
+| Repo de padrões | Clone `repositorio-de-padroes` — este handbook |
 | Repo de código | Identificar o repo do seu primeiro ticket (ver §6) |
 | IA | Cursor ou ferramenta aprovada pelo time — ler [19 — Padrões para IA](19-padroes-para-uso-de-ia.md) |
 
@@ -55,7 +55,7 @@ Guia para integração em squads de **dados e backend** em ambiente **multi-repo
 **Checklist júnior — dia 1:**
 
 - [ ] Acesso Git, AWS, Datadog, CI
-- [ ] `orientacoes` clonado; leu 00 e 18
+- [ ] `repositorio-de-padroes` clonado; leu 00 e 18
 - [ ] Repo de código clonado; build/test local OK
 - [ ] Um fluxo rastreado no Datadog por `correlation_id` (exemplo do time)
 - [ ] Canal Slack do time identificado
@@ -132,7 +132,7 @@ Guia para integração em squads de **dados e backend** em ambiente **multi-repo
 | DoD exceções | Spike, breaking change, cov < 90% |
 | Multi-repo | Ordem de deploy; contratos entre times |
 | Incidentes | Postmortem; runbook; SLO |
-| Handbook | Propor PRs em `orientacoes`; derivar skills ([19 §7](19-padroes-para-uso-de-ia.md#7-como-extrair-skills-playbooks-e-rules-a-partir-deste-handbook)) |
+| Handbook | Propor PRs em `repositorio-de-padroes`; derivar skills ([19 §7](19-padroes-para-uso-de-ia.md#7-como-extrair-skills-playbooks-e-rules-a-partir-deste-handbook)) |
 | Onboarding | Atribuir mentor; validar trilha júnior/terceiro |
 
 **Rituais sugeridos:**
@@ -146,7 +146,7 @@ Guia para integração em squads de **dados e backend** em ambiente **multi-repo
 ## 4. Multi-repo — mapa mental
 
 ```
-orientacoes          → padrões (handbook 00–20, templates)
+repositorio-de-padroes          → padrões (handbook 00–20, templates)
 org/terraform-*      → infra, IAM, alarmes
 org/airflow-*        → DAGs
 org/dbt-*            → models, tests, exposures
@@ -159,7 +159,7 @@ org/api-*            → Spring Boot APIs
 1. Um propósito por repositório
 2. Integração por **contrato** (schema, path S3, OpenAPI, TF output)
 3. PR coordenado quando contrato muda
-4. Padrões transversais só em `orientacoes`
+4. Padrões transversais só em `repositorio-de-padroes`
 
 ---
 

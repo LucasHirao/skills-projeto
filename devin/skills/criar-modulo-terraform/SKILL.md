@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-modulo-terraform
 description: Cria ou altera módulos Terraform/IaC no {nome-projeto} com IAM least privilege, tags padronizadas e alarmes Datadog. Use ao provisionar Lambda, Glue, S3, IAM, filas ou alarmes.
 allowed-tools: read, write, bash, grep, glob
@@ -14,9 +14,9 @@ triggers:
 
 ## Fonte de verdade
 
-- [06 — Terraform](../../docs/engineering-handbook/06-terraform.md)
-- [17 — Segurança](../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [06 — Terraform](../../../docs/engineering-handbook/06-terraform.md)
+- [17 — Segurança](../../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
 ## Quando usar
 
@@ -24,6 +24,13 @@ triggers:
 - Alteração de IAM, buckets, filas, Lambdas, Glue jobs
 - Alarmes e integrações Datadog via Terraform
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Terraform: preserve nomes técnicos/AWS quando necessário; nomes lógicos internos em português quando aplicável.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Passos
 
 1. Ler módulo vizinho; seguir padrão de `variables`, `outputs`, `versions`.
@@ -43,9 +50,9 @@ triggers:
 
 ## Templates
 
-- [readme-componente](../../docs/engineering-handbook/templates/readme-componente.md)
-- [adr](../../docs/engineering-handbook/templates/adr.md)
+- [readme-componente](../../../docs/engineering-handbook/templates/readme-componente.md)
+- [adr](../../../docs/engineering-handbook/templates/adr.md)
 
 ## Não fazer
 
-Ver anti-padrões em [06 — Terraform](../../docs/engineering-handbook/06-terraform.md).
+Ver anti-padrões em [06 — Terraform](../../../docs/engineering-handbook/06-terraform.md).

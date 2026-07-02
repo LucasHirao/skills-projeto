@@ -1,4 +1,4 @@
----
+﻿---
 name: melhorar-observabilidade
 description: Adiciona ou corrige logs JSON, métricas, traces APM e monitors Datadog em componentes do {nome-projeto}. Use quando faltar correlation_id, alertas, dashboard ou debug em produção for difícil.
 allowed-tools: read, write, bash, grep, glob
@@ -15,9 +15,9 @@ triggers:
 
 ## Fonte de verdade
 
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [15 — Documentação](../../docs/engineering-handbook/15-documentacao.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [15 — Documentação](../../../docs/engineering-handbook/15-documentacao.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
 ## Quando usar
 
@@ -25,6 +25,13 @@ triggers:
 - Incidente com MTTR alto por falta de contexto
 - Fluxo crítico sem monitor/runbook
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Observabilidade: preserve tags técnicas (`service`, `env`, `correlation_id`); operações internas em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Passos
 
 1. Mapear fluxo e pontos de falha; ler logs atuais no Datadog (se acesso).
@@ -44,9 +51,9 @@ triggers:
 
 ## Templates
 
-- [dashboard](../../docs/engineering-handbook/templates/dashboard.md)
-- [runbook](../../docs/engineering-handbook/templates/runbook.md)
+- [dashboard](../../../docs/engineering-handbook/templates/dashboard.md)
+- [runbook](../../../docs/engineering-handbook/templates/runbook.md)
 
 ## Não fazer
 
-Ver anti-padrões em [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md).
+Ver anti-padrões em [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md).

@@ -33,7 +33,7 @@
 
 Este documento é o **ponto de entrada** do Engineering Handbook. Ele explica **como navegar**, **quando consultar cada capítulo**, **como aplicar os padrões em repositórios de código separados** e **como manter o handbook vivo** sem transformá-lo em burocracia.
 
-O handbook é a **fonte de verdade** para padrões técnicos de squads de dados e backend. Código de produção vive em repositórios dedicados (`{nome-projeto}-airflow`, `{nome-projeto}-dbt`, etc.); este repositório (`orientacoes`) concentra a documentação versionada que todos os times devem seguir.
+O handbook é a **fonte de verdade** para padrões técnicos de squads de dados e backend. Código de produção vive em repositórios dedicados (`{nome-projeto}-airflow`, `{nome-projeto}-dbt`, etc.); este repositório (`repositorio-de-padroes`) concentra a documentação versionada que todos os times devem seguir.
 
 **Resultado esperado:** qualquer pessoa — interna, terceira ou assistente de IA — consegue, em menos de uma hora, entender o que ler, onde implementar e quais critérios de qualidade aplicar antes de abrir o primeiro PR.
 
@@ -360,7 +360,7 @@ Identificadores criados pelo time (classes, funções, variáveis, testes, `task
 | Anti-padrão | Por que é ruim | Correção |
 |-------------|----------------|----------|
 | "Não li, copiei do repo vizinho" | Propaga dívida antiga | Ler capítulo da stack |
-| Handbook como PDF morto | Desatualiza em semanas | PR no repo `orientacoes` |
+| Handbook como PDF morto | Desatualiza em semanas | PR no repo `repositorio-de-padroes` |
 | Padrão oral no Slack | Não escala, não audita | Documentar no capítulo certo |
 | Monorepo disfarçado | Ownership confuso | Separar `{nome-projeto}-*` |
 | Checklist só no último dia | Retrabalho caro | DoD desde o início do card |
@@ -372,10 +372,10 @@ Identificadores criados pelo time (classes, funções, variáveis, testes, `task
 
 ## 13. Estrutura de pastas e artefatos
 
-### 13.1 Este repositório (`orientacoes`)
+### 13.1 Este repositório (`repositorio-de-padroes`)
 
 ```
-orientacoes/
+repositorio-de-padroes/
 ├── README.md
 └── docs/
     └── engineering-handbook/       # Capítulos 00–20
@@ -511,7 +511,7 @@ R: Não. Use [19-padroes-para-uso-de-ia.md](19-padroes-para-uso-de-ia.md) para a
 
 ### Primeiro dia
 
-1. Clone o repo `orientacoes` e marque favorito o [README](../../README.md).
+1. Clone o repo `repositorio-de-padroes` e marque favorito o [README](../../README.md).
 2. Leia [01-contexto-principios-e-objetivos.md](01-contexto-principios-e-objetivos.md) — entenda o "por quê".
 3. Siga [20-onboarding-tecnico.md](20-onboarding-tecnico.md) no repo do seu time.
 

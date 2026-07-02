@@ -113,7 +113,7 @@ Cada componente de produção vive em **repositório dedicado**:
 {nome-projeto}-api-{servico}
 ```
 
-O repositório `orientacoes` (este handbook) **não contém código de produção** — apenas padrões, templates e exemplos de referência.
+O repositório `repositorio-de-padroes` (este handbook) **não contém código de produção** — apenas padrões, templates e exemplos de referência.
 
 ### 4.3 Fluxo de valor simplificado
 
@@ -307,7 +307,7 @@ Handbook longo mas versionado > wiki curta e obsoleta. Trilhas de leitura em [00
 
 | Tipo | Nome | Conteúdo |
 |------|------|----------|
-| Handbook | `orientacoes` | Capítulos 00–20, templates |
+| Handbook | `repositorio-de-padroes` | Capítulos 00–20, templates |
 | Orquestração | `{nome-projeto}-airflow` | DAGs, plugins, testes |
 | Transformação | `{nome-projeto}-dbt` | models, macros, snapshots |
 | Infra | `{nome-projeto}-infra` | Terraform, módulos |

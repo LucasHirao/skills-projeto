@@ -1,4 +1,4 @@
-# Engineering Handbook / Manual de Engenharia
+﻿# Engineering Handbook / Manual de Engenharia
 
 Repositório **multi-repo** de padrões técnicos para squads de dados e backend (Airflow, dbt, Terraform, Lambda Python, Java Spring Boot, AWS Glue).
 
@@ -62,8 +62,8 @@ README.md                    # Este arquivo
 | [claude/sincronizar-claude.sh](claude/sincronizar-claude.sh) | Copia skills para `.claude/skills/` |
 
 ```bash
-# No repo de código (após clonar orientacoes ou submodule)
-bash /caminho/orientacoes/claude/sincronizar-claude.sh
+# No repo de código (após clonar repositorio-de-padroes ou submodule)
+bash /caminho/repositorio-de-padroes/claude/sincronizar-claude.sh
 ```
 
 ---
@@ -79,7 +79,7 @@ bash /caminho/orientacoes/claude/sincronizar-claude.sh
 | [devin/sincronizar-devin.sh](devin/sincronizar-devin.sh) | Copia skills para `.agents/skills/` |
 
 ```bash
-bash /caminho/orientacoes/devin/sincronizar-devin.sh
+bash /caminho/repositorio-de-padroes/devin/sincronizar-devin.sh
 ```
 
 **Skills** — tarefas recorrentes por stack no repositório. **Playbooks** — fluxos amplos/cross-repo (feature, pipeline, incidente).

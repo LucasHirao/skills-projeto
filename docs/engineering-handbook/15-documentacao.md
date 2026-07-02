@@ -123,7 +123,7 @@ Documentar explicitamente:
 1. **Um README por repositório** — não assumir que o leitor conhece o monorepo vizinho.
 2. **Links entre repos** — URL do contrato (OpenAPI, schema dbt, output Terraform).
 3. **PR coordenado** — referenciar PRs irmãos no corpo (`Depends on org/repo#123`).
-4. **Handbook central** (`orientacoes`) — padrões transversais; detalhe operacional fica no repo do serviço.
+4. **Handbook central** (`repositorio-de-padroes`) — padrões transversais; detalhe operacional fica no repo do serviço.
 
 ---
 

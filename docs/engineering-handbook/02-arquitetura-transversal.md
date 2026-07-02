@@ -207,7 +207,7 @@ flowchart TB
 ### 9.1 Mapa de repositórios
 
 ```
-orientacoes/                    # Handbook (não produção)
+repositorio-de-padroes/                    # Handbook (não produção)
 {nome-projeto}-infra/           # Terraform, IAM, buckets, triggers
 {nome-projeto}-airflow/         # DAGs
 {nome-projeto}-glue-{job}/      # Jobs PySpark
@@ -554,7 +554,7 @@ VPC endpoints onde aplicável; bucket policies deny insecure transport; criptogr
 
 ### Documentação
 
-README por repo + ADR cross-repo em `orientacoes` ou repo infra quando enterprise-wide.
+README por repo + ADR cross-repo em `repositorio-de-padroes` ou repo infra quando enterprise-wide.
 
 ---
 

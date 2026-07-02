@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-dag-airflow
 description: Criar ou alterar DAGs no repositório {nome-projeto}-airflow seguindo padrões de orquestração, idempotência e observabilidade Datadog.
 ---
@@ -13,11 +13,19 @@ description: Criar ou alterar DAGs no repositório {nome-projeto}-airflow seguin
 
 ## Pré-leitura
 
-- [04 — Airflow](../../docs/engineering-handbook/04-airflow.md)
-- [02 — Arquitetura transversal](../../docs/engineering-handbook/02-arquitetura-transversal.md)
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [04 — Airflow](../../../docs/engineering-handbook/04-airflow.md)
+- [02 — Arquitetura transversal](../../../docs/engineering-handbook/02-arquitetura-transversal.md)
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Airflow: `dag_id`, `task_id`, funções auxiliares e nomes de DAG em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -74,7 +82,7 @@ description: Criar ou alterar DAGs no repositório {nome-projeto}-airflow seguin
 ## Critérios de aceite
 
 - CI verde com parse test
-- DoD Airflow em [18](../../docs/engineering-handbook/18-definition-of-done.md) §2.1
+- DoD Airflow em [18](../../../docs/engineering-handbook/18-definition-of-done.md) §2.1
 - Runbook linkado se fluxo crítico
 
 ## O que não fazer
@@ -93,5 +101,5 @@ description: Criar ou alterar DAGs no repositório {nome-projeto}-airflow seguin
 
 ## Fonte de verdade
 
-- [04 — Airflow](../../docs/engineering-handbook/04-airflow.md)
-- [Template — readme-componente](../../docs/engineering-handbook/templates/readme-componente.md)
+- [04 — Airflow](../../../docs/engineering-handbook/04-airflow.md)
+- [Template — readme-componente](../../../docs/engineering-handbook/templates/readme-componente.md)

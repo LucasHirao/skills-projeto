@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-lambda-python
 description: Implementar funções AWS Lambda Python em {nome-projeto} com handler fino, domínio testável, observabilidade Datadog e TaaC.
 ---
@@ -13,11 +13,19 @@ description: Implementar funções AWS Lambda Python em {nome-projeto} com handl
 
 ## Pré-leitura
 
-- [07 — Lambda Python](../../docs/engineering-handbook/07-lambda-python.md)
-- [02 — Arquitetura transversal](../../docs/engineering-handbook/02-arquitetura-transversal.md)
-- [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [07 — Lambda Python](../../../docs/engineering-handbook/07-lambda-python.md)
+- [02 — Arquitetura transversal](../../../docs/engineering-handbook/02-arquitetura-transversal.md)
+- [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Lambda/Python: classes, funções e variáveis internas em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -73,7 +81,7 @@ description: Implementar funções AWS Lambda Python em {nome-projeto} com handl
 
 ## Critérios de aceite
 
-- DoD Lambda em [18](../../docs/engineering-handbook/18-definition-of-done.md) §2.4
+- DoD Lambda em [18](../../../docs/engineering-handbook/18-definition-of-done.md) §2.4
 - CI verde com coverage e lint
 
 ## O que não fazer
@@ -92,4 +100,4 @@ description: Implementar funções AWS Lambda Python em {nome-projeto} com handl
 
 ## Fonte de verdade
 
-- [07 — Lambda Python](../../docs/engineering-handbook/07-lambda-python.md)
+- [07 — Lambda Python](../../../docs/engineering-handbook/07-lambda-python.md)

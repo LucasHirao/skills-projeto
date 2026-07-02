@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-api-spring-boot
 description: Implementar APIs REST Java Spring Boot em {nome-projeto} com camadas hexagonais, OpenAPI, testes e observabilidade Datadog.
 ---
@@ -13,11 +13,19 @@ description: Implementar APIs REST Java Spring Boot em {nome-projeto} com camada
 
 ## Pré-leitura
 
-- [08 — Java Spring Boot](../../docs/engineering-handbook/08-java-spring-boot.md)
-- [02 — Arquitetura transversal](../../docs/engineering-handbook/02-arquitetura-transversal.md)
-- [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [08 — Java Spring Boot](../../../docs/engineering-handbook/08-java-spring-boot.md)
+- [02 — Arquitetura transversal](../../../docs/engineering-handbook/02-arquitetura-transversal.md)
+- [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Java: classes, métodos, variáveis e testes em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -73,7 +81,7 @@ description: Implementar APIs REST Java Spring Boot em {nome-projeto} com camada
 
 ## Critérios de aceite
 
-- DoD Spring em [18](../../docs/engineering-handbook/18-definition-of-done.md) §2.5
+- DoD Spring em [18](../../../docs/engineering-handbook/18-definition-of-done.md) §2.5
 - OpenAPI publicado e exemplos curl
 
 ## O que não fazer
@@ -91,5 +99,5 @@ description: Implementar APIs REST Java Spring Boot em {nome-projeto} com camada
 
 ## Fonte de verdade
 
-- [08 — Java Spring Boot](../../docs/engineering-handbook/08-java-spring-boot.md)
-- [Template — readme-componente](../../docs/engineering-handbook/templates/readme-componente.md)
+- [08 — Java Spring Boot](../../../docs/engineering-handbook/08-java-spring-boot.md)
+- [Template — readme-componente](../../../docs/engineering-handbook/templates/readme-componente.md)

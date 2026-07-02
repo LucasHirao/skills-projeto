@@ -38,7 +38,7 @@
 
 | Fase | PR | DoD resumida | Dependência |
 |------|-----|--------------|-------------|
-| 0 — ADR | `orientacoes` ou `repo/docs` | ADR aceito | — |
+| 0 — ADR | `repositorio-de-padroes` ou `repo/docs` | ADR aceito | — |
 | 1 — Infra | `terraform-*` | plan, alarmes, tags | ADR |
 | 2 — Core | `{repo}` | código + 90% cov + obs | Fase 1 |
 | 3 — Orquestração | `airflow-*` | DAG + callbacks | Fase 2 |

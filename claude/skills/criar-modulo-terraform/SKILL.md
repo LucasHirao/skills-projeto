@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-modulo-terraform
 description: Criar ou alterar módulos Terraform para infraestrutura AWS de {nome-projeto} com IAM least privilege, tags e validação CI.
 ---
@@ -13,11 +13,19 @@ description: Criar ou alterar módulos Terraform para infraestrutura AWS de {nom
 
 ## Pré-leitura
 
-- [06 — Terraform](../../docs/engineering-handbook/06-terraform.md)
-- [17 — Segurança](../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [06 — Terraform](../../../docs/engineering-handbook/06-terraform.md)
+- [17 — Segurança](../../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Terraform: preserve nomes técnicos/AWS quando necessário; nomes lógicos internos em português quando aplicável.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -71,7 +79,7 @@ description: Criar ou alterar módulos Terraform para infraestrutura AWS de {nom
 
 ## Critérios de aceite
 
-- DoD Terraform em [18](../../docs/engineering-handbook/18-definition-of-done.md) §2.3
+- DoD Terraform em [18](../../../docs/engineering-handbook/18-definition-of-done.md) §2.3
 - Plan revisado por humano
 
 ## O que não fazer
@@ -89,5 +97,5 @@ description: Criar ou alterar módulos Terraform para infraestrutura AWS de {nom
 
 ## Fonte de verdade
 
-- [06 — Terraform](../../docs/engineering-handbook/06-terraform.md)
-- [Template — readme-componente](../../docs/engineering-handbook/templates/readme-componente.md)
+- [06 — Terraform](../../../docs/engineering-handbook/06-terraform.md)
+- [Template — readme-componente](../../../docs/engineering-handbook/templates/readme-componente.md)

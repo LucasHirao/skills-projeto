@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-documentacao
 description: Criar ou atualizar documentação de componentes {nome-projeto} — README, runbook, ADR e corpo de PR.
 ---
@@ -13,10 +13,18 @@ description: Criar ou atualizar documentação de componentes {nome-projeto} —
 
 ## Pré-leitura
 
-- [15 — Documentação](../../docs/engineering-handbook/15-documentacao.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md) §1.3
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [15 — Documentação](../../../docs/engineering-handbook/15-documentacao.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md) §1.3
 - Capítulo da stack, se aplicável
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Documentação: prosa em português; identificadores de exemplo alinhados ao capítulo 03.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -37,7 +45,7 @@ description: Criar ou atualizar documentação de componentes {nome-projeto} —
 6. Para APIs: OpenAPI atualizado.
 7. Para DAGs: `doc_md` + README se necessário.
 8. Revisar prosa em português BR; identificadores técnicos conforme contrato.
-9. Incluir no corpo do PR usando [template pr](../../docs/engineering-handbook/templates/pr.md).
+9. Incluir no corpo do PR usando [template pr](../../../docs/engineering-handbook/templates/pr.md).
 
 ## Checklist de qualidade
 
@@ -67,7 +75,7 @@ description: Criar ou atualizar documentação de componentes {nome-projeto} —
 
 ## Critérios de aceite
 
-- DoD §1.3 em [18](../../docs/engineering-handbook/18-definition-of-done.md)
+- DoD §1.3 em [18](../../../docs/engineering-handbook/18-definition-of-done.md)
 - Outro dev opera o componente em 15 min só com a doc
 
 ## O que não fazer
@@ -85,5 +93,5 @@ description: Criar ou atualizar documentação de componentes {nome-projeto} —
 
 ## Fonte de verdade
 
-- [15 — Documentação](../../docs/engineering-handbook/15-documentacao.md)
-- [Templates](../../docs/engineering-handbook/templates/)
+- [15 — Documentação](../../../docs/engineering-handbook/15-documentacao.md)
+- [Templates](../../../docs/engineering-handbook/templates/)

@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-testes-unitarios
 description: Cria ou amplia testes unitários e de mutação no {nome-projeto} com cobertura ≥90% e asserts de comportamento. Use ao testar domain, application, transforms ou módulos sem integração real.
 allowed-tools: read, write, bash, grep, glob
@@ -14,9 +14,9 @@ triggers:
 
 ## Fonte de verdade
 
-- [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md)
-- [12 — Testes de mutação](../../docs/engineering-handbook/12-testes-de-mutacao.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md)
+- [12 — Testes de mutação](../../../docs/engineering-handbook/12-testes-de-mutacao.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
 ## Quando usar
 
@@ -24,6 +24,13 @@ triggers:
 - Refatoração que exige rede de segurança
 - Mutation score insuficiente em `domain/` / `application/`
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Testes: nomes em português (`test_deve_*_quando_*` / `deve*Quando*`).
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Passos
 
 1. Mapear comportamentos públicos do módulo (não implementação).
@@ -43,8 +50,8 @@ triggers:
 
 ## Templates
 
-- [pr](../../docs/engineering-handbook/templates/pr.md)
+- [pr](../../../docs/engineering-handbook/templates/pr.md)
 
 ## Não fazer
 
-Ver anti-padrões em [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md).
+Ver anti-padrões em [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md).

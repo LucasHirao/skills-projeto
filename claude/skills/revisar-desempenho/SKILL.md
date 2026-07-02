@@ -1,4 +1,4 @@
----
+﻿---
 name: revisar-desempenho
 description: Analisar gargalos de desempenho e custo AWS em componentes {nome-projeto} com evidência e mudança mínima.
 ---
@@ -13,11 +13,19 @@ description: Analisar gargalos de desempenho e custo AWS em componentes {nome-pr
 
 ## Pré-leitura
 
-- [14 — Performance](../../docs/engineering-handbook/14-performance.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [14 — Performance](../../../docs/engineering-handbook/14-performance.md)
 - Capítulo da stack (04–09)
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md) §1.5
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md) §1.5
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Desempenho: preserve nomes de métricas técnicas Datadog; lógica interna em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -101,4 +109,4 @@ description: Analisar gargalos de desempenho e custo AWS em componentes {nome-pr
 
 ## Fonte de verdade
 
-- [14 — Performance](../../docs/engineering-handbook/14-performance.md)
+- [14 — Performance](../../../docs/engineering-handbook/14-performance.md)

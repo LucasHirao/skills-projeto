@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-taac
 description: Criar testes integrados (TaaC) na pipeline CI de {nome-projeto} com ambiente autocontido e contratos validados.
 ---
@@ -13,11 +13,19 @@ description: Criar testes integrados (TaaC) na pipeline CI de {nome-projeto} com
 
 ## Pré-leitura
 
-- [11 — TaaC](../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md)
-- [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [11 — TaaC](../../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md)
+- [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md)
 - Capítulo da stack (04–09)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Testes integrados: nomes de casos em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -37,7 +45,7 @@ description: Criar testes integrados (TaaC) na pipeline CI de {nome-projeto} com
 5. Act: executa componente real (handler, job, DAG task isolada).
 6. Assert: estado externo (objeto S3, mensagem fila, row DB).
 7. Teardown determinístico.
-8. Documentar em [template teste-integrado](../../docs/engineering-handbook/templates/teste-integrado.md).
+8. Documentar em [template teste-integrado](../../../docs/engineering-handbook/templates/teste-integrado.md).
 9. Integrar na CI com tag/markers (`integration`).
 10. Manter poucos cenários de alto valor — não duplicar E2E.
 
@@ -89,5 +97,5 @@ description: Criar testes integrados (TaaC) na pipeline CI de {nome-projeto} com
 
 ## Fonte de verdade
 
-- [11 — TaaC](../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md)
-- [Template — teste-integrado](../../docs/engineering-handbook/templates/teste-integrado.md)
+- [11 — TaaC](../../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md)
+- [Template — teste-integrado](../../../docs/engineering-handbook/templates/teste-integrado.md)

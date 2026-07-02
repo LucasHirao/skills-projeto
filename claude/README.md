@@ -1,4 +1,4 @@
-# Claude Code — Manual de Engenharia
+﻿# Claude Code — Manual de Engenharia
 
 Esta pasta contém **regras** e **skills** derivadas do [Manual de Engenharia](../docs/engineering-handbook/). Não substitui a fonte de verdade.
 
@@ -18,7 +18,7 @@ Mapa completo: [artefatos-ia.md](../docs/engineering-handbook/artefatos-ia.md).
 
 ```bash
 # Na raiz do repo de código (cria .claude/skills/)
-bash /caminho/orientacoes/claude/sincronizar-claude.sh
+bash /caminho/repositorio-de-padroes/claude/sincronizar-claude.sh
 ```
 
 Ou copie manualmente `claude/skills/*` → `.claude/skills/`.

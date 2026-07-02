@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-dag-airflow
 description: Cria ou altera DAGs Apache Airflow para orquestração no {nome-projeto}, com idempotência, callbacks Datadog e zero I/O no import. Use ao criar pipeline, sensor, dataset ou task group.
 allowed-tools: read, write, bash, grep, glob
@@ -14,9 +14,9 @@ triggers:
 
 ## Fonte de verdade
 
-- [04 — Airflow](../../docs/engineering-handbook/04-airflow.md)
-- [02 — Arquitetura transversal](../../docs/engineering-handbook/02-arquitetura-transversal.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [04 — Airflow](../../../docs/engineering-handbook/04-airflow.md)
+- [02 — Arquitetura transversal](../../../docs/engineering-handbook/02-arquitetura-transversal.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
 ## Quando usar
 
@@ -24,6 +24,13 @@ triggers:
 - Integração com Glue, Lambda, dbt, S3 via operadores padrão do projeto
 - Sensors, Datasets, `dag_run.conf` com `correlation_id`
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Airflow: `dag_id`, `task_id`, funções auxiliares e nomes de DAG em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Passos
 
 1. Ler DAGs vizinhas; seguir convenções de `tags`, `owner`, `doc_md`.
@@ -44,9 +51,9 @@ triggers:
 
 ## Templates
 
-- [readme-componente](../../docs/engineering-handbook/templates/readme-componente.md)
-- [runbook](../../docs/engineering-handbook/templates/runbook.md)
+- [readme-componente](../../../docs/engineering-handbook/templates/readme-componente.md)
+- [runbook](../../../docs/engineering-handbook/templates/runbook.md)
 
 ## Não fazer
 
-Ver anti-padrões em [04 — Airflow](../../docs/engineering-handbook/04-airflow.md).
+Ver anti-padrões em [04 — Airflow](../../../docs/engineering-handbook/04-airflow.md).

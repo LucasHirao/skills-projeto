@@ -111,5 +111,5 @@ pytest tests/integration -m taac -v
 
 ## Referências
 
-- Handbook: [docs/engineering-handbook/{capítulo}.md](https://github.com/org/orientacoes/blob/main/docs/engineering-handbook/{capítulo}.md)
-- Template: [readme-componente.md](https://github.com/org/orientacoes/blob/main/docs/engineering-handbook/templates/readme-componente.md)
+- Handbook: [docs/engineering-handbook/{capítulo}.md](https://github.com/org/repositorio-de-padroes/blob/main/docs/engineering-handbook/{capítulo}.md)
+- Template: [readme-componente.md](https://github.com/org/repositorio-de-padroes/blob/main/docs/engineering-handbook/templates/readme-componente.md)

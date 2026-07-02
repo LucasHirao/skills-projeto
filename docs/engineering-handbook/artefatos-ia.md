@@ -4,6 +4,8 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 
 **Regra:** handbook primeiro; artefatos depois. Não duplicar capítulos inteiros nas skills.
 
+**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) é pré-leitura obrigatória em **todas** as skills Claude e Devin, com seção fixa **Nomenclatura de código** (identificadores internos em português). Os playbooks Devin incluem a mesma orientação antes do prompt.
+
 ---
 
 ## Como usar este mapa
@@ -21,7 +23,7 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 | [00 — Como usar](00-como-usar-este-handbook.md) | [claude/README.md](../../claude/README.md) | [devin/README.md](../../devin/README.md) |
 | [01 — Contexto e princípios](01-contexto-principios-e-objetivos.md) | [claude/regras/00-regras-gerais.md](../../claude/regras/00-regras-gerais.md) | [devin/AGENTS.md](../../devin/AGENTS.md) |
 | [02 — Arquitetura transversal](02-arquitetura-transversal.md) | [claude/regras/01-arquitetura.md](../../claude/regras/01-arquitetura.md) | [devin/AGENTS.md](../../devin/AGENTS.md), [implementar-feature.md](../../devin/playbooks/implementar-feature.md) |
-| [03 — Padrões de código](03-padroes-de-codigo.md) | [claude/regras/05-padroes-de-codigo.md](../../claude/regras/05-padroes-de-codigo.md), todas as skills | [devin/AGENTS.md](../../devin/AGENTS.md), todas as skills |
+| [03 — Padrões de código](03-padroes-de-codigo.md) | [claude/regras/05-padroes-de-codigo.md](../../claude/regras/05-padroes-de-codigo.md), **todas as skills** (pré-leitura + nomenclatura) | [devin/AGENTS.md](../../devin/AGENTS.md), **todas as skills** (pré-leitura + nomenclatura), **todos os playbooks** (nomenclatura) |
 | [04 — Airflow](04-airflow.md) | [criar-dag-airflow](../../claude/skills/criar-dag-airflow/SKILL.md) | [criar-dag-airflow](../../devin/skills/criar-dag-airflow/SKILL.md), [criar-pipeline-airflow-dbt.md](../../devin/playbooks/criar-pipeline-airflow-dbt.md) |
 | [05 — dbt](05-dbt.md) | [criar-modelo-dbt](../../claude/skills/criar-modelo-dbt/SKILL.md) | [criar-modelo-dbt](../../devin/skills/criar-modelo-dbt/SKILL.md), [criar-pipeline-airflow-dbt.md](../../devin/playbooks/criar-pipeline-airflow-dbt.md) |
 | [06 — Terraform](06-terraform.md) | [criar-modulo-terraform](../../claude/skills/criar-modulo-terraform/SKILL.md) | [criar-modulo-terraform](../../devin/skills/criar-modulo-terraform/SKILL.md), [criar-componente-aws.md](../../devin/playbooks/criar-componente-aws.md) |
@@ -62,8 +64,8 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 
 | Destino local | Origem versionada | Script |
 |---------------|-------------------|--------|
-| `.claude/skills/` | `claude/skills/` | `claude/sincronizar-claude.sh` |
-| `.agents/skills/` | `devin/skills/` | `devin/sincronizar-devin.sh` |
+| `.claude/skills/` | `claude/skills/` | `claude/sincronizar-claude.sh --check` (validar) ou sem flag (copiar) |
+| `.agents/skills/` | `devin/skills/` | `devin/sincronizar-devin.sh --check` (validar) ou sem flag (copiar) |
 
 Copie `claude/CLAUDE.md` ou `devin/AGENTS.md` para a raiz do **repositório de código** alvo quando necessário.
 

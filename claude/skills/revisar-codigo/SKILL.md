@@ -1,4 +1,4 @@
----
+﻿---
 name: revisar-codigo
 description: Pré-revisar diff de PR contra handbook, DoD e checklist da stack. Não substitui aprovação humana.
 disable-model-invocation: true
@@ -16,11 +16,19 @@ disable-model-invocation: true
 
 ## Pré-leitura
 
-- [16 — Code review](../../docs/engineering-handbook/16-code-review.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [16 — Code review](../../../docs/engineering-handbook/16-code-review.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 - Capítulo da stack (04–09)
-- [17 — Segurança](../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
+- [17 — Segurança](../../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Revisão: verificar se código novo segue identificadores internos em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -39,7 +47,7 @@ disable-model-invocation: true
 4. Verificar código gerado por IA (deps, regra inventada, mocks vazios).
 5. Checar multi-repo: referências cruzadas e contratos alinhados.
 6. Classificar cada achado: 🔴 bloqueio | 🟡 atenção | 🟢 sugestão.
-7. Preencher [template code-review](../../docs/engineering-handbook/templates/code-review.md).
+7. Preencher [template code-review](../../../docs/engineering-handbook/templates/code-review.md).
 8. **Não aprovar** — recomendar ação ao autor e revisor humano.
 
 ## Checklist de qualidade
@@ -112,6 +120,6 @@ Usar estrutura:
 
 ## Fonte de verdade
 
-- [16 — Code review](../../docs/engineering-handbook/16-code-review.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
-- [Template — code-review](../../docs/engineering-handbook/templates/code-review.md)
+- [16 — Code review](../../../docs/engineering-handbook/16-code-review.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
+- [Template — code-review](../../../docs/engineering-handbook/templates/code-review.md)

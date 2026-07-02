@@ -1,4 +1,4 @@
----
+﻿---
 name: investigar-falha
 description: Diagnosticar incidentes, bugs e falhas de pipeline em {nome-projeto} com hipóteses ordenadas e correção mínima.
 disable-model-invocation: true
@@ -16,11 +16,19 @@ disable-model-invocation: true
 
 ## Pré-leitura
 
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [16 — Code review](../../docs/engineering-handbook/16-code-review.md) (dimensão dados/ops)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [16 — Code review](../../../docs/engineering-handbook/16-code-review.md) (dimensão dados/ops)
 - Capítulo da stack afetada
-- [11 — TaaC](../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md) (reprodução)
+- [11 — TaaC](../../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md) (reprodução)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Investigação: preserve `correlation_id` e campos de ferramenta; relatório em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -114,6 +122,6 @@ disable-model-invocation: true
 
 ## Fonte de verdade
 
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [Template — runbook](../../docs/engineering-handbook/templates/runbook.md)
-- [19 — Padrões para uso de IA](../../docs/engineering-handbook/19-padroes-para-uso-de-ia.md) (§3.7)
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [Template — runbook](../../../docs/engineering-handbook/templates/runbook.md)
+- [19 — Padrões para uso de IA](../../../docs/engineering-handbook/19-padroes-para-uso-de-ia.md) (§3.7)

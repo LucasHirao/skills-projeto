@@ -1,4 +1,4 @@
----
+﻿---
 name: revisar-codigo
 description: Revisa pull requests contra o Manual de Engenharia do {nome-projeto}, classificando achados em bloqueio, atenção e sugestão, incluindo nomenclatura em português para código interno.
 allowed-tools: read, grep, glob, bash
@@ -15,10 +15,10 @@ triggers:
 
 ## Fonte de verdade
 
-- [16 — Code review](../../docs/engineering-handbook/16-code-review.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
-- [17 — Segurança](../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
-- Capítulo da stack: [04](../../docs/engineering-handbook/04-airflow.md)–[09](../../docs/engineering-handbook/09-aws-glue.md)
+- [16 — Code review](../../../docs/engineering-handbook/16-code-review.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
+- [17 — Segurança](../../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
+- Capítulo da stack: [04](../../../docs/engineering-handbook/04-airflow.md)–[09](../../../docs/engineering-handbook/09-aws-glue.md)
 
 ## Quando usar
 
@@ -26,6 +26,13 @@ triggers:
 - Auditoria de PR gerado por IA
 - Review multi-repo com PRs irmãos
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Revisão: verificar se código novo segue identificadores internos em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Passos
 
 1. Identificar stack e repos tocados; ler descrição do PR e PRs relacionados.
@@ -48,8 +55,8 @@ triggers:
 
 ## Templates
 
-- [code-review](../../docs/engineering-handbook/templates/code-review.md)
-- [pr](../../docs/engineering-handbook/templates/pr.md)
+- [code-review](../../../docs/engineering-handbook/templates/code-review.md)
+- [pr](../../../docs/engineering-handbook/templates/pr.md)
 
 ## Não fazer
 

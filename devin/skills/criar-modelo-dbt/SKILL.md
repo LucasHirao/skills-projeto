@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-modelo-dbt
 description: Cria ou altera modelos dbt (staging, intermediate, mart) no {nome-projeto} com testes, documentação e contratos de dados. Use ao criar model SQL, incremental, source freshness ou exposure.
 allowed-tools: read, write, bash, grep, glob
@@ -14,9 +14,9 @@ triggers:
 
 ## Fonte de verdade
 
-- [05 — dbt](../../docs/engineering-handbook/05-dbt.md)
-- [02 — Arquitetura transversal](../../docs/engineering-handbook/02-arquitetura-transversal.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [05 — dbt](../../../docs/engineering-handbook/05-dbt.md)
+- [02 — Arquitetura transversal](../../../docs/engineering-handbook/02-arquitetura-transversal.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
 ## Quando usar
 
@@ -24,6 +24,13 @@ triggers:
 - Materialização incremental, snapshot ou seed
 - Testes de schema, uniqueness, relationships, unit tests dbt
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- dbt: models internos em português após prefixo técnico (ex.: `stg_{nome-projeto}__arquivos_recebidos`).
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Passos
 
 1. Ler modelos da mesma camada (`staging` → `intermediate` → `mart`).
@@ -43,9 +50,9 @@ triggers:
 
 ## Templates
 
-- [readme-componente](../../docs/engineering-handbook/templates/readme-componente.md)
-- [decisao-tecnica](../../docs/engineering-handbook/templates/decisao-tecnica.md)
+- [readme-componente](../../../docs/engineering-handbook/templates/readme-componente.md)
+- [decisao-tecnica](../../../docs/engineering-handbook/templates/decisao-tecnica.md)
 
 ## Não fazer
 
-Ver anti-padrões em [05 — dbt](../../docs/engineering-handbook/05-dbt.md).
+Ver anti-padrões em [05 — dbt](../../../docs/engineering-handbook/05-dbt.md).

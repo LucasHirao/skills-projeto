@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-job-glue
 description: Criar ou alterar jobs AWS Glue em {nome-projeto} com transformações testáveis, argumentos tipados e observabilidade Datadog.
 ---
@@ -13,11 +13,19 @@ description: Criar ou alterar jobs AWS Glue em {nome-projeto} com transformaçõ
 
 ## Pré-leitura
 
-- [09 — AWS Glue](../../docs/engineering-handbook/09-aws-glue.md)
-- [02 — Arquitetura transversal](../../docs/engineering-handbook/02-arquitetura-transversal.md)
-- [14 — Performance](../../docs/engineering-handbook/14-performance.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [09 — AWS Glue](../../../docs/engineering-handbook/09-aws-glue.md)
+- [02 — Arquitetura transversal](../../../docs/engineering-handbook/02-arquitetura-transversal.md)
+- [14 — Performance](../../../docs/engineering-handbook/14-performance.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Glue/PySpark: funções de transformação e módulos internos em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -73,7 +81,7 @@ description: Criar ou alterar jobs AWS Glue em {nome-projeto} com transformaçõ
 
 ## Critérios de aceite
 
-- DoD Glue em [18](../../docs/engineering-handbook/18-definition-of-done.md) §2.6
+- DoD Glue em [18](../../../docs/engineering-handbook/18-definition-of-done.md) §2.6
 - Job roda em hml com `data_referencia` de teste
 
 ## O que não fazer
@@ -92,4 +100,4 @@ description: Criar ou alterar jobs AWS Glue em {nome-projeto} com transformaçõ
 
 ## Fonte de verdade
 
-- [09 — AWS Glue](../../docs/engineering-handbook/09-aws-glue.md)
+- [09 — AWS Glue](../../../docs/engineering-handbook/09-aws-glue.md)

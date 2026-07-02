@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-testes-unitarios
 description: Criar ou ampliar testes unitários e mutation em {nome-projeto} com cobertura ≥90% e asserts de comportamento.
 ---
@@ -13,11 +13,18 @@ description: Criar ou ampliar testes unitários e mutation em {nome-projeto} com
 
 ## Pré-leitura
 
-- [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md)
-- [12 — Testes de mutação](../../docs/engineering-handbook/12-testes-de-mutacao.md)
-- [03 — Padrões de código](../../docs/engineering-handbook/03-padroes-de-codigo.md)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md)
+- [12 — Testes de mutação](../../../docs/engineering-handbook/12-testes-de-mutacao.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Testes: nomes em português (`test_deve_*_quando_*` / `deve*Quando*`).
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -69,7 +76,7 @@ description: Criar ou ampliar testes unitários e mutation em {nome-projeto} com
 ## Critérios de aceite
 
 - Gates de coverage/mutation da CI verdes
-- DoD §1.2 em [18](../../docs/engineering-handbook/18-definition-of-done.md)
+- DoD §1.2 em [18](../../../docs/engineering-handbook/18-definition-of-done.md)
 
 ## O que não fazer
 
@@ -86,5 +93,5 @@ description: Criar ou ampliar testes unitários e mutation em {nome-projeto} com
 
 ## Fonte de verdade
 
-- [10 — Testes unitários](../../docs/engineering-handbook/10-testes-unitarios.md)
-- [12 — Testes de mutação](../../docs/engineering-handbook/12-testes-de-mutacao.md)
+- [10 — Testes unitários](../../../docs/engineering-handbook/10-testes-unitarios.md)
+- [12 — Testes de mutação](../../../docs/engineering-handbook/12-testes-de-mutacao.md)

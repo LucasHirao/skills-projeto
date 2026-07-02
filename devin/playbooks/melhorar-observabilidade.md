@@ -12,6 +12,16 @@ Prompt reutilizável para hardening de logs, métricas, traces e alertas Datadog
 
 ---
 
+## Nomenclatura de código
+
+Ao implementar ou revisar código:
+
+- Use português para identificadores internos criados pelo time.
+- Preserve nomes externos, SDKs, frameworks, contratos públicos, schemas, comandos e tags técnicas.
+- Não renomeie contrato público existente sem versionamento/migração.
+- Consulte [03 — Padrões de código](../../docs/engineering-handbook/03-padroes-de-codigo.md).
+
+
 ## Prompt
 
 ```

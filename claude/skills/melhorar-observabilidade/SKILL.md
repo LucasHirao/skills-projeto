@@ -1,4 +1,4 @@
----
+﻿---
 name: melhorar-observabilidade
 description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datadog em componentes {nome-projeto}.
 ---
@@ -14,10 +14,18 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 
 ## Pré-leitura
 
-- [13 — Observabilidade (Datadog)](../../docs/engineering-handbook/13-observabilidade.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [13 — Observabilidade (Datadog)](../../../docs/engineering-handbook/13-observabilidade.md)
 - Capítulo da stack (04–09)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md) §1.4
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md) §1.4
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- Observabilidade: preserve tags técnicas (`service`, `env`, `correlation_id`); operações internas em português.
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -35,8 +43,8 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 3. Propagar `correlation_id` de upstream (DAG conf, header HTTP, message attribute).
 4. Emitir métricas: sucesso, erro, duração, volume (tags baixa cardinalidade).
 5. Habilitar trace APM se serviço HTTP/Lambda com latência relevante.
-6. Criar/atualizar dashboard ([template](../../docs/engineering-handbook/templates/dashboard.md)).
-7. Se crítico: monitor + runbook ([template](../../docs/engineering-handbook/templates/runbook.md)).
+6. Criar/atualizar dashboard ([template](../../../docs/engineering-handbook/templates/dashboard.md)).
+7. Se crítico: monitor + runbook ([template](../../../docs/engineering-handbook/templates/runbook.md)).
 8. Validar ausência de PII em logs e tags.
 9. Documentar no README como debugar no Datadog.
 
@@ -70,7 +78,7 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 
 ## Critérios de aceite
 
-- DoD §1.4 em [18](../../docs/engineering-handbook/18-definition-of-done.md)
+- DoD §1.4 em [18](../../../docs/engineering-handbook/18-definition-of-done.md)
 - Query Datadog por `correlation_id` funciona ponta a ponta
 
 ## O que não fazer
@@ -89,6 +97,6 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 
 ## Fonte de verdade
 
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
-- [Template — dashboard](../../docs/engineering-handbook/templates/dashboard.md)
-- [Template — runbook](../../docs/engineering-handbook/templates/runbook.md)
+- [13 — Observabilidade](../../../docs/engineering-handbook/13-observabilidade.md)
+- [Template — dashboard](../../../docs/engineering-handbook/templates/dashboard.md)
+- [Template — runbook](../../../docs/engineering-handbook/templates/runbook.md)

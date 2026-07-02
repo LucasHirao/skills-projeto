@@ -191,6 +191,7 @@ Cosmos: seleção de models, renderização de vars, menos shell injection.
 
 ```python
 from datetime import timedelta
+from include.app.common.callbacks import callback_falha_datadog, callback_sucesso_datadog
 
 DEFAULT_ARGS = {
     "owner": "time-dados",
@@ -200,8 +201,8 @@ DEFAULT_ARGS = {
     "max_retry_delay": timedelta(minutes=30),
     "execution_timeout": timedelta(hours=2),
     "email_on_failure": False,
-    "on_failure_callback": datadog_on_failure_callback,
-    "on_success_callback": datadog_on_success_callback,  # opcional métricas
+    "on_failure_callback": callback_falha_datadog,
+    "on_success_callback": callback_sucesso_datadog,  # opcional métricas
 }
 ```
 
@@ -269,34 +270,34 @@ requests.get("https://api.example.com/health")  # no import!
 **Bom:**
 
 ```python
-"""DAG: carga diária vendas. SLA: 06:00 UTC. Idempotente por data_referencia."""
+"""DAG: carga diária de arquivos. SLA: 06:00 UTC. Idempotente por data_referencia."""
 from airflow.decorators import dag, task
-from include.app.vendas.tasks import validar_lote, acionar_glue_carga
-from include.app.common.callbacks import datadog_on_failure_callback
+from include.app.arquivos.tasks import validar_arquivo_entrada, executar_processamento_glue
+from include.app.common.callbacks import callback_falha_datadog
 from include.app.common.defaults import DEFAULT_ARGS
 
 @dag(
-    dag_id="datalake_vendas_carga_diaria",
+    dag_id="datalake_carga_diaria_arquivos",
     schedule="0 4 * * *",
     catchup=False,
     max_active_runs=1,
-    tags=["datalake", "vendas"],
+    tags=["datalake", "carga-diaria"],
     default_args=DEFAULT_ARGS,
     doc_md=__doc__,
-    on_failure_callback=datadog_on_failure_callback,
+    on_failure_callback=callback_falha_datadog,
 )
-def datalake_vendas_carga_diaria():
-    @task(task_id="validar_lote_entrada")
+def datalake_carga_diaria_arquivos():
+    @task(task_id="validar_arquivo_entrada")
     def validar():
-        return validar_lote()
+        return validar_arquivo_entrada()
 
-    @task(task_id="executar_glue_carga")
-    def glue():
-        acionar_glue_carga()
+    @task(task_id="executar_processamento_glue")
+    def executar_glue():
+        executar_processamento_glue()
 
-    validar() >> glue()
+    validar() >> executar_glue()
 
-datalake_vendas_carga_diaria()
+datalake_carga_diaria_arquivos()
 ```
 
 ### 12.2 Callback Datadog
@@ -311,7 +312,7 @@ from datadog import statsd
 
 logger = logging.getLogger(__name__)
 
-def datadog_on_failure_callback(context):
+def callback_falha_datadog(context):
     ti = context["task_instance"]
     dag_id = ti.dag_id
     task_id = ti.task_id

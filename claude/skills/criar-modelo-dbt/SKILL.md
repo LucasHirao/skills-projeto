@@ -1,4 +1,4 @@
----
+﻿---
 name: criar-modelo-dbt
 description: Criar ou alterar modelos dbt em {nome-projeto}-dbt com camadas, testes, documentação e integração Airflow.
 ---
@@ -13,10 +13,18 @@ description: Criar ou alterar modelos dbt em {nome-projeto}-dbt com camadas, tes
 
 ## Pré-leitura
 
-- [05 — dbt](../../docs/engineering-handbook/05-dbt.md)
-- [04 — Airflow](../../docs/engineering-handbook/04-airflow.md) (integração Cosmos)
-- [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
+- [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
+- [05 — dbt](../../../docs/engineering-handbook/05-dbt.md)
+- [04 — Airflow](../../../docs/engineering-handbook/04-airflow.md) (integração Cosmos)
+- [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 
+## Nomenclatura de código
+
+- Use português para identificadores internos criados pelo time: classes, funções, métodos, variáveis, testes, tasks, DAGs, models dbt e módulos internos.
+- Preserve nomes externos, SDKs, frameworks, comandos, schemas, contratos públicos, tags técnicas e campos exigidos por ferramentas.
+- Se o repositório alvo já tiver padrão consolidado em inglês, documente a exceção no PR ou em ADR.
+- dbt: models internos em português após prefixo técnico (ex.: `stg_{nome-projeto}__arquivos_recebidos`).
+- Referência: [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
 ## Entradas
 
 | Campo | Obrigatório | Exemplo |
@@ -69,7 +77,7 @@ description: Criar ou alterar modelos dbt em {nome-projeto}-dbt com camadas, tes
 
 ## Critérios de aceite
 
-- DoD dbt em [18](../../docs/engineering-handbook/18-definition-of-done.md) §2.2
+- DoD dbt em [18](../../../docs/engineering-handbook/18-definition-of-done.md) §2.2
 - Lineage claro; consumidores atualizados
 
 ## O que não fazer
@@ -87,4 +95,4 @@ description: Criar ou alterar modelos dbt em {nome-projeto}-dbt com camadas, tes
 
 ## Fonte de verdade
 
-- [05 — dbt](../../docs/engineering-handbook/05-dbt.md)
+- [05 — dbt](../../../docs/engineering-handbook/05-dbt.md)

@@ -1,4 +1,4 @@
-# Devin — Manual de Engenharia
+﻿# Devin — Manual de Engenharia
 
 Configuração do agente **Devin** derivada do [Manual de Engenharia](../docs/engineering-handbook/). Skills e playbooks **não** são fonte de verdade — apenas atalhos acionáveis.
 
@@ -44,7 +44,7 @@ Playbooks são **prompts reutilizáveis** — Devin não os descobre automaticam
 
 ```bash
 # Na raiz do repo de código
-bash /caminho/orientacoes/devin/sincronizar-devin.sh
+bash /caminho/repositorio-de-padroes/devin/sincronizar-devin.sh
 ```
 
 Copia `devin/skills/*` → `.agents/skills/`. Copie [`AGENTS.md`](AGENTS.md) para a raiz do repo alvo se necessário.
@@ -62,7 +62,7 @@ Copia `devin/skills/*` → `.agents/skills/`. Copie [`AGENTS.md`](AGENTS.md) par
 1. Handbook primeiro
 2. Skill/playbook depois
 3. Piloto em feature real
-4. PR neste repo (`orientacoes`)
+4. PR neste repo (`repositorio-de-padroes`)
 
 ## Fonte de verdade
 

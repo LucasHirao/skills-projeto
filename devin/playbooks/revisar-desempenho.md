@@ -11,6 +11,16 @@ Prompt reutilizável para análise de performance, custo AWS e otimização com 
 
 ---
 
+## Nomenclatura de código
+
+Ao implementar ou revisar código:
+
+- Use português para identificadores internos criados pelo time.
+- Preserve nomes externos, SDKs, frameworks, contratos públicos, schemas, comandos e tags técnicas.
+- Não renomeie contrato público existente sem versionamento/migração.
+- Consulte [03 — Padrões de código](../../docs/engineering-handbook/03-padroes-de-codigo.md).
+
+
 ## Prompt
 
 ```
