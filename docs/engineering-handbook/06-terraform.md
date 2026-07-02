@@ -131,6 +131,24 @@ terraform-{dominio}/
 
 ---
 
+## Padrões de código da stack
+
+Índice rápido — detalhes neste capítulo:
+
+| Tópico | Seção |
+|--------|-------|
+| Estrutura de pastas | [Estrutura de repositório](#estrutura-de-repositório-e-pastas) |
+| Convenções e naming | [Convenções e naming](#convenções-e-naming) |
+| Práticas / anti-padrões | [Práticas obrigatórias](#práticas-obrigatórias) · [Anti-padrões](#anti-padrões) |
+| Exemplos | [Exemplos](#exemplos-bom-vs-ruim) |
+| Testes | [Estratégia de testes](#estratégia-de-testes) |
+| Observabilidade / segurança | [Observabilidade](#observabilidade-datadog) · [Segurança](#segurança) |
+| Checklists | [Checklist de implementação](#checklist-de-implementação) |
+
+Transversal: [03 — Padrões de código](03-padroes-de-codigo.md) · [18 — DoD](18-definition-of-done.md)
+
+---
+
 ## Convenções e naming
 
 ### Recursos AWS

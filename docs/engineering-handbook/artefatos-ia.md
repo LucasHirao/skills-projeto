@@ -1,77 +1,79 @@
 # Mapa de artefatos de IA
 
-Este documento rastreia a relação entre capítulos do **Manual de Engenharia** (`docs/engineering-handbook/`) e artefatos derivados para **Claude Code** (`claude/`) e **Devin** (`devin/`).
+Este documento explica como o **Manual de Engenharia** se relaciona com artefatos derivados para **Claude Code** (`claude/`) e **Devin** (`devin/`).
 
 **Regra:** handbook primeiro; artefatos depois. Não duplicar capítulos inteiros nas skills.
 
-**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) é pré-leitura obrigatória em **todas** as skills Claude e Devin, com seção fixa **Nomenclatura de código** (identificadores internos em português). Os playbooks Devin incluem a mesma orientação antes do prompt. [21 — Agentes e prompts](21-agentes-e-prompts.md) governa a camada preparador/revisor. [13 — Logging seguro](13-observabilidade.md#logging-seguro-e-dados-sensíveis) aplica-se a observabilidade, revisão e implementação.
+**Catálogo canônico:** [`manifest.yaml`](manifest.yaml) — stacks, capítulos transversais, paths de skills e playbooks. **Evite** manter listas paralelas em outros arquivos; atualize o manifesto ao adicionar stack ou artefato.
+
+**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) em todas as skills; [13 — Logging seguro](13-observabilidade.md#logging-seguro-e-dados-sensíveis) em observabilidade/revisão; [21 — Agentes](21-agentes-e-prompts.md) e [22 — Documentação funcional](22-documentacao-funcional.md) nas camadas correspondentes.
 
 ---
 
-## Como usar este mapa
+## Como usar
 
-1. Ao alterar um padrão no handbook, localize a linha do capítulo.
-2. Atualize os artefatos listados na mesma sprint (ou PR subsequente).
-3. Rode piloto em uma feature real antes de considerar skill “estável”.
-
----
-
-## Mapa por capítulo
-
-| Capítulo do handbook | Artefatos Claude | Artefatos Devin |
-|----------------------|------------------|-----------------|
-| [00 — Como usar](00-como-usar-este-handbook.md) | [claude/README.md](../../claude/README.md) | [devin/README.md](../../devin/README.md) |
-| [01 — Contexto e princípios](01-contexto-principios-e-objetivos.md) | [claude/regras/00-regras-gerais.md](../../claude/regras/00-regras-gerais.md) | [devin/AGENTS.md](../../devin/AGENTS.md) |
-| [02 — Arquitetura transversal](02-arquitetura-transversal.md) | [claude/regras/01-arquitetura.md](../../claude/regras/01-arquitetura.md) | [devin/AGENTS.md](../../devin/AGENTS.md), [implementar-feature.md](../../devin/playbooks/implementar-feature.md) |
-| [03 — Padrões de código](03-padroes-de-codigo.md) | [claude/regras/05-padroes-de-codigo.md](../../claude/regras/05-padroes-de-codigo.md), **todas as skills** (pré-leitura + nomenclatura) | [devin/AGENTS.md](../../devin/AGENTS.md), **todas as skills** (pré-leitura + nomenclatura), **todos os playbooks** (nomenclatura) |
-| [04 — Airflow](04-airflow.md) | [criar-dag-airflow](../../claude/skills/criar-dag-airflow/SKILL.md) | [criar-dag-airflow](../../devin/skills/criar-dag-airflow/SKILL.md), [criar-pipeline-airflow-dbt.md](../../devin/playbooks/criar-pipeline-airflow-dbt.md) |
-| [05 — dbt](05-dbt.md) | [criar-modelo-dbt](../../claude/skills/criar-modelo-dbt/SKILL.md) | [criar-modelo-dbt](../../devin/skills/criar-modelo-dbt/SKILL.md), [criar-pipeline-airflow-dbt.md](../../devin/playbooks/criar-pipeline-airflow-dbt.md) |
-| [06 — Terraform](06-terraform.md) | [criar-modulo-terraform](../../claude/skills/criar-modulo-terraform/SKILL.md) | [criar-modulo-terraform](../../devin/skills/criar-modulo-terraform/SKILL.md), [criar-componente-aws.md](../../devin/playbooks/criar-componente-aws.md) |
-| [07 — Lambda Python](07-lambda-python.md) | [criar-lambda-python](../../claude/skills/criar-lambda-python/SKILL.md) | [criar-lambda-python](../../devin/skills/criar-lambda-python/SKILL.md), [criar-componente-aws.md](../../devin/playbooks/criar-componente-aws.md) |
-| [08 — Java Spring Boot](08-java-spring-boot.md) | [criar-api-spring-boot](../../claude/skills/criar-api-spring-boot/SKILL.md) | [criar-api-spring-boot](../../devin/skills/criar-api-spring-boot/SKILL.md) |
-| [09 — AWS Glue](09-aws-glue.md) | [criar-job-glue](../../claude/skills/criar-job-glue/SKILL.md) | [criar-job-glue](../../devin/skills/criar-job-glue/SKILL.md), [criar-componente-aws.md](../../devin/playbooks/criar-componente-aws.md) |
-| [10 — Testes unitários](10-testes-unitarios.md) | [claude/regras/02-testes.md](../../claude/regras/02-testes.md), [criar-testes-unitarios](../../claude/skills/criar-testes-unitarios/SKILL.md) | [criar-testes-unitarios](../../devin/skills/criar-testes-unitarios/SKILL.md) |
-| [11 — TaaC](11-taac-testes-integrados-na-pipeline.md) | [criar-taac](../../claude/skills/criar-taac/SKILL.md) | [criar-taac](../../devin/skills/criar-taac/SKILL.md), [criar-taac.md](../../devin/playbooks/criar-taac.md) |
-| [12 — Testes de mutação](12-testes-de-mutacao.md) | [claude/regras/02-testes.md](../../claude/regras/02-testes.md), [criar-testes-unitarios](../../claude/skills/criar-testes-unitarios/SKILL.md) | [criar-testes-unitarios](../../devin/skills/criar-testes-unitarios/SKILL.md) |
-| [13 — Observabilidade](13-observabilidade.md) | [claude/regras/03-observabilidade.md](../../claude/regras/03-observabilidade.md), [melhorar-observabilidade](../../claude/skills/melhorar-observabilidade/SKILL.md), [investigar-falha](../../claude/skills/investigar-falha/SKILL.md), [revisar-codigo](../../claude/skills/revisar-codigo/SKILL.md) | [melhorar-observabilidade](../../devin/skills/melhorar-observabilidade/SKILL.md), [investigar-falha](../../devin/skills/investigar-falha/SKILL.md), playbooks observabilidade, pipeline e revisar-pr |
-| [14 — Performance](14-performance.md) | [revisar-desempenho](../../claude/skills/revisar-desempenho/SKILL.md) | [revisar-desempenho](../../devin/skills/revisar-desempenho/SKILL.md), [revisar-desempenho.md](../../devin/playbooks/revisar-desempenho.md) |
-| [15 — Documentação](15-documentacao.md) | [criar-documentacao](../../claude/skills/criar-documentacao/SKILL.md) | [criar-documentacao](../../devin/skills/criar-documentacao/SKILL.md) |
-| [16 — Code review](16-code-review.md) | [revisar-codigo](../../claude/skills/revisar-codigo/SKILL.md) | [revisar-codigo](../../devin/skills/revisar-codigo/SKILL.md), [revisar-pr.md](../../devin/playbooks/revisar-pr.md) |
-| [17 — Segurança](17-seguranca-conformidade-e-dados-sensiveis.md) | [claude/regras/04-seguranca.md](../../claude/regras/04-seguranca.md) | [devin/AGENTS.md](../../devin/AGENTS.md) |
-| [18 — Definition of Done](18-definition-of-done.md) | Todas as skills (checklist DoD) | Todas as skills e playbooks |
-| [19 — Padrões para uso de IA](19-padroes-para-uso-de-ia.md) | [claude/regras/06-uso-de-ia.md](../../claude/regras/06-uso-de-ia.md), [claude/CLAUDE.md](../../claude/CLAUDE.md) | [devin/AGENTS.md](../../devin/AGENTS.md) |
-| [20 — Onboarding técnico](20-onboarding-tecnico.md) | [claude/README.md](../../claude/README.md) | [devin/README.md](../../devin/README.md) |
-| [21 — Agentes e prompts](21-agentes-e-prompts.md) | [preparar-prompt-tecnico](../../claude/skills/preparar-prompt-tecnico/SKILL.md), [revisar-prompt-tecnico](../../claude/skills/revisar-prompt-tecnico/SKILL.md) | [preparar-feature-para-implementacao.md](../../devin/playbooks/preparar-feature-para-implementacao.md), [revisar-prompt-de-implementacao.md](../../devin/playbooks/revisar-prompt-de-implementacao.md) |
-| [22 — Documentação funcional](22-documentacao-funcional.md) | [extrair-documentacao-funcional](../../claude/skills/extrair-documentacao-funcional/SKILL.md), [revisar-documentacao-funcional](../../claude/skills/revisar-documentacao-funcional/SKILL.md) | [extrair-documentacao-funcional.md](../../devin/playbooks/extrair-documentacao-funcional.md), [revisar-documentacao-funcional.md](../../devin/playbooks/revisar-documentacao-funcional.md) |
-| Templates | [criar-documentacao](../../claude/skills/criar-documentacao/SKILL.md), templates funcionais | [criar-documentacao](../../devin/skills/criar-documentacao/SKILL.md), playbooks, [`documentacao-funcional.md`](templates/documentacao-funcional.md) |
+1. Altere o padrão no capítulo do handbook.
+2. Atualize skills/playbooks derivados na mesma sprint (ou PR subsequente).
+3. Registre nova stack em `manifest.yaml`.
+4. Rode `bash scripts/validar-handbook.sh` ou `sincronizar-*.sh --check`.
+5. Pilote em feature real antes de considerar skill estável.
 
 ---
 
-## Playbooks Devin (transversais)
+## Capítulos transversais
 
-| Playbook | Capítulos principais |
-|----------|---------------------|
-| [implementar-feature.md](../../devin/playbooks/implementar-feature.md) | 02, 03, 18, 15 |
-| [revisar-pr.md](../../devin/playbooks/revisar-pr.md) | 16, 18, 03 |
-| [criar-pipeline-airflow-dbt.md](../../devin/playbooks/criar-pipeline-airflow-dbt.md) | 04, 05, 11, 13 |
-| [criar-componente-aws.md](../../devin/playbooks/criar-componente-aws.md) | 06, 07, 09, 17 |
-| [criar-taac.md](../../devin/playbooks/criar-taac.md) | 11, 10, 18 |
-| [investigar-falha-pipeline.md](../../devin/playbooks/investigar-falha-pipeline.md) | 13, 14, 16 |
-| [melhorar-observabilidade.md](../../devin/playbooks/melhorar-observabilidade.md) | 13, 15 |
-| [revisar-desempenho.md](../../devin/playbooks/revisar-desempenho.md) | 14, 03 |
-| [preparar-feature-para-implementacao.md](../../devin/playbooks/preparar-feature-para-implementacao.md) | 21, 03, 18, 19 |
-| [revisar-prompt-de-implementacao.md](../../devin/playbooks/revisar-prompt-de-implementacao.md) | 21, 03, 18, 17 |
-| [extrair-documentacao-funcional.md](../../devin/playbooks/extrair-documentacao-funcional.md) | 22, 03, 17, 13 |
-| [revisar-documentacao-funcional.md](../../devin/playbooks/revisar-documentacao-funcional.md) | 22, 03, 17, 13 |
+| Tema | Capítulo | Artefatos típicos |
+|------|----------|-------------------|
+| Código | [03](03-padroes-de-codigo.md) | Todas as skills; `claude/regras/05-padroes-de-codigo.md` |
+| DoD | [18](18-definition-of-done.md) | Todas as skills e playbooks de implementação |
+| Observabilidade | [13](13-observabilidade.md) | `melhorar-observabilidade`, `investigar-falha`, playbooks relacionados |
+| Segurança | [17](17-seguranca-conformidade-e-dados-sensiveis.md) | `claude/regras/04-seguranca.md`, `devin/AGENTS.md` |
+| Agentes de prompt | [21](21-agentes-e-prompts.md) | Skills/playbooks com `prompt` no nome |
+| Documentação funcional | [22](22-documentacao-funcional.md) | Skills/playbooks com `documentacao-funcional` no nome |
+| Uso de IA | [19](19-padroes-para-uso-de-ia.md) | `CLAUDE.md`, `AGENTS.md`, `claude/regras/06-uso-de-ia.md` |
+
+---
+
+## Stacks (visão resumida)
+
+Detalhes completos em `manifest.yaml`. Cada stack tem capítulo handbook + skills Claude/Devin quando aplicável.
+
+| Stack | Capítulo |
+|-------|----------|
+| Airflow | [04-airflow.md](04-airflow.md) |
+| dbt | [05-dbt.md](05-dbt.md) |
+| Terraform | [06-terraform.md](06-terraform.md) |
+| Lambda Python | [07-lambda-python.md](07-lambda-python.md) |
+| Java Spring Boot | [08-java-spring-boot.md](08-java-spring-boot.md) |
+| AWS Glue | [09-aws-glue.md](09-aws-glue.md) |
+
+---
+
+## Descoberta por convenção
+
+| Artefato | Onde | Convenção |
+|----------|------|-----------|
+| Skills Claude | `claude/skills/*/SKILL.md` | Uma pasta por skill |
+| Skills Devin | `devin/skills/*/SKILL.md` | Espelha Claude quando por stack |
+| Playbooks Devin | `devin/playbooks/*.md` | Prompts reutilizáveis amplos |
+| Regras Claude | `claude/regras/*.md` | Listadas em `manifest.yaml` |
+
+Validação por categoria (nome do artefato):
+
+- `*prompt*` → deve referenciar cap. 21
+- `*documentacao-funcional*` → deve referenciar cap. 22
+- `*observabilidade*` / `*investigar-falha*` → deve referenciar cap. 13
+- Skill de stack no manifesto → deve referenciar capítulo da stack
 
 ---
 
 ## Sincronização
 
-| Destino local | Origem versionada | Script |
-|---------------|-------------------|--------|
-| `.claude/skills/` | `claude/skills/` | `claude/sincronizar-claude.sh --check` (validar) ou sem flag (copiar) |
-| `.agents/skills/` | `devin/skills/` | `devin/sincronizar-devin.sh --check` (validar) ou sem flag (copiar) |
+| Destino local | Origem | Validação / cópia |
+|---------------|--------|-------------------|
+| `.claude/skills/` | `claude/skills/` | `claude/sincronizar-claude.sh` |
+| `.agents/skills/` | `devin/skills/` | `devin/sincronizar-devin.sh` |
+| — | handbook + manifesto | `scripts/validar-handbook.sh` |
 
 Copie `claude/CLAUDE.md` ou `devin/AGENTS.md` para a raiz do **repositório de código** alvo quando necessário.
 
@@ -79,10 +81,11 @@ Copie `claude/CLAUDE.md` ou `devin/AGENTS.md` para a raiz do **repositório de c
 
 ## Fonte de verdade
 
-Este artefato é derivado do Manual de Engenharia.
+Este artefato é **visão humana resumida**. O catálogo operacional é [`manifest.yaml`](manifest.yaml).
 
 Antes de alterar um padrão:
 
-1. Atualize o capítulo correspondente em `docs/engineering-handbook/`.
+1. Atualize o capítulo em `docs/engineering-handbook/`.
 2. Abra PR de revisão do handbook.
-3. Depois atualize este mapa e os artefatos listados.
+3. Atualize `manifest.yaml` e artefatos derivados.
+4. Rode validação (`scripts/validar-handbook.sh`).

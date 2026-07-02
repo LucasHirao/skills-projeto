@@ -7,13 +7,10 @@
 
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-HANDBOOK="${ROOT}/docs/engineering-handbook"
-DEVIN="${ROOT}/devin"
-SKILLS_DIR="${DEVIN}/skills"
-PLAYBOOKS_DIR="${DEVIN}/playbooks"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DEVIN="${REPO_ROOT}/devin"
 CHECK_ONLY=false
-TARGET_ROOT="${ROOT}"
+TARGET_ROOT="${REPO_ROOT}"
 
 if [[ "${1:-}" == "--check" ]]; then
   CHECK_ONLY=true
@@ -21,148 +18,14 @@ elif [[ -n "${1:-}" ]]; then
   TARGET_ROOT="$1"
 fi
 
-LINK_ERRORS=0
-
-fail() {
-  echo "[sincronizar-devin] ERRO: $*" >&2
-  LINK_ERRORS=$((LINK_ERRORS + 1))
-}
-
 log() { echo "[sincronizar-devin] $*"; }
 
-validate_link_in_file() {
-  local src_file="$1"
-  local link="$2"
-  local src_dir link_path dest
+log "Executando validação central..."
+bash "${REPO_ROOT}/scripts/validar-handbook.sh"
 
-  link="${link%%#*}"
-  [[ -z "${link}" ]] && return 0
-  [[ "${link}" =~ ^https?:// ]] && return 0
-  [[ "${link}" =~ ^mailto: ]] && return 0
-  [[ "${link}" != *"engineering-handbook"* ]] && return 0
-
-  src_dir="$(dirname "${src_file}")"
-  link_path="${src_dir}/${link}"
-  dest="$(realpath -m "${link_path}")"
-
-  if [[ -f "${dest}" ]] || [[ -d "${dest}" ]]; then
-    return 0
-  fi
-
-  fail "link quebrado em ${src_file#${ROOT}/}: ${link} (resolvido: ${dest})"
-}
-
-validate_markdown_file() {
-  local file="$1"
-  local link
-
-  while IFS= read -r link; do
-    [[ -n "${link}" ]] && validate_link_in_file "${file}" "${link}"
-  done < <(grep -oE '\[[^]]*\]\([^)]+\)' "${file}" 2>/dev/null \
-    | sed -E 's/^\[[^]]*\]\(//;s/\)$//' || true)
-}
-
-EXPECTED_SKILLS=(
-  criar-api-spring-boot
-  criar-dag-airflow
-  criar-documentacao
-  criar-job-glue
-  criar-lambda-python
-  criar-modelo-dbt
-  criar-modulo-terraform
-  criar-taac
-  criar-testes-unitarios
-  investigar-falha
-  melhorar-observabilidade
-  revisar-codigo
-  revisar-desempenho
-)
-
-EXPECTED_PLAYBOOKS=(
-  implementar-feature.md
-  revisar-pr.md
-  criar-pipeline-airflow-dbt.md
-  criar-componente-aws.md
-  criar-taac.md
-  investigar-falha-pipeline.md
-  melhorar-observabilidade.md
-  revisar-desempenho.md
-  preparar-feature-para-implementacao.md
-  revisar-prompt-de-implementacao.md
-  extrair-documentacao-funcional.md
-  revisar-documentacao-funcional.md
-)
-
-PROMPT_PLAYBOOKS=(
-  preparar-feature-para-implementacao.md
-  revisar-prompt-de-implementacao.md
-)
-
-FUNC_DOC_PLAYBOOKS=(
-  extrair-documentacao-funcional.md
-  revisar-documentacao-funcional.md
-)
-
-[[ -d "${HANDBOOK}" ]] || { echo "ERRO: handbook não encontrado" >&2; exit 1; }
-[[ -f "${DEVIN}/AGENTS.md" ]] || { echo "ERRO: devin/AGENTS.md não encontrado" >&2; exit 1; }
-
-[[ -f "${HANDBOOK}/21-agentes-e-prompts.md" ]] \
-  || { echo "ERRO: capítulo 21 ausente no handbook" >&2; exit 1; }
-[[ -f "${HANDBOOK}/22-documentacao-funcional.md" ]] \
-  || { echo "ERRO: capítulo 22 ausente no handbook" >&2; exit 1; }
-
-log "Validando links..."
-validate_markdown_file "${DEVIN}/README.md"
-validate_markdown_file "${DEVIN}/AGENTS.md"
-validate_markdown_file "${ROOT}/docs/engineering-handbook/artefatos-ia.md"
-
-for skill in "${EXPECTED_SKILLS[@]}"; do
-  skill_file="${SKILLS_DIR}/${skill}/SKILL.md"
-  [[ -f "${skill_file}" ]] || fail "skill ausente: ${skill}/SKILL.md"
-  validate_markdown_file "${skill_file}"
-  grep -q "03-padroes-de-codigo.md" "${skill_file}" \
-    || fail "capítulo 03 ausente em devin/skills/${skill}/SKILL.md"
-  grep -q "## Nomenclatura de código" "${skill_file}" \
-    || fail "seção Nomenclatura ausente em devin/skills/${skill}/SKILL.md"
-  grep -q '^name:' "${skill_file}" || fail "${skill}/SKILL.md sem campo name"
-  grep -q '^description:' "${skill_file}" || fail "${skill}/SKILL.md sem campo description"
-  grep -q '## Fonte de verdade' "${skill_file}" || fail "${skill}/SKILL.md sem Fonte de verdade"
-done
-
-for pb in "${EXPECTED_PLAYBOOKS[@]}"; do
-  playbook="${PLAYBOOKS_DIR}/${pb}"
-  [[ -f "${playbook}" ]] || fail "playbook ausente: ${pb}"
-  validate_markdown_file "${playbook}"
-  grep -q "## Nomenclatura de código" "${playbook}" \
-    || fail "seção Nomenclatura ausente em devin/playbooks/${pb}"
-done
-
-for pb in "${PROMPT_PLAYBOOKS[@]}"; do
-  playbook="${PLAYBOOKS_DIR}/${pb}"
-  grep -q "## Fonte de verdade" "${playbook}" \
-    || fail "seção Fonte de verdade ausente em devin/playbooks/${pb}"
-  grep -q "21-agentes-e-prompts.md" "${playbook}" \
-    || fail "capítulo 21 ausente em devin/playbooks/${pb}"
-  grep -q "03-padroes-de-codigo.md" "${playbook}" \
-    || fail "capítulo 03 ausente em devin/playbooks/${pb}"
-done
-
-for pb in "${FUNC_DOC_PLAYBOOKS[@]}"; do
-  playbook="${PLAYBOOKS_DIR}/${pb}"
-  grep -q "## Fonte de verdade" "${playbook}" \
-    || fail "seção Fonte de verdade ausente em devin/playbooks/${pb}"
-  grep -q "22-documentacao-funcional.md" "${playbook}" \
-    || fail "capítulo 22 ausente em devin/playbooks/${pb}"
-  grep -q "03-padroes-de-codigo.md" "${playbook}" \
-    || fail "capítulo 03 ausente em devin/playbooks/${pb}"
-done
-
-if [[ "${LINK_ERRORS}" -gt 0 ]]; then
-  echo "[sincronizar-devin] ${LINK_ERRORS} erro(s) de validação." >&2
-  exit 1
-fi
-
-log "Estrutura e links OK."
+SKILL_COUNT="$(find "${DEVIN}/skills" -name 'SKILL.md' | wc -l | tr -d ' ')"
+PLAYBOOK_COUNT="$(find "${DEVIN}/playbooks" -name '*.md' | wc -l | tr -d ' ')"
+log "Estrutura OK (${SKILL_COUNT} skills, ${PLAYBOOK_COUNT} playbooks descobertos por convenção)."
 
 if [[ "${CHECK_ONLY}" == true ]]; then
   log "Modo --check: nenhuma cópia aplicada."
@@ -171,9 +34,12 @@ fi
 
 DEST="${TARGET_ROOT}/.agents/skills"
 mkdir -p "${DEST}"
-for skill in "${EXPECTED_SKILLS[@]}"; do
-  rm -rf "${DEST}/${skill}"
-  cp -R "${SKILLS_DIR}/${skill}" "${DEST}/${skill}"
-done
+
+while IFS= read -r skill_file; do
+  skill_dir="$(basename "$(dirname "${skill_file}")")"
+  rm -rf "${DEST}/${skill_dir}"
+  cp -R "${DEVIN}/skills/${skill_dir}" "${DEST}/${skill_dir}"
+done < <(find "${DEVIN}/skills" -name 'SKILL.md' | sort)
+
 log "Skills copiadas para ${DEST}"
 log "Sincronização concluída."

@@ -125,6 +125,23 @@ pedidos-api/
 
 ---
 
+## Padrões de código da stack
+
+Índice rápido — detalhes neste capítulo:
+
+| Tópico | Seção |
+|--------|-------|
+| Estrutura de pastas | [Estrutura de repositório](#estrutura-de-repositório-e-pastas) |
+| Convenções | [Convenções e naming](#convenções-e-naming) |
+| Práticas / anti-padrões | [Práticas obrigatórias](#práticas-obrigatórias) · [Anti-padrões](#anti-padrões) |
+| Exemplos | [Exemplos](#exemplos-bom-vs-ruim) |
+| Testes / observabilidade | [Estratégia de testes](#estratégia-de-testes) · [Observabilidade](#observabilidade-datadog) |
+| Checklists | [Checklist de implementação](#checklist-de-implementação) |
+
+Transversal: [03 — Padrões de código](03-padroes-de-codigo.md) · [18 — DoD](18-definition-of-done.md)
+
+---
+
 ## Convenções e naming
 
 | Item | Convenção |

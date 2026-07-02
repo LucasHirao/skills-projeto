@@ -188,6 +188,23 @@ Unit test para lógica pura; integration test (`dbt build`) para contrato real.
 
 ---
 
+## Padrões de código da stack
+
+Índice rápido — detalhes neste capítulo:
+
+| Tópico | Seção |
+|--------|-------|
+| Estrutura de pastas | [§8](#8-estrutura-de-pastas) |
+| Camadas e convenções | [§9](#9-camadas-de-modelagem) · [§10](#10-convenções) |
+| Práticas e anti-padrões | [§11](#11-práticas-obrigatórias-e-recomendadas) · [§12](#12-anti-padrões) |
+| Exemplos | [§13](#13-exemplos-bom--ruim) |
+| Checklists | [§17](#17-checklists) |
+| Logging seguro | [13 — Observabilidade](13-observabilidade.md#logging-seguro-e-dados-sensíveis) |
+
+Transversal: [03 — Padrões de código](03-padroes-de-codigo.md) · [18 — DoD](18-definition-of-done.md)
+
+---
+
 ## 9. Camadas de modelagem
 
 | Camada | Prefixo | Propósito | Materialização típica |

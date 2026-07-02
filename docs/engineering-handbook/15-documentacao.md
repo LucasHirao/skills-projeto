@@ -37,6 +37,8 @@ Se alguma resposta estiver só na cabeça de alguém, a documentação está inc
 | Fluxo funcional | Passo a passo de processo | Junto à doc funcional | [`templates/fluxo-funcional.md`](templates/fluxo-funcional.md) |
 | Code review | Review formal ou auditoria | PR / wiki | [`templates/code-review.md`](templates/code-review.md) |
 
+**Catálogo de stacks e templates:** [`manifest.yaml`](manifest.yaml).
+
 ---
 
 ## 3. O que documentar por stack

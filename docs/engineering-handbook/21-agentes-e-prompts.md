@@ -66,7 +66,9 @@ Chame a Skill de stack **somente após**:
 2. Revisão de prompt sem bloqueios 🔴
 3. Contexto mínimo listado explicitamente
 
-| Stack | Skill Claude/Devin | Capítulo handbook |
+Stacks registradas: consulte [`manifest.yaml`](manifest.yaml). Tabela resumida (não exaustiva):
+
+| Stack | Skill (manifesto) | Capítulo handbook |
 |-------|-------------------|-------------------|
 | Airflow | `criar-dag-airflow` | [04 — Airflow](04-airflow.md) |
 | dbt | `criar-modelo-dbt` | [05 — dbt](05-dbt.md) |

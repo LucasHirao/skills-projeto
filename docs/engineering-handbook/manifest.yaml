@@ -1,0 +1,123 @@
+version: 1
+
+handbook:
+  root: docs/engineering-handbook
+  source_of_truth: true
+
+stacks:
+  - id: airflow
+    name: Airflow
+    chapter: docs/engineering-handbook/04-airflow.md
+    category: orchestration
+    claude_skill: claude/skills/criar-dag-airflow/SKILL.md
+    devin_skill: devin/skills/criar-dag-airflow/SKILL.md
+    dod_profile: airflow
+    enabled: true
+
+  - id: dbt
+    name: dbt
+    chapter: docs/engineering-handbook/05-dbt.md
+    category: transformation
+    claude_skill: claude/skills/criar-modelo-dbt/SKILL.md
+    devin_skill: devin/skills/criar-modelo-dbt/SKILL.md
+    dod_profile: dbt
+    enabled: true
+
+  - id: terraform
+    name: Terraform
+    chapter: docs/engineering-handbook/06-terraform.md
+    category: infrastructure
+    claude_skill: claude/skills/criar-modulo-terraform/SKILL.md
+    devin_skill: devin/skills/criar-modulo-terraform/SKILL.md
+    dod_profile: terraform
+    enabled: true
+
+  - id: lambda-python
+    name: Lambda Python
+    chapter: docs/engineering-handbook/07-lambda-python.md
+    category: serverless
+    claude_skill: claude/skills/criar-lambda-python/SKILL.md
+    devin_skill: devin/skills/criar-lambda-python/SKILL.md
+    dod_profile: lambda-python
+    enabled: true
+
+  - id: java-spring-boot
+    name: Java Spring Boot
+    chapter: docs/engineering-handbook/08-java-spring-boot.md
+    category: api
+    claude_skill: claude/skills/criar-api-spring-boot/SKILL.md
+    devin_skill: devin/skills/criar-api-spring-boot/SKILL.md
+    dod_profile: java-spring-boot
+    enabled: true
+
+  - id: aws-glue
+    name: AWS Glue
+    chapter: docs/engineering-handbook/09-aws-glue.md
+    category: batch-processing
+    claude_skill: claude/skills/criar-job-glue/SKILL.md
+    devin_skill: devin/skills/criar-job-glue/SKILL.md
+    dod_profile: aws-glue
+    enabled: true
+
+cross_cutting_chapters:
+  - id: codigo
+    chapter: docs/engineering-handbook/03-padroes-de-codigo.md
+    required_for_all_skills: true
+
+  - id: dod
+    chapter: docs/engineering-handbook/18-definition-of-done.md
+    required_for_all_implementation: true
+
+  - id: observabilidade
+    chapter: docs/engineering-handbook/13-observabilidade.md
+
+  - id: seguranca
+    chapter: docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md
+
+  - id: agentes
+    chapter: docs/engineering-handbook/21-agentes-e-prompts.md
+
+  - id: documentacao-funcional
+    chapter: docs/engineering-handbook/22-documentacao-funcional.md
+
+claude_skills:
+  root: claude/skills
+  discovery: "*/SKILL.md"
+
+devin_skills:
+  root: devin/skills
+  discovery: "*/SKILL.md"
+
+devin_playbooks:
+  root: devin/playbooks
+  discovery: "*.md"
+
+# Regras de validação por padrão de caminho (convenção sobre nome do artefato)
+skill_path_rules:
+  - pattern: prompt
+    required_chapter: docs/engineering-handbook/21-agentes-e-prompts.md
+  - pattern: documentacao-funcional
+    required_chapter: docs/engineering-handbook/22-documentacao-funcional.md
+
+playbook_path_rules:
+  - pattern: prompt
+    required_chapter: docs/engineering-handbook/21-agentes-e-prompts.md
+  - pattern: documentacao-funcional
+    required_chapter: docs/engineering-handbook/22-documentacao-funcional.md
+
+required_templates:
+  - docs/engineering-handbook/templates/capitulo-stack.md
+  - docs/engineering-handbook/templates/documentacao-funcional.md
+  - docs/engineering-handbook/templates/glossario-funcional.md
+  - docs/engineering-handbook/templates/fluxo-funcional.md
+
+claude_regras:
+  root: claude/regras
+  files:
+    - 00-regras-gerais.md
+    - 01-arquitetura.md
+    - 02-testes.md
+    - 03-observabilidade.md
+    - 04-seguranca.md
+    - 05-padroes-de-codigo.md
+    - 06-uso-de-ia.md

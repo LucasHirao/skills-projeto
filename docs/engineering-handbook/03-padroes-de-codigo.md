@@ -445,13 +445,32 @@ def test_deve_totalizar_apenas_registros_aprovados():
 
 ---
 
+## Padrões específicos por stack
+
+Este capítulo define apenas **padrões transversais** de código.
+
+Detalhes específicos de linguagem, framework ou ferramenta devem ficar no **capítulo da stack** correspondente e ser registrados no [`manifest.yaml`](manifest.yaml).
+
+Ao adicionar nova stack:
+
+1. Crie um capítulo usando [`templates/capitulo-stack.md`](templates/capitulo-stack.md).
+2. Crie Skills/Playbooks derivados quando necessário.
+3. Registre a stack no `manifest.yaml`.
+4. **Não** adicione detalhes específicos da stack neste capítulo, exceto se a regra for realmente transversal.
+
+Stacks registradas: ver seção **Padrões de código da stack** em cada capítulo `04`–`09` listado no manifesto.
+
+---
+
 ## 13. Por linguagem e stack
+
+> **Fonte canônica por stack:** capítulos `04`–`09` e [`manifest.yaml`](manifest.yaml). O recorte abaixo cobre apenas convenções **transversais** que cruzam linguagens — não substitui o capítulo da stack.
 
 ### 13.1 Python
 
 - `from __future__ import annotations` se necessário
 - Dataclasses `frozen=True` para value objects
-- Pydantic v2 na borda Lambda/API
+- Pydantic v2 na borda Lambda/API — detalhes em [07-lambda-python.md](07-lambda-python.md)
 - `pytest` + fixtures; não unittest legado
 - Dependências pinadas (`requirements.txt` ou poetry.lock)
 
@@ -468,17 +487,24 @@ def test_deve_totalizar_apenas_registros_aprovados():
 - Nomes explícitos de CTE
 - Um conceito por model
 - Comentário `-- Por quê:` no topo do model não óbvio
+- Detalhes completos em [05-dbt.md](05-dbt.md)
 
 ### 13.4 Terraform
 
 - Um recurso por bloco lógico agrupado
 - `description` em variables
 - Sem `0.0.0.0/0` em security group sem ADR
+- Detalhes completos em [06-terraform.md](06-terraform.md)
 
 ### 13.5 PySpark (Glue)
 
 - Transformações puras em funções testáveis com pandas local quando possível
 - `job.py` só wiring
+- Detalhes completos em [09-aws-glue.md](09-aws-glue.md)
+
+### 13.6 Airflow
+
+- Convenções de DAG, tasks e callbacks — [04-airflow.md](04-airflow.md)
 
 ---
 

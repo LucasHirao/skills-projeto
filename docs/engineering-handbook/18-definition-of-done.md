@@ -68,100 +68,75 @@ Uma tarefa só está **pronta** quando todos os itens **aplicáveis** abaixo est
 
 ---
 
-## 2. DoD por stack
+## 2. Perfis de maturidade
 
-### 2.1 Airflow
+Use os níveis abaixo **além** do DoD universal (§1). Detalhes específicos de cada stack ficam no capítulo registrado em [`manifest.yaml`](manifest.yaml).
 
-- [ ] `airflow dags list` / parse test na CI
-- [ ] Zero I/O no import da DAG
-- [ ] `doc_md` com SLA, dono, idempotência
-- [ ] `on_failure_callback` → log JSON + métrica Datadog
-- [ ] `correlation_id` propagado via `dag_run.conf`
-- [ ] `max_active_runs` definido conscientemente
-- [ ] Sensors com `mode="reschedule"` quando longos
-- [ ] TaaC se DAG integra com S3/fila/DB externo
+### Nível 1 — obrigatório desde o primeiro PR
 
-### 2.2 dbt
+- lint/format;
+- testes unitários;
+- cobertura mínima ou justificativa;
+- security scan;
+- documentação mínima;
+- [logging seguro](13-observabilidade.md#checklist-de-logging-seguro).
 
-- [ ] `schema.yml` com descriptions (model + colunas críticas)
-- [ ] `dbt build` verde (run + test)
-- [ ] Estratégia incremental com `unique_key` documentada
-- [ ] Tests em colunas de negócio críticas
-- [ ] `exposures` atualizados se consumidor externo
-- [ ] Freshness configurado em sources críticos
-- [ ] Métricas de build expostas à CI/Datadog
+### Nível 2 — integração real
 
-### 2.3 Terraform
+- TaaC;
+- contratos versionados;
+- observabilidade com métricas/logs;
+- runbook;
+- validação de dados sensíveis.
 
-- [ ] `terraform fmt` + `validate`
-- [ ] `plan` na CI ou anexado ao PR
-- [ ] tfsec/checkov sem HIGH/CRITICAL não justificado
-- [ ] Tags obrigatórias: `env`, `service`, `team`
-- [ ] IAM least privilege
-- [ ] Alarmes Datadog/CloudWatch em recursos críticos
-- [ ] README do módulo com inputs/outputs
-- [ ] Sem segredo em plain text
+### Nível 3 — fluxo crítico
 
-### 2.4 Lambda Python
-
-- [ ] Handler fino; domínio em módulo testável
-- [ ] AWS Lambda Powertools: Logger, Tracer, Metrics
-- [ ] Datadog Extension configurada (`DD_*`)
-- [ ] DLQ se invocação assíncrona (SQS, EventBridge)
-- [ ] Timeout e memória dimensionados
-- [ ] Cobertura ≥ 90%; mutation em domain
-- [ ] TaaC se integra com AWS real (LocalStack ou hml)
-
-### 2.5 Java Spring Boot
-
-- [ ] OpenAPI atualizado
-- [ ] Spring Security em endpoints expostos
-- [ ] MDC `correlation_id`; Micrometer → Datadog
-- [ ] Paginação em listagens; sem N+1
-- [ ] Testes unitários + slice/IT em endpoints novos
-- [ ] Cobertura ≥ 90%; mutation em domain/application
-- [ ] TaaC para fluxos integrados críticos
-
-### 2.6 AWS Glue
-
-- [ ] Transformações testáveis (funções puras extraídas)
-- [ ] Particionamento de saída documentado
-- [ ] Job args: `data_referencia`, `correlation_id`
-- [ ] Bookmark ou estratégia incremental
-- [ ] Log JSON no driver com volume e duração
-- [ ] Métricas custom no Datadog
-- [ ] TaaC com subset representativo de dados
-
-### 2.7 Documentação (entrega doc-only)
-
-- [ ] Responde às 7 perguntas do [15 — Documentação](15-documentacao.md)
-- [ ] Links válidos; comandos testados
-- [ ] Revisão de par técnico
-- [ ] Sem informação sensível ou desatualizada
-
-### 2.8 Observabilidade (entrega obs-only)
-
-- [ ] Monitors com runbook linkado
-- [ ] Dashboard com owner e filtros `env`/`service`
-- [ ] SLO definido se fluxo crítico
-- [ ] Cardinalidade de tags revisada
-- [ ] Teste de alerta em hml (fire drill)
-
-### 2.9 Performance (entrega perf-only)
-
-- [ ] Baseline documentado (métrica Datadog antes/depois)
-- [ ] Teste de volume representativo
-- [ ] ADR se trade-off de custo vs latência
-
-### 2.10 Segurança (entrega seg-only)
-
-- [ ] Threat model leve ou checklist [17](17-seguranca-conformidade-e-dados-sensiveis.md)
-- [ ] Evidência de scan limpo ou ADR de exceção
-- [ ] Rotação de segredo se exposto
+- mutation testing;
+- SLO/dashboard;
+- teste de volume/performance;
+- rollback validado;
+- game day ou fire drill quando aplicável.
 
 ---
 
-## 3. Metas de qualidade numéricas
+## 3. DoD por stack
+
+Os detalhes específicos ficam no **capítulo da stack** registrado no [`manifest.yaml`](manifest.yaml). A tabela abaixo é mapa de referência — **não** substitui o checklist completo do capítulo.
+
+| Stack | Capítulo | Perfil `dod_profile` |
+|-------|----------|----------------------|
+| Airflow | [04-airflow.md](04-airflow.md) | `airflow` |
+| dbt | [05-dbt.md](05-dbt.md) | `dbt` |
+| Terraform | [06-terraform.md](06-terraform.md) | `terraform` |
+| Lambda Python | [07-lambda-python.md](07-lambda-python.md) | `lambda-python` |
+| Java Spring Boot | [08-java-spring-boot.md](08-java-spring-boot.md) | `java-spring-boot` |
+| AWS Glue | [09-aws-glue.md](09-aws-glue.md) | `aws-glue` |
+
+### Recorte mínimo (referência rápida)
+
+> Fonte exaustiva: capítulo da stack. Use apenas como lembrete no PR.
+
+| Stack | Recorte |
+|-------|---------|
+| Airflow | parse test; callback Datadog; `correlation_id`; TaaC se integração externa |
+| dbt | `dbt build` verde; `schema.yml`; testes em colunas críticas |
+| Terraform | `fmt`/`validate`; plan na CI; tfsec/checkov; IAM least privilege |
+| Lambda | handler fino; Powertools; DLQ se async; cobertura ≥ 90% |
+| Spring Boot | OpenAPI; Security; MDC `correlation_id`; cobertura ≥ 90% |
+| Glue | transformações testáveis; particionamento; log JSON com volume |
+
+### Entregas transversais (não-stack)
+
+| Tipo | Referência |
+|------|------------|
+| Documentação | [15 — Documentação](15-documentacao.md) |
+| Observabilidade | [13 — Observabilidade](13-observabilidade.md) |
+| Performance | [14 — Performance](14-performance.md) |
+| Segurança | [17 — Segurança](17-seguranca-conformidade-e-dados-sensiveis.md) |
+
+---
+
+## 4. Metas de qualidade numéricas
 
 | Métrica | Meta | Onde mede | Exceção |
 |---------|------|-----------|---------|
@@ -172,7 +147,7 @@ Uma tarefa só está **pronta** quando todos os itens **aplicáveis** abaixo est
 
 ---
 
-## 4. Pipeline CI mínima (recomendada)
+## 5. Pipeline CI mínima (recomendada)
 
 ```yaml
 # Conceito — ajustar ao projeto
@@ -191,7 +166,7 @@ Bloqueios mínimos para merge: lint + unit + coverage + security. Mutation e Taa
 
 ---
 
-## 5. Exceções temporárias
+## 6. Exceções temporárias
 
 | Situação | Quem aprova | O que documentar |
 |----------|-------------|------------------|
@@ -205,7 +180,7 @@ Spike **não** vai para produção sem convergir para DoD completa.
 
 ---
 
-## 6. DoD por tipo de entrega
+## 7. DoD por tipo de entrega
 
 | Entrega | Itens além da DoD universal |
 |---------|----------------------------|
@@ -221,7 +196,7 @@ Spike **não** vai para produção sem convergir para DoD completa.
 
 ---
 
-## 7. Checklist rápido para o autor (copiar no PR)
+## 8. Checklist rápido para o autor (copiar no PR)
 
 ```markdown
 ## DoD
@@ -239,7 +214,7 @@ Template completo: [`templates/pr.md`](templates/pr.md).
 
 ---
 
-## 8. Referências
+## 9. Referências
 
 - [10 — Testes unitários](10-testes-unitarios.md)
 - [11 — TaaC](11-taac-testes-integrados-na-pipeline.md)
