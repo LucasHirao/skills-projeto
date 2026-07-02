@@ -33,6 +33,10 @@ Segurança não é camada final — é requisito em **código, infra, dados, log
 
 ## 3. Dados sensíveis em logs e telemetria
 
+**Política canônica:** allowlist de campos, exemplos e checklist em [13 — Observabilidade, seção Logging seguro e dados sensíveis](13-observabilidade.md#logging-seguro-e-dados-sensíveis).
+
+Resumo:
+
 ```python
 # ❌ Proibido
 logger.info(f"cpf={usuario.cpf}, email={usuario.email}")
@@ -72,6 +76,7 @@ logger.info(
 - [ ] Arquivos/dados só em buckets e paths aprovados
 - [ ] Criptografia KMS em buckets e databases sensíveis
 - [ ] PII mascarada ou excluída em exports e logs
+- [ ] [Checklist de logging seguro](13-observabilidade.md#checklist-de-logging-seguro) atendido no PR
 
 ---
 

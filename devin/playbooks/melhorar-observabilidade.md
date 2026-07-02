@@ -4,7 +4,7 @@ Prompt reutilizável para hardening de logs, métricas, traces e alertas Datadog
 
 ## Fonte de verdade
 
-- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md)
+- [13 — Observabilidade](../../docs/engineering-handbook/13-observabilidade.md) — [Logging seguro](../../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis)
 - [15 — Documentação](../../docs/engineering-handbook/15-documentacao.md)
 - [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
 - [Template dashboard](../../docs/engineering-handbook/templates/dashboard.md)
@@ -42,7 +42,7 @@ Plano com:
 3. Trace APM se aplicável
 4. Monitors Datadog propostos (threshold, janela, destino)
 5. Runbook para cada monitor crítico
-6. O que **não** logar (PII, payloads completos, alta cardinalidade)
+6. O que **não** logar — política allowlist: sem payload, PII, credenciais; hash/máscara; tags Datadog sem alta cardinalidade ([checklist](../../docs/engineering-handbook/13-observabilidade.md#checklist-de-logging-seguro))
 
 ## Implementação
 Skill: melhorar-observabilidade

@@ -7,6 +7,7 @@ Prompt reutilizável para code review de pull requests contra o Engineering Hand
 - [16 — Code review](../../docs/engineering-handbook/16-code-review.md)
 - [18 — Definition of Done](../../docs/engineering-handbook/18-definition-of-done.md)
 - [17 — Segurança](../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
+- [13 — Logging seguro](../../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis)
 - [Template code review](../../docs/engineering-handbook/templates/code-review.md)
 
 ---
@@ -40,6 +41,7 @@ Revise este pull request no ecossistema {nome-projeto}.
    funcional, clareza, testes, segurança, performance, observabilidade, dados, ops, contratos, multi-repo.
 3. Para código gerado por IA: deps reais, regra não inventada, estilo do vizinho, sem `except: pass`.
 4. Verifique aderência ao [18 — DoD](../../docs/engineering-handbook/18-definition-of-done.md).
+5. Revise logs no diff: [checklist de logging seguro](../../docs/engineering-handbook/13-observabilidade.md#checklist-de-logging-seguro) — sem payload, PII, credenciais; tags Datadog válidas.
 
 ## Classificação de severidade (obrigatória em cada achado)
 - 🔴 **Bloqueio** — bug, segurança, perda de dados, contrato quebrado, CI vermelho ignorado

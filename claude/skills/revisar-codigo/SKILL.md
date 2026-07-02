@@ -20,7 +20,7 @@ disable-model-invocation: true
 - [16 — Code review](../../../docs/engineering-handbook/16-code-review.md)
 - [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md)
 - Capítulo da stack (04–09)
-- [17 — Segurança](../../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md)
+- [17 — Segurança](../../../docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md) — [Logging seguro](../../../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis)
 
 ## Nomenclatura de código
 
@@ -66,7 +66,8 @@ disable-model-invocation: true
 ## Checklist de observabilidade
 
 - [ ] Logs JSON, métricas Datadog
-- [ ] Sem PII em log/tags
+- [ ] [Checklist de logging seguro](../../../docs/engineering-handbook/13-observabilidade.md#checklist-de-logging-seguro): sem payload, PII, credenciais
+- [ ] Tags Datadog sem PII nem alta cardinalidade
 - [ ] Runbook/monitor se fluxo crítico novo
 
 ## Checklist de desempenho
@@ -79,6 +80,7 @@ disable-model-invocation: true
 - [ ] Least privilege IAM
 - [ ] Sem segredo no diff
 - [ ] Inputs validados
+- [ ] Diff de logging revisado (allowlist, sem payload bruto)
 
 ## Critérios de aceite
 

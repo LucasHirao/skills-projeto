@@ -45,11 +45,12 @@ disable-model-invocation: true
 2. Coletar evidência: logs Datadog (`correlation_id`), métricas, histórico de deploy.
 3. Listar hipóteses ordenadas por probabilidade.
 4. Testar hipótese mais provável com menor custo (query, replay, teste local).
-5. Reproduzir com teste unitário ou TaaC **antes** de corrigir.
-6. Aplicar correção mínima; evitar mudança colateral.
-7. Adicionar teste de regressão.
-8. Atualizar runbook se lacuna operacional.
-9. Post-mortem leve no PR se incidente prod.
+5. Ao coletar evidência: **não** reproduzir PII ou payload completo no relatório — usar `correlation_id` e campos allowlist.
+6. Reproduzir com teste unitário ou TaaC **antes** de corrigir.
+7. Aplicar correção mínima; evitar mudança colateral.
+8. Adicionar teste de regressão.
+9. Atualizar runbook se lacuna operacional.
+10. Post-mortem leve no PR se incidente prod.
 
 ## Checklist de qualidade
 

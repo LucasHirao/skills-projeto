@@ -93,6 +93,94 @@ Tags adicionais recomendadas por domínio:
 
 ---
 
+## Logging seguro e dados sensíveis
+
+Política de logging por **allowlist**: só campos explicitamente permitidos entram no log. Em dúvida, **não logar** o campo.
+
+Ver também [17 — Segurança, conformidade e dados sensíveis](17-seguranca-conformidade-e-dados-sensiveis.md).
+
+### Princípios
+
+- Log deve explicar o que aconteceu **sem expor o dado processado**.
+- Preferir **allowlist** de campos permitidos, não blacklist.
+- **Nunca** logar payload completo.
+- **Nunca** logar dados pessoais, financeiros, regulatórios ou credenciais.
+- Tags Datadog **não** devem conter PII nem valores de alta cardinalidade.
+- Identificadores de negócio devem ser **hash** ou **máscara**.
+- Logs devem permitir troubleshooting por `correlation_id`, `status`, `operation`, `error_type`, contadores e timestamps.
+- Em dúvida, **não logar** o campo.
+
+### Campos permitidos em log
+
+| Campo | Pode? | Observação |
+|-------|-------|------------|
+| `correlation_id` | Sim | Obrigatório para rastreio |
+| `operation` | Sim | Nome estável da operação |
+| `status` | Sim | `SUCCESS`, `FAILURE`, `PARTIAL`, `SKIPPED` |
+| `duration_ms` | Sim | Métrica técnica |
+| `record_count` | Sim | Volume, sem conteúdo |
+| `error_type` | Sim | Tipo estável do erro |
+| `business_key_hash` | Sim | Hash, nunca valor claro |
+| `data_referencia` | Sim | Se não identificar pessoa |
+| `cpf`, `cnpj`, `email`, `telefone`, `nome` | Não | Usar hash/máscara quando indispensável |
+| `payload` | Não | Nunca completo |
+| `token`, `senha`, `secret`, `api_key` | Não | Nunca |
+| `s3_key` completa | Evitar | Pode conter dado sensível; preferir prefixo seguro |
+
+### Exemplos
+
+**Ruim:**
+
+```python
+logger.info("processando", extra={"payload": event})
+```
+
+**Bom:**
+
+```python
+logger.info(
+    "arquivo_processado",
+    extra={
+        "correlation_id": correlation_id,
+        "operation": "processar_arquivo",
+        "status": "SUCCESS",
+        "record_count": total_registros,
+        "duration_ms": duracao_ms,
+        "business_key_hash": hash_sha256(chave_negocio),
+    },
+)
+```
+
+**Ruim — tag Datadog com PII:**
+
+```python
+statsd.increment("processamento.ok", tags=[f"cliente_id:{cliente_id}"])
+```
+
+**Bom:**
+
+```python
+statsd.increment(
+    "processamento.ok",
+    tags=["env:prod", "service:lambda-processa-lote", f"operation:processar_lote"],
+)
+```
+
+### Checklist de logging seguro
+
+- [ ] Nenhum payload completo em log.
+- [ ] Nenhum CPF/CNPJ/e-mail/telefone/nome em claro.
+- [ ] Nenhum token/senha/secret em log.
+- [ ] Nenhuma tag Datadog com PII.
+- [ ] Campos sensíveis hasheados ou mascarados.
+- [ ] `correlation_id` presente.
+- [ ] `error_type` estável.
+- [ ] Logs de erro não incluem dados brutos.
+- [ ] `DEBUG` desabilitado em produção.
+- [ ] Sensitive Data Scanner considerado.
+
+---
+
 ## 4. Ingestão de logs no Datadog
 
 ### 4.1 Arquitetura por tipo de workload
@@ -445,6 +533,8 @@ logger.info(
 
 ## 12. Segurança em telemetria
 
+Política detalhada de logging por allowlist: ver [Logging seguro e dados sensíveis](#logging-seguro-e-dados-sensíveis).
+
 | Risco | Mitigação |
 |-------|-----------|
 | PII em log | Sensitive Data Scanner + revisão de PR |
@@ -460,6 +550,7 @@ Ver [17 — Segurança, conformidade e dados sensíveis](17-seguranca-conformida
 ## 13. Checklist no PR
 
 - [ ] Logs JSON com `correlation_id`, `service`, `env`, `status`
+- [ ] [Checklist de logging seguro](#checklist-de-logging-seguro) atendido
 - [ ] Métricas de sucesso, erro, duração e volume (onde aplicável)
 - [ ] Sem dados sensíveis em log ou tag de alta cardinalidade
 - [ ] Trace/span em chamadas externas e hot path (APM)

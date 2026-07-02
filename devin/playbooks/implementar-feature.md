@@ -55,7 +55,7 @@ Aguarde confirmação implícita do plano antes de alterar arquivos.
 ## Entregáveis por repo
 - Código + testes (cobertura ≥ 90%; mutation onde aplicável)
 - TaaC se houver integração real ([11 — TaaC](../../docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md))
-- Logs JSON com correlation_id + métricas Datadog
+- Logs JSON com correlation_id + métricas Datadog ([logging seguro](../../docs/engineering-handbook/13-observabilidade.md#checklist-de-logging-seguro): sem payload, PII, credenciais)
 - README / OpenAPI / schema.yml se contrato mudou
 - ADR se decisão arquitetural relevante
 

@@ -47,13 +47,15 @@ Identificadores **internos** em português. Exceções: contratos externos, SDKs
 4. **Revisar** skill em PR com humano
 5. **Testar** em feature piloto antes de considerar estável
 
-## Skills (15)
+## Skills (17)
 
-**Agentes (preparar/revisar prompt):** `preparar-prompt-tecnico` · `revisar-prompt-tecnico`
+**Agentes (prompt):** `preparar-prompt-tecnico` · `revisar-prompt-tecnico`
+
+**Documentação funcional:** `extrair-documentacao-funcional` · `revisar-documentacao-funcional`
 
 **Implementação e operação:** `criar-dag-airflow` · `criar-modelo-dbt` · `criar-modulo-terraform` · `criar-lambda-python` · `criar-api-spring-boot` · `criar-job-glue` · `criar-testes-unitarios` · `criar-taac` · `revisar-codigo` · `revisar-desempenho` · `melhorar-observabilidade` · `criar-documentacao` · `investigar-falha`
 
-Guia de agentes: [21 — Agentes e prompts](../docs/engineering-handbook/21-agentes-e-prompts.md).
+Guia de agentes: [21 — Agentes e prompts](../docs/engineering-handbook/21-agentes-e-prompts.md). Documentação funcional: [22](../docs/engineering-handbook/22-documentacao-funcional.md). Logging seguro: [13](../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis).
 
 ## Fluxo preparador → revisor → implementação
 

@@ -4,7 +4,7 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 
 **Regra:** handbook primeiro; artefatos depois. Não duplicar capítulos inteiros nas skills.
 
-**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) é pré-leitura obrigatória em **todas** as skills Claude e Devin, com seção fixa **Nomenclatura de código** (identificadores internos em português). Os playbooks Devin incluem a mesma orientação antes do prompt. [21 — Agentes e prompts](21-agentes-e-prompts.md) governa a camada preparador/revisor.
+**Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) é pré-leitura obrigatória em **todas** as skills Claude e Devin, com seção fixa **Nomenclatura de código** (identificadores internos em português). Os playbooks Devin incluem a mesma orientação antes do prompt. [21 — Agentes e prompts](21-agentes-e-prompts.md) governa a camada preparador/revisor. [13 — Logging seguro](13-observabilidade.md#logging-seguro-e-dados-sensíveis) aplica-se a observabilidade, revisão e implementação.
 
 ---
 
@@ -33,7 +33,7 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 | [10 — Testes unitários](10-testes-unitarios.md) | [claude/regras/02-testes.md](../../claude/regras/02-testes.md), [criar-testes-unitarios](../../claude/skills/criar-testes-unitarios/SKILL.md) | [criar-testes-unitarios](../../devin/skills/criar-testes-unitarios/SKILL.md) |
 | [11 — TaaC](11-taac-testes-integrados-na-pipeline.md) | [criar-taac](../../claude/skills/criar-taac/SKILL.md) | [criar-taac](../../devin/skills/criar-taac/SKILL.md), [criar-taac.md](../../devin/playbooks/criar-taac.md) |
 | [12 — Testes de mutação](12-testes-de-mutacao.md) | [claude/regras/02-testes.md](../../claude/regras/02-testes.md), [criar-testes-unitarios](../../claude/skills/criar-testes-unitarios/SKILL.md) | [criar-testes-unitarios](../../devin/skills/criar-testes-unitarios/SKILL.md) |
-| [13 — Observabilidade](13-observabilidade.md) | [claude/regras/03-observabilidade.md](../../claude/regras/03-observabilidade.md), [melhorar-observabilidade](../../claude/skills/melhorar-observabilidade/SKILL.md), [investigar-falha](../../claude/skills/investigar-falha/SKILL.md) | [melhorar-observabilidade](../../devin/skills/melhorar-observabilidade/SKILL.md), [investigar-falha](../../devin/skills/investigar-falha/SKILL.md), playbooks de observabilidade e pipeline |
+| [13 — Observabilidade](13-observabilidade.md) | [claude/regras/03-observabilidade.md](../../claude/regras/03-observabilidade.md), [melhorar-observabilidade](../../claude/skills/melhorar-observabilidade/SKILL.md), [investigar-falha](../../claude/skills/investigar-falha/SKILL.md), [revisar-codigo](../../claude/skills/revisar-codigo/SKILL.md) | [melhorar-observabilidade](../../devin/skills/melhorar-observabilidade/SKILL.md), [investigar-falha](../../devin/skills/investigar-falha/SKILL.md), playbooks observabilidade, pipeline e revisar-pr |
 | [14 — Performance](14-performance.md) | [revisar-desempenho](../../claude/skills/revisar-desempenho/SKILL.md) | [revisar-desempenho](../../devin/skills/revisar-desempenho/SKILL.md), [revisar-desempenho.md](../../devin/playbooks/revisar-desempenho.md) |
 | [15 — Documentação](15-documentacao.md) | [criar-documentacao](../../claude/skills/criar-documentacao/SKILL.md) | [criar-documentacao](../../devin/skills/criar-documentacao/SKILL.md) |
 | [16 — Code review](16-code-review.md) | [revisar-codigo](../../claude/skills/revisar-codigo/SKILL.md) | [revisar-codigo](../../devin/skills/revisar-codigo/SKILL.md), [revisar-pr.md](../../devin/playbooks/revisar-pr.md) |
@@ -42,7 +42,8 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 | [19 — Padrões para uso de IA](19-padroes-para-uso-de-ia.md) | [claude/regras/06-uso-de-ia.md](../../claude/regras/06-uso-de-ia.md), [claude/CLAUDE.md](../../claude/CLAUDE.md) | [devin/AGENTS.md](../../devin/AGENTS.md) |
 | [20 — Onboarding técnico](20-onboarding-tecnico.md) | [claude/README.md](../../claude/README.md) | [devin/README.md](../../devin/README.md) |
 | [21 — Agentes e prompts](21-agentes-e-prompts.md) | [preparar-prompt-tecnico](../../claude/skills/preparar-prompt-tecnico/SKILL.md), [revisar-prompt-tecnico](../../claude/skills/revisar-prompt-tecnico/SKILL.md) | [preparar-feature-para-implementacao.md](../../devin/playbooks/preparar-feature-para-implementacao.md), [revisar-prompt-de-implementacao.md](../../devin/playbooks/revisar-prompt-de-implementacao.md) |
-| Templates | [criar-documentacao](../../claude/skills/criar-documentacao/SKILL.md) | [criar-documentacao](../../devin/skills/criar-documentacao/SKILL.md), playbooks |
+| [22 — Documentação funcional](22-documentacao-funcional.md) | [extrair-documentacao-funcional](../../claude/skills/extrair-documentacao-funcional/SKILL.md), [revisar-documentacao-funcional](../../claude/skills/revisar-documentacao-funcional/SKILL.md) | [extrair-documentacao-funcional.md](../../devin/playbooks/extrair-documentacao-funcional.md), [revisar-documentacao-funcional.md](../../devin/playbooks/revisar-documentacao-funcional.md) |
+| Templates | [criar-documentacao](../../claude/skills/criar-documentacao/SKILL.md), templates funcionais | [criar-documentacao](../../devin/skills/criar-documentacao/SKILL.md), playbooks, [`documentacao-funcional.md`](templates/documentacao-funcional.md) |
 
 ---
 
@@ -60,6 +61,8 @@ Este documento rastreia a relação entre capítulos do **Manual de Engenharia**
 | [revisar-desempenho.md](../../devin/playbooks/revisar-desempenho.md) | 14, 03 |
 | [preparar-feature-para-implementacao.md](../../devin/playbooks/preparar-feature-para-implementacao.md) | 21, 03, 18, 19 |
 | [revisar-prompt-de-implementacao.md](../../devin/playbooks/revisar-prompt-de-implementacao.md) | 21, 03, 18, 17 |
+| [extrair-documentacao-funcional.md](../../devin/playbooks/extrair-documentacao-funcional.md) | 22, 03, 17, 13 |
+| [revisar-documentacao-funcional.md](../../devin/playbooks/revisar-documentacao-funcional.md) | 22, 03, 17, 13 |
 
 ---
 

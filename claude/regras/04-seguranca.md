@@ -13,7 +13,9 @@ IAM, segredos, dados sensíveis e conformidade em `{nome-projeto}-*`.
 
 ## Dados sensíveis
 
-- Não logar PII; mascarar em métricas e traces
+- Logging por **allowlist** — ver [13 — Logging seguro](../../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis)
+- Não logar payload, PII, credenciais; usar hash/máscara
+- Validar tags Datadog sem PII nem alta cardinalidade
 - Não colar dados reais em prompts de IA
 - Classificar dados conforme política do time
 

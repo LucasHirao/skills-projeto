@@ -15,7 +15,7 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 ## Pré-leitura
 
 - [03 — Padrões de código](../../../docs/engineering-handbook/03-padroes-de-codigo.md)
-- [13 — Observabilidade (Datadog)](../../../docs/engineering-handbook/13-observabilidade.md)
+- [13 — Observabilidade (Datadog)](../../../docs/engineering-handbook/13-observabilidade.md) — [Logging seguro](../../../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis)
 - Capítulo da stack (04–09)
 - [18 — Definition of Done](../../../docs/engineering-handbook/18-definition-of-done.md) §1.4
 
@@ -45,7 +45,7 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 5. Habilitar trace APM se serviço HTTP/Lambda com latência relevante.
 6. Criar/atualizar dashboard ([template](../../../docs/engineering-handbook/templates/dashboard.md)).
 7. Se crítico: monitor + runbook ([template](../../../docs/engineering-handbook/templates/runbook.md)).
-8. Validar ausência de PII em logs e tags.
+8. Validar [checklist de logging seguro](../../../docs/engineering-handbook/13-observabilidade.md#checklist-de-logging-seguro): sem payload, PII, credenciais; tags Datadog sem alta cardinalidade.
 9. Documentar no README como debugar no Datadog.
 
 ## Checklist de qualidade
@@ -73,20 +73,23 @@ description: Adicionar ou corrigir logs JSON, métricas, traces e alertas Datado
 
 ## Checklist de segurança
 
-- [ ] Sem PII em log, trace ou tag
+- [ ] [Logging seguro](../../../docs/engineering-handbook/13-observabilidade.md#checklist-de-logging-seguro): allowlist, sem payload/PII/credenciais
+- [ ] Tags Datadog sem PII nem alta cardinalidade
 - [ ] Sem segredo em mensagem de log
+
+## O que não fazer
+
+- Log de payload completo (`extra={"payload": event}`)
+- Log de objeto inteiro com dados sensíveis
+- Tag `user_id` ou timestamp como dimensão de métrica
+- Dashboard sem owner
+- Alerta sem runbook em fluxo crítico
 
 ## Critérios de aceite
 
 - DoD §1.4 em [18](../../../docs/engineering-handbook/18-definition-of-done.md)
 - Query Datadog por `correlation_id` funciona ponta a ponta
-
-## O que não fazer
-
-- Log de objeto inteiro com dados sensíveis
-- Tag `user_id` ou timestamp como dimensão de métrica
-- Dashboard sem owner
-- Alerta sem runbook em fluxo crítico
+- Checklist de logging seguro atendido
 
 ## Como reportar
 

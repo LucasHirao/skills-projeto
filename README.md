@@ -6,7 +6,7 @@ Repositório **multi-repo** de padrões técnicos para squads de dados e backend
 
 ## Fonte principal da verdade
 
-Todo padrão técnico vive em [`docs/engineering-handbook/`](docs/engineering-handbook/) (capítulos `00`–`21` + [templates](docs/engineering-handbook/templates/)).
+Todo padrão técnico vive em [`docs/engineering-handbook/`](docs/engineering-handbook/) (capítulos `00`–`22` + [templates](docs/engineering-handbook/templates/)).
 
 Artefatos para agentes de IA são **derivados** — ver [artefatos-ia.md](docs/engineering-handbook/artefatos-ia.md) e [19 — Padrões para uso de IA](docs/engineering-handbook/19-padroes-para-uso-de-ia.md).
 
@@ -35,7 +35,7 @@ README.md                    # Este arquivo
 
 ---
 
-## Índice do handbook (00–21)
+## Índice do handbook (00–22)
 
 | # | Documento |
 |---|-----------|
@@ -46,7 +46,7 @@ README.md                    # Este arquivo
 | 04–09 | [Airflow](docs/engineering-handbook/04-airflow.md) · [dbt](docs/engineering-handbook/05-dbt.md) · [Terraform](docs/engineering-handbook/06-terraform.md) · [Lambda](docs/engineering-handbook/07-lambda-python.md) · [Java](docs/engineering-handbook/08-java-spring-boot.md) · [Glue](docs/engineering-handbook/09-aws-glue.md) |
 | 10–12 | [Testes unitários](docs/engineering-handbook/10-testes-unitarios.md) · [TaaC](docs/engineering-handbook/11-taac-testes-integrados-na-pipeline.md) · [Mutação](docs/engineering-handbook/12-testes-de-mutacao.md) |
 | 13–14 | [Observabilidade](docs/engineering-handbook/13-observabilidade.md) · [Performance](docs/engineering-handbook/14-performance.md) |
-| 15–21 | [Documentação](docs/engineering-handbook/15-documentacao.md) · [Code review](docs/engineering-handbook/16-code-review.md) · [Segurança](docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md) · [DoD](docs/engineering-handbook/18-definition-of-done.md) · [IA](docs/engineering-handbook/19-padroes-para-uso-de-ia.md) · [Onboarding](docs/engineering-handbook/20-onboarding-tecnico.md) · [Agentes e prompts](docs/engineering-handbook/21-agentes-e-prompts.md) |
+| 15–22 | [Documentação](docs/engineering-handbook/15-documentacao.md) · [Code review](docs/engineering-handbook/16-code-review.md) · [Segurança](docs/engineering-handbook/17-seguranca-conformidade-e-dados-sensiveis.md) · [DoD](docs/engineering-handbook/18-definition-of-done.md) · [IA](docs/engineering-handbook/19-padroes-para-uso-de-ia.md) · [Onboarding](docs/engineering-handbook/20-onboarding-tecnico.md) · [Agentes e prompts](docs/engineering-handbook/21-agentes-e-prompts.md) · [Documentação funcional](docs/engineering-handbook/22-documentacao-funcional.md) |
 | — | [Mapa artefatos IA](docs/engineering-handbook/artefatos-ia.md) |
 
 ---
@@ -58,7 +58,7 @@ README.md                    # Este arquivo
 | [claude/README.md](claude/README.md) | Instalação e manutenção |
 | [claude/CLAUDE.md](claude/CLAUDE.md) | Modelo para copiar à raiz de repos de código |
 | [claude/regras/](claude/regras/) | Regras curtas operacionais |
-| [claude/skills/](claude/skills/) | 15 skills versionadas (incl. agentes preparador/revisor) |
+| [claude/skills/](claude/skills/) | 17 skills versionadas (agentes, documentação funcional, stacks) |
 | [claude/sincronizar-claude.sh](claude/sincronizar-claude.sh) | Copia skills para `.claude/skills/` |
 
 ```bash
@@ -75,7 +75,7 @@ bash /caminho/repositorio-de-padroes/claude/sincronizar-claude.sh
 | [devin/README.md](devin/README.md) | Instalação, Skills vs Playbooks |
 | [devin/AGENTS.md](devin/AGENTS.md) | Modelo de instrução para repos de código |
 | [devin/skills/](devin/skills/) | 13 skills versionadas |
-| [devin/playbooks/](devin/playbooks/) | 10 playbooks (incl. preparar/revisar prompt) |
+| [devin/playbooks/](devin/playbooks/) | 12 playbooks (agentes, documentação funcional, implementação) |
 | [devin/sincronizar-devin.sh](devin/sincronizar-devin.sh) | Copia skills para `.agents/skills/` |
 
 ```bash
@@ -83,6 +83,10 @@ bash /caminho/repositorio-de-padroes/devin/sincronizar-devin.sh
 ```
 
 **Skills** — tarefas recorrentes por stack no repositório. **Playbooks** — fluxos amplos/cross-repo (feature, pipeline, incidente).
+
+**Logging seguro:** política por allowlist em [13 — Observabilidade](docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis) — sem payload, PII ou credenciais em log.
+
+**Documentação funcional:** extrair conhecimento tácito com [22 — Documentação funcional](docs/engineering-handbook/22-documentacao-funcional.md) e skills/playbooks dedicados.
 
 **Agentes (preparar/revisar prompt)** — use antes de implementar para reduzir ambiguidade e tokens. Ver [21 — Agentes e prompts](docs/engineering-handbook/21-agentes-e-prompts.md).
 

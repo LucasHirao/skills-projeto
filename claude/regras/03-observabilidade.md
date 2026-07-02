@@ -19,9 +19,11 @@ Telemetria padrão com **Datadog** em todos os componentes `{nome-projeto}`.
 ## Logs
 
 - Formato JSON
-- Campos mínimos: `correlation_id`, `service`, `env`, `status`, `mensagem`
-- **Sem PII** — mascarar ou omitir dados sensíveis
-- Tags de **baixa cardinalidade** em métricas
+- Campos mínimos: `correlation_id`, `service`, `env`, `status`, `operation`
+- **Allowlist** — só campos permitidos; em dúvida, não logar
+- **Sem payload completo**, PII, credenciais ou tags de alta cardinalidade
+- Hash/máscara para identificadores de negócio quando indispensável
+- Revisar logs no PR contra [Logging seguro](../../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis)
 
 ## Fluxos críticos
 
@@ -32,7 +34,8 @@ Telemetria padrão com **Datadog** em todos os componentes `{nome-projeto}`.
 ## Anti-padrões
 
 - `print` ou log texto livre sem estrutura
-- Alta cardinalidade em tags (user_id, timestamp como tag)
+- `logger.info(..., extra={"payload": event})`
+- Alta cardinalidade em tags (`user_id`, `cpf`, timestamp como tag)
 - Alerta só por e-mail sem Datadog
 - Deploy sem como debugar em produção
 

@@ -32,6 +32,9 @@ Se alguma resposta estiver só na cabeça de alguém, a documentação está inc
 | Dashboard | Fluxo novo ou criticidade alterada | Datadog + doc | [`templates/dashboard.md`](templates/dashboard.md) |
 | TaaC | Teste integrado novo | `tests/integration/` | [`templates/teste-integrado.md`](templates/teste-integrado.md) |
 | Plano de implementação | Feature média/grande, multi-repo | `docs/planos/` ou PR | [`templates/plano-de-implementacao.md`](templates/plano-de-implementacao.md) |
+| Documentação funcional | Processo, regras e fluxos de negócio | `docs/funcional/` ou wiki | [`templates/documentacao-funcional.md`](templates/documentacao-funcional.md) |
+| Glossário funcional | Vocabulário do domínio | Junto à doc funcional | [`templates/glossario-funcional.md`](templates/glossario-funcional.md) |
+| Fluxo funcional | Passo a passo de processo | Junto à doc funcional | [`templates/fluxo-funcional.md`](templates/fluxo-funcional.md) |
 | Code review | Review formal ou auditoria | PR / wiki | [`templates/code-review.md`](templates/code-review.md) |
 
 ---

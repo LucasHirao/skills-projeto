@@ -11,6 +11,8 @@ Configuração do agente **Devin** derivada do [Manual de Engenharia](../docs/en
 | DoD | [18 — Definition of Done](../docs/engineering-handbook/18-definition-of-done.md) |
 | Uso de IA | [19 — Padrões para uso de IA](../docs/engineering-handbook/19-padroes-para-uso-de-ia.md) |
 | Agentes | [21 — Agentes e prompts](../docs/engineering-handbook/21-agentes-e-prompts.md) |
+| Documentação funcional | [22 — Documentação funcional](../docs/engineering-handbook/22-documentacao-funcional.md) |
+| Logging seguro | [13 — Observabilidade](../docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis) |
 
 **Regra:** mudança de padrão → PR no handbook primeiro; `devin/` atualizado depois.
 
@@ -20,7 +22,7 @@ Configuração do agente **Devin** derivada do [Manual de Engenharia](../docs/en
 devin/
   AGENTS.md              # Modelo para repos de código
   skills/                # 13 skills (fonte versionada)
-  playbooks/             # 10 prompts (incl. preparar/revisar prompt)
+  playbooks/             # 12 prompts (agentes, doc funcional, implementação)
   sincronizar-devin.sh   # Copia skills → .agents/skills/
 ```
 
@@ -54,9 +56,11 @@ Copia `devin/skills/*` → `.agents/skills/`. Copie [`AGENTS.md`](AGENTS.md) par
 
 `criar-dag-airflow` · `criar-modelo-dbt` · `criar-modulo-terraform` · `criar-lambda-python` · `criar-api-spring-boot` · `criar-job-glue` · `criar-testes-unitarios` · `criar-taac` · `revisar-codigo` · `revisar-desempenho` · `melhorar-observabilidade` · `criar-documentacao` · `investigar-falha`
 
-## Playbooks (10)
+## Playbooks (12)
 
 **Agentes:** [`preparar-feature-para-implementacao.md`](playbooks/preparar-feature-para-implementacao.md) · [`revisar-prompt-de-implementacao.md`](playbooks/revisar-prompt-de-implementacao.md)
+
+**Documentação funcional:** [`extrair-documentacao-funcional.md`](playbooks/extrair-documentacao-funcional.md) · [`revisar-documentacao-funcional.md`](playbooks/revisar-documentacao-funcional.md)
 
 **Implementação e operação:** [`implementar-feature.md`](playbooks/implementar-feature.md) · [`revisar-pr.md`](playbooks/revisar-pr.md) · [`criar-pipeline-airflow-dbt.md`](playbooks/criar-pipeline-airflow-dbt.md) · [`criar-componente-aws.md`](playbooks/criar-componente-aws.md) · [`criar-taac.md`](playbooks/criar-taac.md) · [`investigar-falha-pipeline.md`](playbooks/investigar-falha-pipeline.md) · [`melhorar-observabilidade.md`](playbooks/melhorar-observabilidade.md) · [`revisar-desempenho.md`](playbooks/revisar-desempenho.md)
 
