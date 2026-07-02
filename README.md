@@ -10,7 +10,7 @@ Todo padrão técnico vive em [`docs/engineering-handbook/`](docs/engineering-ha
 
 Artefatos para agentes de IA são **derivados** — ver [artefatos-ia.md](docs/engineering-handbook/artefatos-ia.md) e [19 — Padrões para uso de IA](docs/engineering-handbook/19-padroes-para-uso-de-ia.md).
 
-**Catálogo canônico:** [`docs/engineering-handbook/manifest.yaml`](docs/engineering-handbook/manifest.yaml) — stacks, skills e playbooks registrados. Evite listas paralelas em README.
+**Catálogo canônico:** [`docs/engineering-handbook/manifest.yaml`](docs/engineering-handbook/manifest.yaml) — stacks registradas, capítulos transversais, Skills associadas a stacks, regras de descoberta de Skills/Playbooks e templates obrigatórios. Evite listas paralelas em README.
 
 **Observabilidade:** [Datadog](docs/engineering-handbook/13-observabilidade.md) · **Logging seguro:** [allowlist](docs/engineering-handbook/13-observabilidade.md#logging-seguro-e-dados-sensíveis).
 
@@ -46,7 +46,7 @@ Capítulos de stack (`04`–`09`) e demais capítulos: ver diretório [`docs/eng
 
 ## Catálogo de stacks e artefatos
 
-O catálogo canônico vive em [`docs/engineering-handbook/manifest.yaml`](docs/engineering-handbook/manifest.yaml).
+O catálogo canônico vive em [`docs/engineering-handbook/manifest.yaml`](docs/engineering-handbook/manifest.yaml) (stacks, capítulos transversais, Skills de stack, regras de descoberta e templates). Skills e Playbooks adicionais são encontrados por convenção de pastas — não precisam estar listados nominalmente no manifesto.
 
 Para adicionar nova stack:
 

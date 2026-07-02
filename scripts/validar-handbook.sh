@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # validar-handbook.sh — validação central do handbook, manifesto e artefatos derivados
 # Uso: bash scripts/validar-handbook.sh
+#
+# Limitações: parsing do manifest.yaml é conservador (grep/awk), não valida schema YAML completo.
 
 set -euo pipefail
 
@@ -21,17 +23,21 @@ fail() {
 validate_link_in_file() {
   local src_file="$1"
   local link="$2"
-  local src_dir link_path dest
+  local src_dir dest
 
   link="${link%%#*}"
+
   [[ -z "${link}" ]] && return 0
   [[ "${link}" =~ ^https?:// ]] && return 0
   [[ "${link}" =~ ^mailto: ]] && return 0
-  [[ "${link}" != *"engineering-handbook"* ]] && return 0
+  [[ "${link}" =~ ^tel: ]] && return 0
+  [[ "${link}" =~ ^# ]] && return 0
+  # Placeholders intencionais em templates (ex.: {nome}, XXX-titulo.md)
+  [[ "${link}" == *'{'* ]] && return 0
+  [[ "${link}" == *'XXX'* ]] && return 0
 
   src_dir="$(dirname "${src_file}")"
-  link_path="${src_dir}/${link}"
-  dest="$(realpath -m "${link_path}")"
+  dest="$(realpath -m "${src_dir}/${link}")"
 
   if [[ -f "${dest}" ]] || [[ -d "${dest}" ]]; then
     return 0
@@ -49,6 +55,17 @@ validate_markdown_file() {
     [[ -n "${link}" ]] && validate_link_in_file "${file}" "${link}"
   done < <(grep -oE '\[[^]]*\]\([^)]+\)' "${file}" 2>/dev/null \
     | sed -E 's/^\[[^]]*\]\(//;s/\)$//' || true)
+}
+
+validate_all_markdown_links() {
+  local md_file
+
+  log "Validando links relativos internos em todos os .md..."
+  while IFS= read -r md_file; do
+    validate_markdown_file "${md_file}"
+  done < <(find "${REPO_ROOT}" \
+    -path "${REPO_ROOT}/.git" -prune -o \
+    -name "*.md" -type f -print | sort)
 }
 
 validate_manifest() {
@@ -78,40 +95,75 @@ validate_manifest() {
   done < <(awk '/^claude_regras:/{f=0} /^  files:/{f=1;next} f && /^  - /{print $2}' "${MANIFEST}")
 }
 
-validate_stack_skills_from_manifest() {
-  local in_stack=0 chapter="" claude_skill="" devin_skill="" chapter_base=""
+validate_stack_entry() {
+  local stack_id="$1"
+  local chapter="$2"
+  local claude_skill="$3"
+  local devin_skill="$4"
+  local chapter_path="${REPO_ROOT}/${chapter}"
+  local chapter_base
+
+  chapter_base="$(basename "${chapter}")"
+
+  [[ -f "${chapter_path}" ]] \
+    || fail "stack ${stack_id}: capítulo ausente: ${chapter}"
+
+  grep -q '## Padrões de código da stack' "${chapter_path}" \
+    || fail "stack ${stack_id}: capítulo sem '## Padrões de código da stack': ${chapter}"
+
+  grep -q '03-padroes-de-codigo.md' "${chapter_path}" \
+    || fail "stack ${stack_id}: capítulo sem referência a 03-padroes-de-codigo.md: ${chapter}"
+
+  grep -q '18-definition-of-done.md' "${chapter_path}" \
+    || fail "stack ${stack_id}: capítulo sem referência a 18-definition-of-done.md: ${chapter}"
+
+  if [[ -n "${claude_skill}" ]]; then
+    [[ -f "${REPO_ROOT}/${claude_skill}" ]] \
+      || fail "stack ${stack_id}: claude_skill ausente: ${claude_skill}"
+    grep -q "${chapter_base}" "${REPO_ROOT}/${claude_skill}" \
+      || fail "stack ${stack_id}: claude_skill não referencia capítulo: ${claude_skill} → ${chapter_base}"
+  fi
+
+  if [[ -n "${devin_skill}" ]]; then
+    [[ -f "${REPO_ROOT}/${devin_skill}" ]] \
+      || fail "stack ${stack_id}: devin_skill ausente: ${devin_skill}"
+    grep -q "${chapter_base}" "${REPO_ROOT}/${devin_skill}" \
+      || fail "stack ${stack_id}: devin_skill não referencia capítulo: ${devin_skill} → ${chapter_base}"
+  fi
+}
+
+validate_stacks_from_manifest() {
+  local in_stack=0 stack_id="" chapter="" claude_skill="" devin_skill="" enabled="true"
+
+  log "Validando stacks registradas no manifesto..."
 
   while IFS= read -r line; do
     case "${line}" in
-      "  - id:"*) in_stack=1; chapter=""; claude_skill=""; devin_skill="" ;;
+      "  - id:"*)
+        in_stack=1
+        stack_id="$(echo "${line}" | sed -E 's/^[[:space:]]+- id:[[:space:]]*//')"
+        chapter=""
+        claude_skill=""
+        devin_skill=""
+        enabled="true"
+        ;;
       "    chapter:"*)
-        if [[ "${in_stack}" -eq 1 ]]; then
-          chapter="$(echo "${line}" | sed -E 's/^[[:space:]]+chapter:[[:space:]]*//')"
-          chapter_base="$(basename "${chapter}")"
-        fi
+        [[ "${in_stack}" -eq 1 ]] && chapter="$(echo "${line}" | sed -E 's/^[[:space:]]+chapter:[[:space:]]*//')"
         ;;
       "    claude_skill:"*)
-        if [[ "${in_stack}" -eq 1 ]]; then
-          claude_skill="$(echo "${line}" | sed -E 's/^[[:space:]]+claude_skill:[[:space:]]*//')"
-        fi
+        [[ "${in_stack}" -eq 1 ]] && claude_skill="$(echo "${line}" | sed -E 's/^[[:space:]]+claude_skill:[[:space:]]*//')"
         ;;
       "    devin_skill:"*)
-        if [[ "${in_stack}" -eq 1 ]]; then
-          devin_skill="$(echo "${line}" | sed -E 's/^[[:space:]]+devin_skill:[[:space:]]*//')"
-        fi
+        [[ "${in_stack}" -eq 1 ]] && devin_skill="$(echo "${line}" | sed -E 's/^[[:space:]]+devin_skill:[[:space:]]*//')"
         ;;
-      "    enabled:"*)
-        if [[ "${in_stack}" -eq 1 && -n "${chapter_base}" ]]; then
-          if [[ -f "${REPO_ROOT}/${claude_skill}" ]]; then
-            grep -q "${chapter_base}" "${REPO_ROOT}/${claude_skill}" \
-              || fail "skill Claude não referencia capítulo da stack: ${claude_skill} → ${chapter_base}"
-          fi
-          if [[ -f "${REPO_ROOT}/${devin_skill}" ]]; then
-            grep -q "${chapter_base}" "${REPO_ROOT}/${devin_skill}" \
-              || fail "skill Devin não referencia capítulo da stack: ${devin_skill} → ${chapter_base}"
-          fi
-          in_stack=0
+      "    enabled: false"*)
+        [[ "${in_stack}" -eq 1 ]] && enabled="false"
+        ;;
+      "    enabled: true"*)
+        if [[ "${in_stack}" -eq 1 && "${enabled}" == "true" && -n "${chapter}" ]]; then
+          validate_stack_entry "${stack_id}" "${chapter}" "${claude_skill}" "${devin_skill}"
         fi
+        in_stack=0
         ;;
     esac
   done < "${MANIFEST}"
@@ -179,44 +231,25 @@ validate_discovered_artifacts() {
   log "Validando Skills Claude (descoberta por convenção)..."
   while IFS= read -r skill_file; do
     validate_claude_skill "${skill_file}"
-    validate_markdown_file "${skill_file}"
   done < <(find "${CLAUDE}/skills" -name 'SKILL.md' | sort)
 
   log "Validando Skills Devin (descoberta por convenção)..."
   while IFS= read -r skill_file; do
     validate_devin_skill "${skill_file}"
-    validate_markdown_file "${skill_file}"
   done < <(find "${DEVIN}/skills" -name 'SKILL.md' | sort)
 
   log "Validando Playbooks Devin..."
   while IFS= read -r playbook; do
     validate_devin_playbook "${playbook}"
-    validate_markdown_file "${playbook}"
   done < <(find "${DEVIN}/playbooks" -name '*.md' | sort)
-
-  log "Validando regras Claude..."
-  local regra
-  while IFS= read -r regra; do
-    validate_markdown_file "${CLAUDE}/regras/${regra}"
-  done < <(awk '/^claude_regras:/{f=0} /^  files:/{f=1;next} f && /^  - /{print $2}' "${MANIFEST}")
-}
-
-validate_core_docs() {
-  log "Validando documentos centrais..."
-  validate_markdown_file "${REPO_ROOT}/README.md"
-  validate_markdown_file "${HANDBOOK}/artefatos-ia.md"
-  validate_markdown_file "${CLAUDE}/README.md"
-  validate_markdown_file "${DEVIN}/README.md"
-  validate_markdown_file "${CLAUDE}/CLAUDE.md"
-  validate_markdown_file "${DEVIN}/AGENTS.md"
 }
 
 [[ -d "${HANDBOOK}" ]] || { echo "ERRO: handbook não encontrado" >&2; exit 1; }
 
 validate_manifest
-validate_stack_skills_from_manifest
+validate_stacks_from_manifest
 validate_discovered_artifacts
-validate_core_docs
+validate_all_markdown_links
 
 if [[ "${ERRORS}" -gt 0 ]]; then
   echo "[validar-handbook] ${ERRORS} erro(s) encontrado(s)." >&2

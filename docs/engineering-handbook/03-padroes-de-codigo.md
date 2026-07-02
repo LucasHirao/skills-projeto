@@ -157,37 +157,18 @@ Comentar **por quê**, não **o quê**. Código autoexplicativo para o quê.
 
 ## 8. Estrutura e organização
 
-### 8.1 Layout Python (Lambda, Airflow tasks, Glue)
+Princípio transversal: separar **domínio**, **aplicação** e **infraestrutura/adapters**; manter a entrada fina (handler, task, job, controller).
 
-```
-src/
-├── domain/           # Puro: sem boto3, airflow, pyspark
-├── application/      # Casos de uso
-├── infrastructure/   # Adapters AWS
-└── handler.py|tasks.py|job.py  # Entrada fina
-tests/
-├── domain/
-├── application/
-└── integration/
-```
+Layouts e pastas específicos vivem no capítulo da stack:
 
-### 8.2 Layout Java (Spring Boot)
+| Contexto | Capítulo |
+|----------|----------|
+| Python (Lambda, Glue, tasks Airflow) | [07 — Lambda Python](07-lambda-python.md) · [09 — AWS Glue](09-aws-glue.md) · [04 — Airflow](04-airflow.md) |
+| Java Spring Boot | [08 — Java Spring Boot](08-java-spring-boot.md) |
+| dbt | [05 — dbt](05-dbt.md) |
+| Terraform | [06 — Terraform](06-terraform.md) |
 
-```
-domain/         # Entidades, value objects, domain services
-application/    # Use cases, ports
-adapter/in/     # Controllers
-adapter/out/    # JPA, clients
-config/
-```
-
-### 8.3 dbt
-
-Ver [05-dbt.md](05-dbt.md) — staging / intermediate / marts.
-
-### 8.4 Terraform
-
-Ver [06-terraform.md](06-terraform.md) — módulos por capacidade.
+**Nova stack:** crie capítulo com [`templates/capitulo-stack.md`](templates/capitulo-stack.md) e registre em [`manifest.yaml`](manifest.yaml). Não documente layout detalhado neste capítulo.
 
 ---
 
@@ -464,47 +445,37 @@ Stacks registradas: ver seção **Padrões de código da stack** em cada capítu
 
 ## 13. Por linguagem e stack
 
-> **Fonte canônica por stack:** capítulos `04`–`09` e [`manifest.yaml`](manifest.yaml). O recorte abaixo cobre apenas convenções **transversais** que cruzam linguagens — não substitui o capítulo da stack.
+> **Fonte canônica:** capítulos `04`–`09` registrados em [`manifest.yaml`](manifest.yaml). Este capítulo mantém apenas orientação transversal.
 
-### 13.1 Python
+### Python
 
-- `from __future__ import annotations` se necessário
-- Dataclasses `frozen=True` para value objects
-- Pydantic v2 na borda Lambda/API — detalhes em [07-lambda-python.md](07-lambda-python.md)
-- `pytest` + fixtures; não unittest legado
-- Dependências pinadas (`requirements.txt` ou poetry.lock)
+Convenções específicas de Python ficam nos capítulos das stacks que usam Python:
 
-### 13.2 Java
+- [07 — Lambda Python](07-lambda-python.md)
+- [09 — AWS Glue](09-aws-glue.md)
+- [04 — Airflow](04-airflow.md), quando envolver tasks Python
 
-- Java 17+ LTS
-- Records para DTOs imutáveis
-- Optional sem `.get()` nu
-- MapStruct ou mapper explícito
-- Arquitetura hexagonal — [08-java-spring-boot.md](08-java-spring-boot.md)
+Princípios transversais aqui: nomes claros em português, baixo acoplamento, testabilidade, logging seguro e separação de camadas.
 
-### 13.3 SQL / dbt
+### Java
 
-- Nomes explícitos de CTE
-- Um conceito por model
-- Comentário `-- Por quê:` no topo do model não óbvio
-- Detalhes completos em [05-dbt.md](05-dbt.md)
+Convenções específicas de Java/Spring Boot: [08 — Java Spring Boot](08-java-spring-boot.md).
 
-### 13.4 Terraform
+### SQL / dbt
 
-- Um recurso por bloco lógico agrupado
-- `description` em variables
-- Sem `0.0.0.0/0` em security group sem ADR
-- Detalhes completos em [06-terraform.md](06-terraform.md)
+Convenções de models, camadas e testes: [05 — dbt](05-dbt.md).
 
-### 13.5 PySpark (Glue)
+### Terraform
 
-- Transformações puras em funções testáveis com pandas local quando possível
-- `job.py` só wiring
-- Detalhes completos em [09-aws-glue.md](09-aws-glue.md)
+Convenções de módulos, IAM e naming de recursos: [06 — Terraform](06-terraform.md).
 
-### 13.6 Airflow
+### PySpark (Glue)
 
-- Convenções de DAG, tasks e callbacks — [04-airflow.md](04-airflow.md)
+Jobs, transformações e testes locais: [09 — AWS Glue](09-aws-glue.md).
+
+### Airflow
+
+DAGs, tasks, callbacks e idempotência: [04 — Airflow](04-airflow.md).
 
 ---
 

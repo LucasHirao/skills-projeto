@@ -4,7 +4,7 @@ Este documento explica como o **Manual de Engenharia** se relaciona com artefato
 
 **Regra:** handbook primeiro; artefatos depois. Não duplicar capítulos inteiros nas skills.
 
-**Catálogo canônico:** [`manifest.yaml`](manifest.yaml) — stacks, capítulos transversais, paths de skills e playbooks. **Evite** manter listas paralelas em outros arquivos; atualize o manifesto ao adicionar stack ou artefato.
+**Catálogo canônico:** [`manifest.yaml`](manifest.yaml) — stacks registradas, capítulos transversais, paths de Skills de stack e regras de descoberta para Skills/Playbooks. Este documento é apenas uma visão humana resumida.
 
 **Transversal:** [03 — Padrões de código](03-padroes-de-codigo.md) em todas as skills; [13 — Logging seguro](13-observabilidade.md#logging-seguro-e-dados-sensíveis) em observabilidade/revisão; [21 — Agentes](21-agentes-e-prompts.md) e [22 — Documentação funcional](22-documentacao-funcional.md) nas camadas correspondentes.
 

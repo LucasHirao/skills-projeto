@@ -101,7 +101,11 @@ Use os níveis abaixo **além** do DoD universal (§1). Detalhes específicos de
 
 ## 3. DoD por stack
 
-Os detalhes específicos ficam no **capítulo da stack** registrado no [`manifest.yaml`](manifest.yaml). A tabela abaixo é mapa de referência — **não** substitui o checklist completo do capítulo.
+Os detalhes específicos ficam no **capítulo da stack** registrado no [`manifest.yaml`](manifest.yaml).
+
+A tabela abaixo é apenas um **resumo humano** das stacks principais atuais. O catálogo canônico de stacks e capítulos vive em [`manifest.yaml`](manifest.yaml). Ao adicionar nova stack, atualize o manifesto e o capítulo da stack; **não** transforme esta seção em lista exaustiva.
+
+### Stacks principais atuais
 
 | Stack | Capítulo | Perfil `dod_profile` |
 |-------|----------|----------------------|

@@ -16,7 +16,7 @@
 {diagrama ASCII ou link para C4/ADR}
 ```
 
-**ADRs relacionados:** [ADR-NNN](../adr/NNN-titulo.md)
+**ADRs relacionados:** `docs/adr/NNN-titulo.md` (criar a partir de [`templates/adr.md`](adr.md))
 
 ## Como rodar localmente
 
