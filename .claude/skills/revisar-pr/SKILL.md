@@ -1,69 +1,133 @@
 ﻿---
 name: revisar-pr
 description: >-
-  Revisa pull requests projeto contra padrões, checklists por stack e riscos de
-  dados/ops/segurança. Use ao revisar PR, diff, branch ou código gerado por IA
-  antes do merge.
+  Revisa pull requests contra padrões, checklists por stack e riscos de dados,
+  ops e segurança. Use ao revisar PR, diff, branch ou código gerado por IA antes do merge.
+disable-model-invocation: true
 ---
 
-# Revisar PR
+# Revisar PR (Claude Code)
 
-**Referência:** `docs/padroes/14-code-review.md` | **Template:** `docs/padroes/templates/template-code-review.md`
+**Repo alvo:** repo do PR | **Rule:** `.claude/rules/arquitetura.md` + rule da stack | **Doc:** `docs/padroes/14-code-review.md`
 
-## Quando usar
+## Pré-voo
 
-Review de PR, validação pré-merge, auditoria de código de agente IA.
+1. Ler descrição do PR, plano de teste e issues vinculadas.
+2. Identificar stack(s) e repos afetados (multi-repo).
+3. Abrir checklist(s) em `checklists/code-review-{stack}.md`.
+4. Ler `16-definition-of-done.md` e `checklist-transversal.md`.
 
-## Entradas esperadas
+## Entradas
 
-- Diff ou link do PR
-- Stack(s) afetada(s)
-- Descrição do autor e plano de teste
+- Diff, link do PR ou branch
+- Stack(s): airflow, dbt, terraform, lambda, java, glue, testes
+- Contexto: feature, bugfix, refactor, código IA
+- Ambiente alvo (dev/hml/prod)
 
-## Passo a passo
+## Procedimento
 
-1. Ler descrição e identificar stacks.
-2. Abrir checklist(s) em `checklists/code-review-{stack}.md`.
-3. Verificar DoD (`16-definition-of-done.md`).
-4. Classificar achados: 🔴 bloqueio, 🟡 atenção, 🟢 sugestão.
-5. Checar código IA: deps reais, negócio não inventado, testes substantivos.
-6. Avaliar impacto dados, custo, rollback.
-7. Emitir veredito: aprovado / ressalvas / mudanças necessárias.
+### 1. Classificação de achados
 
-## Checklist de qualidade
+| Nível | Critério | Ação |
+|-------|----------|------|
+| 🔴 Bloqueio | Segurança, perda de dados, contrato quebrado, sem teste em lógica crítica | Exigir correção |
+| 🟡 Atenção | Débito, observabilidade fraca, performance em escala | Corrigir ou ticket |
+| 🟢 Sugestão | Estilo, naming, simplificação | Opcional |
 
-- [ ] Aderência a `docs/padroes/`
-- [ ] Simplicidade e coesão
-- [ ] Breaking changes explícitos
+### 2. Checklist por dimensão
 
-## Checklist de testes
+**Arquitetura** (`01-arquitetura-de-codigo.md`)
+- Lógica de negócio fora de handler/DAG/TF?
+- Camadas respeitadas?
+- Um PR por repo?
 
-- [ ] 90% cov; mutation onde aplicável
-- [ ] TaaC se integração
+**Dados**
+- Schema/coluna removida ou renomeada? Breaking change documentado?
+- Idempotência e reprocessamento?
+- Impacto em backfill?
 
-## Checklist de observabilidade
+**Segurança**
+- IAM least privilege; sem secrets no código.
+- PII em logs?
 
-- [ ] Sem remoção de telemetria
-- [ ] Logs/métricas adequados
+**Testes**
+- ≥ 90% cobertura; mutation onde aplicável.
+- Asserts substantivos; TaaC se integração.
 
-## Checklist de performance
+**Ops**
+- Observabilidade mantida ou melhorada.
+- Runbook/alerta se fluxo crítico.
 
-- [ ] Volume considerado
-- [ ] Sem anti-padrões óbvios
+**Código IA**
+- Dependências existem no repo?
+- Regra de negócio inventada?
+- Código morto ou over-engineering?
 
-## Armadilhas comuns
+### 3. Multi-repo
 
-- Aprovar só porque CI verde
-- Ignorar impacto em backfill
-- Nit sem distinguir bloqueio
-
-## Resultado esperado
-
-Review estruturado com achados priorizados e veredito claro.
-
-## Exemplo de prompt
+Verificar PR descreve PRs irmãos:
 
 ```
-Use revisar-pr. Revise este diff de DAG Airflow + dbt contra checklists.
-Classifique achados e veredito. Atente código gerado por IA.
+infra (IAM/bucket) → glue/lambda → dbt → airflow
+```
+
+Contratos: ARN, path S3, colunas, `data_referencia`, tag dbt.
+
+### 4. Template de saída
+
+Usar estrutura de `docs/padroes/templates/template-code-review.md`:
+
+```markdown
+## Veredito
+Aprovado | Aprovado com ressalvas | Mudanças necessárias
+
+## Bloqueios
+- ...
+
+## Atenção
+- ...
+
+## Sugestões
+- ...
+
+## Multi-repo
+- [ ] PR irmão em ...
+
+## Testes
+CI: verde/vermelho — gaps: ...
+```
+
+### 5. Playbook Devin (referência)
+
+Reviews amplos multi-repo: `devin/playbooks/revisar-pull-request.devin.md`.
+
+## Checklists
+
+- Transversal: `docs/padroes/checklist-transversal.md`
+- Stack: `checklists/code-review-{stack}.md` (uma ou mais)
+- DoD: `docs/padroes/16-definition-of-done.md`
+
+## Armadilhas
+
+| Sintoma | Correção |
+|---------|----------|
+| Aprovar só porque CI verde | Ler diff e contratos |
+| Nit como bloqueio | Separar severidade |
+| Ignorar backfill | Perguntar impacto dados |
+| Review só de estilo | Checar dados/segurança/ops |
+| Um PR com airflow+dbt+infra | Pedir split por repo |
+
+## Reporte Claude
+
+- Veredito claro
+- Achados por severidade com arquivo/linha quando possível
+- PRs irmãos faltantes
+- Perguntas ao autor se negócio ambíguo
+
+## Prompt
+
+```
+Use revisar-pr. Diff no repo datalake-dbt, branch feature/fct-pedidos.
+Checklists dbt + transversal. Classifique achados. Código gerado por IA — validar negócio.
+Veredito e PRs irmãos necessários.
 ```

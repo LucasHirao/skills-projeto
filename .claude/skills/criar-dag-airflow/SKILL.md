@@ -1,73 +1,100 @@
 ﻿---
 name: criar-dag-airflow
 description: >-
-  Cria ou altera DAG Airflow no padrão projeto com naming, testes e idempotência.
-  Use ao implementar orquestração, schedule, tasks Airflow, sensors ou integração
-  Glue/Lambda/dbt via DAG.
+  Cria ou altera DAG Airflow com naming, idempotência, testes e integração Glue/Lambda/dbt.
+  Use para orquestração, sensors, datasets, schedules ou callbacks no repo {nome-projeto}-airflow.
+disable-model-invocation: true
 ---
 
-# Criar DAG Airflow
+# Criar DAG Airflow (Claude Code)
 
-**Referência:** `docs/padroes/02-airflow.md` | **Regra:** `.claude/rules/airflow.md`
+**Repo alvo:** `{nome-projeto}-airflow` | **Rule:** `.claude/rules/airflow.md` | **Doc:** `docs/padroes/02-airflow.md`
 
-## Quando usar
+## Pré-voo
 
-Nova DAG, nova task, alteração de schedule, callback de falha ou integração orquestrada.
+1. Confirmar repo correto (não monorepo).
+2. Ler DAG similar em `dags/` e `include/`.
+3. Ler `02-airflow.md` seções: naming, idempotência, integrações.
+4. Plano: `dag_id`, tasks, contratos com Glue/dbt/S3.
 
-## Entradas esperadas
+## Entradas
 
-- Domínio e fluxo (`vendas`, `carga_diaria`)
-- Dependências (S3, Glue, dbt, REST)
-- SLA e regra de idempotência
-- Schedule e restrição de concorrência
+- `{nome-projeto}`, `{dominio}`, `{fluxo}`
+- SLA, schedule, `data_referencia` / chave idempotência
+- Dependências externas (bucket, job Glue, tag dbt)
 
-## Passo a passo
+## Procedimento
 
-1. Buscar DAG similar em `airflow/dags/`.
-2. Definir `dag_id` = `{nome-projeto}_{dominio}_{fluxo}`.
-3. Criar módulo `include/app/{dag}/tasks.py` para lógica testável.
-4. DAG fina: defaults, tags, `doc_md`, tasks com `task_id` `{verbo}_{objeto}`.
-5. Configurar `max_active_runs`, retries, `on_failure_callback`.
-6. Adicionar testes em `tests/dags/`.
-7. Atualizar README/runbook se fluxo crítico.
-
-## Checklist de qualidade
-
-- [ ] Sem I/O no import
-- [ ] `doc_md` com SLA e reprocessamento
-- [ ] Naming projeto
-- [ ] Lógica fora da DAG
-
-## Checklist de testes
-
-- [ ] `test_dag_loads`
-- [ ] `test_dag_structure` (tasks, max_active_runs)
-- [ ] Testes unitários em `tasks.py`
-
-## Checklist de observabilidade
-
-- [ ] Callback de falha com log JSON + correlation_id
-- [ ] Métrica ou log de início/fim de fluxo crítico
-
-## Checklist de performance
-
-- [ ] Parse da DAG leve
-- [ ] Processamento pesado delegado a Glue/Lambda/dbt
-
-## Armadilhas comuns
-
-- SQL de negócio na DAG
-- `catchup=True` sem planejamento
-- Duas execuções escrevendo mesma partição
-
-## Resultado esperado
-
-DAG revisável, testada na CI, com módulo auxiliar testável e documentação operacional.
-
-## Exemplo de prompt
+### 1. Estrutura de arquivos
 
 ```
-Use a skill criar-dag-airflow. Crie DAG datalake_vendas_carga_diaria que valida
-arquivo S3 e aciona job Glue. Idempotente por data_referencia, max_active_runs=1.
-Inclua testes de parse e tasks.py testável.
+dags/{nome-projeto}_{dominio}_{fluxo}.py
+include/app/{dominio}_{fluxo}/tasks.py
+include/app/{dominio}_{fluxo}/config.yaml   # opcional
+tests/dags/test_{dominio}_{fluxo}.py
+tests/unit/test_tasks_{dominio}.py
+```
+
+### 2. Módulo `tasks.py`
+
+- Funções puras ou com injeção de clientes (testável com pytest).
+- Sem import pesado de Airflow no domínio.
+
+### 3. DAG declarativa
+
+- `DEFAULT_ARGS`: retries, backoff, `on_failure_callback` → log JSON + `correlation_id`.
+- `max_active_runs=1` se escrita não idempotente.
+- `doc_md`: SLA, reprocessamento, contratos upstream/downstream **outros repos**.
+- Tags: `datalake`, domínio, ambiente.
+
+### 4. Integração
+
+| Cenário | Abordagem |
+|---------|-----------|
+| Arquivo S3 | `S3KeySensor`, reschedule, timeout |
+| Dataset | `outlets` / `schedule=[Dataset(...)]` |
+| Glue | Operator, job name por Variable/env |
+| dbt | Cosmos/`dbt build` com `vars: data_referencia` |
+
+### 5. Testes
+
+```python
+def test_dag_loads(dag_bag):
+    assert dag_bag.get_dag("datalake_vendas_carga_diaria") is not None
+
+def test_max_active_runs(dag_bag):
+    assert dag_bag.get_dag("...").max_active_runs == 1
+```
+
+### 6. Documentação
+
+- README do repo airflow: nova DAG, parâmetros conf, link runbook se crítico.
+- Se novo contrato S3: atualizar README repo Glue/dbt consumidor (issue/PR irmão).
+
+## Checklists
+
+- Transversal: `docs/padroes/checklist-transversal.md`
+- Stack: `checklists/code-review-airflow.md`
+
+## Armadilhas
+
+| Sintoma | Correção |
+|---------|----------|
+| Parse lento | Remover I/O do import |
+| Duplicata em reprocessamento | `max_active_runs` + idempotência downstream |
+| SQL na DAG | Mover para dbt ou `tasks.py` |
+
+## Reporte Claude
+
+- Arquivos alterados
+- `dag_id` e contratos
+- Comando teste executado
+- PRs necessários em outros repos
+
+## Prompt
+
+```
+Repo datalake-airflow. Skill criar-dag-airflow. Plano primeiro.
+DAG datalake_vendas_carga_diaria: sensor S3, Glue, correlation_id no conf.
+Testes parse + tasks.py unitário.
 ```

@@ -64,4 +64,7 @@ Template de review: `docs/padroes/templates/template-code-review.md`.
 
 ## Skill
 
-Use `.claude/skills/revisar-pr/` para workflow estruturado.
+## Skills
+
+- Claude: `.claude/skills/revisar-pr/`
+- Devin: `devin/skills/revisar-pr/` ou playbook `devin/playbooks/revisar-pull-request.devin.md`

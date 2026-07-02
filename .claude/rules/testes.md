@@ -4,23 +4,23 @@
 
 ## Metas
 
-- Cobertura **90%** (line; branch se disponível)
-- Mutation **90%** em lógica de negócio
-- TaaC quando há integração real
+- Cobertura **90%** line (branch quando disponível).
+- Mutation **90%** em domain/application/transforms.
+- TaaC quando há integração real — repo com `docker-compose` ou pipeline do ambiente.
 
 ## Faça
 
-- Assert de comportamento observável
-- Nomes: `deve_X_quando_Y`
-- Fixtures determinísticas; cleanup
-- Marcar `@pytest.mark.taac` / perfil Maven IT
+- Nome: `deve_{resultado}_quando_{condicao}`.
+- Assert em comportamento observável.
+- TaaC autocontido — LocalStack, Testcontainers, WireMock.
+- Um teste de regressão por bug corrigido.
 
 ## Não faça
 
-- Teste só para cobertura
-- E2E frágil que duplica TaaC
-- BDD em todo teste técnico
+- Teste sem assert.
+- E2E frágil duplicando TaaC.
+- BDD em todo teste técnico.
 
-## Exceções
+## Exceções (justificar no PR)
 
-DTO/bootstrap/gerado — justificar no PR
+DTO, bootstrap, código gerado, DAG declarativa, SQL literal dbt.

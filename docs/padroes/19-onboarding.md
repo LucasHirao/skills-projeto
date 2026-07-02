@@ -5,7 +5,7 @@ Guia para desenvolvedores internos e terceiros.
 ## Ordem de leitura (≈ 2–3 h)
 
 1. [00-visao-geral.md](00-visao-geral.md)
-2. [AGENTS.md](../../AGENTS.md) ou guia do seu agente: [CURSOR.md](../../CURSOR.md) / [CLAUDE.md](../../CLAUDE.md) / [DEVIN.md](../../DEVIN.md)
+2. [AGENTS.md](../../AGENTS.md) + guia da sua IA: [CLAUDE.md](../../CLAUDE.md) ou [DEVIN.md](../../DEVIN.md)
 3. [18-estrutura-repositorios.md](18-estrutura-repositorios.md)
 4. Padrão da(s) stack(s) que você vai tocar (`02`–`07`)
 5. [16-definition-of-done.md](16-definition-of-done.md)
@@ -40,9 +40,10 @@ Preencha contatos reais do seu time na tabela abaixo:
 
 | Ferramenta | Comece por |
 |------------|------------|
-| Cursor | `CURSOR.md` |
-| Claude Code | `CLAUDE.md` + skill da tarefa |
-| Devin | `DEVIN.md` + playbook em `devin-playbooks/` |
+| IA | Entrada |
+|----|---------|
+| Claude Code | `CLAUDE.md` + skill em `.claude/skills/` |
+| Devin | `DEVIN.md` + `devin/playbooks/` ou `devin/skills/` |
 
 ## Anti-padrões no onboarding
 

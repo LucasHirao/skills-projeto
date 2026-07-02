@@ -1,72 +1,131 @@
 ﻿---
 name: criar-modulo-terraform
 description: >-
-  Cria ou altera módulos e recursos Terraform projeto com IAM restritivo, tags,
-  validação e plan de PR. Use para infra AWS, IAM, Lambda, S3, Glue, filas ou
-  ambientes dev/hml/prod.
+  Cria ou altera módulos e recursos Terraform AWS com IAM restritivo, tags,
+  validação e plan de PR. Use no repo {nome-projeto}-infra para Lambda, S3, Glue,
+  filas, roles e ambientes dev/hml/prod.
+disable-model-invocation: true
 ---
 
-# Criar módulo Terraform
+# Criar módulo Terraform (Claude Code)
 
-**Referência:** `docs/padroes/04-terraform.md` | **Regra:** `.claude/rules/terraform.md`
+**Repo alvo:** `{nome-projeto}-infra` | **Rule:** `.claude/rules/terraform.md` | **Doc:** `docs/padroes/04-terraform.md`
 
-## Quando usar
+## Pré-voo
 
-Novo recurso AWS, módulo reutilizável, IAM, variáveis ou ambiente.
+1. Confirmar repo `-infra` (IaC separado do código de aplicação).
+2. Ler módulo similar em `modules/` e uso em `environments/{env}/`.
+3. Ler `04-terraform.md`: naming, IAM least privilege, state, testes `tftest`.
+4. Plano: recurso, inputs/outputs, IAM, impacto em repos `-lambda-*`, `-glue-*`, `-airflow`.
 
-## Entradas esperadas
+## Entradas
 
-- Recursos necessários
-- Ambiente (dev/hml/prod)
-- Contratos de input/output
-- Permissões mínimas
+- `{nome-projeto}`, `{componente}`, `{ambiente}` (dev/hml/prod)
+- Recursos AWS (Lambda, S3, IAM, SQS, Glue, EventBridge, etc.)
+- Consumidores downstream (ARN, bucket, fila)
+- Tags obrigatórias, retenção, criptografia
 
-## Passo a passo
+## Procedimento
 
-1. Verificar módulo existente em `infra/modules/`.
-2. Criar/estender módulo com `variables.tf` (validação), `main.tf`, `outputs.tf`.
-3. Aplicar `local.default_tags` projeto.
-4. IAM least privilege — sem wildcard sem ADR.
-5. README do módulo com inputs/outputs.
-6. Rodar `fmt`, `validate`, `tflint`, `tfsec`.
-7. Gerar `plan` para anexar ao PR.
-
-## Checklist de qualidade
-
-- [ ] Tags obrigatórias
-- [ ] Variáveis tipadas e validadas
-- [ ] Outputs com description
-- [ ] Sem secret em plain text
-
-## Checklist de testes
-
-- [ ] `terraform validate`
-- [ ] `tflint` / `tfsec`
-- [ ] Teste de módulo se outputs críticos
-
-## Checklist de observabilidade
-
-- [ ] Alarmes em recurso crítico
-- [ ] Logs com retenção definida
-
-## Checklist de performance
-
-- [ ] Dimensionamento justificado
-- [ ] Lifecycle em recursos efêmeros
-
-## Armadilhas comuns
-
-- Módulo god com 20+ recursos não relacionados
-- State sem backend remoto
-- Policy `*/*`
-
-## Resultado esperado
-
-Módulo revisável, plan no PR, IAM restritivo, documentado.
-
-## Exemplo de prompt
+### 1. Estrutura de arquivos
 
 ```
-Use criar-modulo-terraform. Módulo lambda-processa-arquivo com IAM leitura
-bucket projeto-input-{env}, DLQ e tags projeto. Incluir validate e tfsec.
+modules/{componente}/
+  main.tf
+  variables.tf
+  outputs.tf
+  iam.tf              # se IAM não trivial
+  versions.tf
+environments/{env}/{componente}.tf
+tests/{componente}_module.tftest.hcl
+```
+
+### 2. Módulo reutilizável
+
+- Variáveis com `description`, `type`, `validation` quando possível.
+- Outputs explícitos para contratos (ARN, nome, URL).
+- Tags padrão via `locals` ou módulo `tags`.
+
+```hcl
+# IAM — escopo mínimo
+{
+  Effect   = "Allow"
+  Action   = ["s3:GetObject", "s3:ListBucket"]
+  Resource = [
+    aws_s3_bucket.datalake.arn,
+    "${aws_s3_bucket.datalake.arn}/raw/${var.dominio}/*"
+  ]
+}
+```
+
+### 3. Ambiente
+
+- `environments/{env}/` referencia módulo; sem lógica duplicada.
+- Secrets via SSM/Secrets Manager — nunca em `.tfvars` commitado.
+- `lifecycle` e `prevent_destroy` apenas com ADR.
+
+### 4. Contratos multi-repo
+
+| Output TF | Consumidor | Documentar em |
+|-----------|------------|---------------|
+| Lambda ARN | `-lambda-*` README | output + README infra |
+| Bucket name | Glue, dbt sources | README ambos repos |
+| IAM role ARN | CI/CD, Airflow | runbook se crítico |
+| SQS URL | Lambda trigger | contrato mensagem |
+
+Liste breaking changes em outputs no corpo do PR.
+
+### 5. Testes
+
+```hcl
+# tests/lambda_module.tftest.hcl
+run "validates_required_tags" {
+  command = plan
+  assert {
+    condition     = contains(keys(var.tags), "Environment")
+    error_message = "Tag Environment obrigatória"
+  }
+}
+```
+
+```bash
+terraform fmt -check -recursive
+terraform validate
+terraform test   # se configurado
+```
+
+### 6. Plan e documentação
+
+- Incluir trecho do `terraform plan` no PR (sem secrets).
+- README do módulo: inputs, outputs, exemplo de uso.
+- Rollback: o que `destroy` afeta; dependências.
+
+## Checklists
+
+- Transversal: `docs/padroes/checklist-transversal.md`
+- Stack: `checklists/code-review-terraform.md`
+
+## Armadilhas
+
+| Sintoma | Correção |
+|---------|----------|
+| `s3:*` / `resources = ["*"]` | Escopo mínimo por recurso |
+| Lógica de negócio no TF | Só infra; app no repo da stack |
+| Output renomeado sem aviso | Breaking change explícito |
+| State local | Backend remoto por ambiente |
+| Recurso órfão sem tag | Tags obrigatórias + `default_tags` |
+
+## Reporte Claude
+
+- Módulos/arquivos alterados
+- Outputs novos ou alterados (breaking?)
+- Comando `terraform plan` / `test` executado
+- PRs irmãos nos repos que consomem ARN/bucket/fila
+
+## Prompt
+
+```
+Repo datalake-infra. Skill criar-modulo-terraform. Plano primeiro.
+Módulo lambda_processa_vendas: role IAM S3 read + DynamoDB write, outputs arn e role_name.
+Ambiente dev. tftest para tags. terraform plan.
 ```

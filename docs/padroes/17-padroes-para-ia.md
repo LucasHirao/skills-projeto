@@ -82,10 +82,9 @@ Hipóteses ordenadas. Não corrigir sem reproduzir com teste.
 3. Conferir aderência ao padrão do diretório vizinho.
 4. Review humano obrigatório.
 
-## Ferramentas no repositório
+## Ferramentas
 
-| Agente | Guia de uso (raiz) | Recursos |
-|--------|-------------------|----------|
-| Cursor | [`CURSOR.md`](../../CURSOR.md) | `.cursor/rules/`, `AGENTS.md` |
-| Claude Code | [`CLAUDE.md`](../../CLAUDE.md) | `.claude/rules`, `.claude/skills` |
-| Devin | [`DEVIN.md`](../../DEVIN.md) | `.agents/skills`, `devin-playbooks/` |
+| IA | Guia | Skills / playbooks |
+|----|------|-------------------|
+| Claude Code | [CLAUDE.md](../../CLAUDE.md) | `.claude/skills/` |
+| Devin | [DEVIN.md](../../DEVIN.md) | `devin/skills/`, `devin/playbooks/` |

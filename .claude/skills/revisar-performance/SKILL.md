@@ -1,67 +1,106 @@
 ﻿---
 name: revisar-performance
 description: >-
-  Analisa e propõe melhorias de performance e custo AWS em código projeto. Use para
-  gargalos, N+1, scans, cold start Lambda, jobs Spark lentos ou queries dbt caras.
+  Analisa e propõe melhorias de performance e custo AWS em código do projeto.
+  Use para gargalos, N+1, scans, cold start Lambda, jobs Spark lentos ou queries dbt caras.
+disable-model-invocation: true
 ---
 
-# Revisar performance
+# Revisar performance (Claude Code)
 
-**Referência:** `docs/padroes/12-performance.md` | **Checklist:** `checklists/code-review-performance.md`
+**Repo alvo:** repo do componente | **Rule:** `.claude/rules/performance.md` | **Doc:** `docs/padroes/12-performance.md`
 
-## Quando usar
+## Pré-voo
 
-PR com risco de performance, job lento, custo AWS alto, endpoint sem paginação.
+1. Definir sintoma: latência, custo AWS, timeout, SLA miss, query lenta.
+2. Ler código no hot path; métricas/traces existentes se disponíveis.
+3. Ler `12-performance.md`: volume, batch, partition, anti-padrões.
+4. Plano: hipótese, medição, mudança mínima, risco de regressão.
 
-## Entradas esperadas
+## Entradas
 
-- Componente e path crítico
-- Volume esperado (registros, RPS, GB)
-- Métricas/baseline se disponíveis
+- Componente e operação (endpoint, task DAG, job Glue, model dbt)
+- Volume esperado (registros/dia, RPS, tamanho partição)
+- Métricas atuais ou evidência (log, trace, EXPLAIN)
+- Orçamento/custo se relevante
 
-## Passo a passo
+## Procedimento
 
-1. Identificar operações O(n), I/O em loop, full scans.
-2. Classificar por impacto (latência, custo, throughput).
-3. Propor mudança mínima com trade-off explícito.
-4. Sugerir batch/paginação/cache/partition conforme stack.
-5. Recomendar teste de volume ou baseline antes/depois.
-6. Documentar no PR impacto estimado.
+### 1. Diagnóstico
 
-## Checklist de qualidade
+| Stack | Verificar |
+|-------|-----------|
+| Lambda | cold start, memória, package size, I/O em loop |
+| API Java | N+1, pool conexão, payload grande |
+| Glue/Spark | skew, shuffle, UDF, full scan |
+| dbt | full table scan, incremental ausente, join cartesiano |
+| Airflow | paralelismo excessivo, sensor polling |
+| Terraform | N/A código — rightsizing recursos |
 
-- [ ] Mudança não compromete idempotência
-- [ ] Simplicidade preservada
-
-## Checklist de testes
-
-- [ ] Teste de regressão comportamental
-- [ ] Benchmark/microbench só se justificado
-
-## Checklist de observabilidade
-
-- [ ] Métricas para validar melhoria pós-deploy
-
-## Checklist de performance
-
-- [ ] N+1 eliminado
-- [ ] Filtro cedo aplicado
-- [ ] Timeouts e retry com jitter
-- [ ] Custo AWS considerado
-
-## Armadilhas comuns
-
-- Otimizar prematuramente sem medição
-- Cache sem invalidação
-- microbench em código não hot
-
-## Resultado esperado
-
-Lista priorizada de gargalos + patches recomendados com impacto estimado.
-
-## Exemplo de prompt
+### 2. Padrões de melhoria
 
 ```
-Use revisar-performance. Analise repository que lista pedidos com N+1,
-volume 100k/dia. Proponha paginação e fetch join com impacto estimado.
+Filtro cedo → batch/paginação → partition/cluster → cache consciente → escala horizontal
+```
+
+- **dbt:** incremental, pré-agregação em `int_`, `where` em staging.
+- **Glue:** partition pushdown, broadcast join pequeno, salting skew.
+- **Lambda:** batch SQS, connection reuse, arm/memory tuning.
+- **API:** projeção DTO, paginação cursor, índice DB.
+
+### 3. Medição
+
+- Antes/depois com mesma carga (benchmark script ou métrica CloudWatch).
+- Documentar no PR: baseline, ganho esperado, trade-off (complexidade/custo).
+
+### 4. Custo AWS
+
+- Glue DPU-hours, Lambda GB-s, S3 requests, Athena scanned data.
+- Propor rightsizing com dados — não chute.
+
+### 5. Multi-repo
+
+| Gargalo | Repo provável |
+|---------|---------------|
+| Query cara no mart | `-dbt` |
+| Job lento curated | `-glue-*` |
+| Orquestração serial demais | `-airflow` |
+| Lambda timeout | `-lambda-*` + memória TF em `-infra` |
+
+Coordenar PRs se otimização cruza camadas (ex.: particionar no Glue + filtrar no dbt).
+
+### 6. Testes
+
+- Testes unitários não regredem.
+- Benchmark opcional em `tests/perf/` se repo tiver padrão.
+- Não otimizar prematuramente fora do hot path documentado.
+
+## Checklists
+
+- Transversal: `docs/padroes/checklist-transversal.md` (seção Performance)
+- Stack: `checklists/code-review-performance.md` + checklist da stack
+
+## Armadilhas
+
+| Sintoma | Correção |
+|---------|----------|
+| Otimizar sem medir | Baseline primeiro |
+| Micro-otimização em código frio | Focar hot path |
+| Incremental errado (duplicata) | Validar `unique_key` + merge |
+| Aumentar memória sem limite | Custo vs ganho |
+| Cache sem TTL/invalidação | Definir política |
+
+## Reporte Claude
+
+- Gargalo identificado (evidência)
+- Mudanças propostas/implementadas
+- Ganho esperado ou medido
+- Trade-offs e PRs irmãos
+
+## Prompt
+
+```
+Repo datalake-dbt. Skill revisar-performance.
+fct_vendas_pedidos lento em full refresh. Analisar plano, propor incremental + filtro staging.
+Documentar baseline e ganho esperado. dbt build para validar.
 ```

@@ -1,66 +1,122 @@
 ﻿---
 name: criar-testes-unitarios
 description: >-
-  Cria ou melhora testes unitários projeto com cobertura 90% e asserts de comportamento.
-  Use para pytest, JUnit, testes de DAG parse, transforms ou domínio sem integração.
+  Cria ou melhora testes unitários com cobertura 90% e asserts de comportamento.
+  Use em qualquer repo de código para pytest, JUnit, testes de DAG parse, transforms
+  ou domínio sem integração real.
+disable-model-invocation: true
 ---
 
-# Criar testes unitários
+# Criar testes unitários (Claude Code)
 
-**Referência:** `docs/padroes/08-testes-unitarios.md` | **Regra:** `.claude/rules/testes.md`
+**Repo alvo:** repo da stack em edição | **Rule:** `.claude/rules/testes.md` | **Doc:** `docs/padroes/08-testes-unitarios.md`
 
-## Quando usar
+## Pré-voo
 
-Código novo sem testes, cobertura abaixo de 90%, testes frágeis ou superficiais.
+1. Identificar módulo alvo e stack (Python, Java, Airflow, dbt unit, etc.).
+2. Ler testes existentes no mesmo pacote/pasta.
+3. Ler `08-testes-unitarios.md`: pirâmide, cobertura, mutation, anti-padrões.
+4. Plano: comportamentos a cobrir, fixtures, mocks na borda, meta 90%.
 
-## Entradas esperadas
+## Entradas
 
-- Módulo/classe alvo
-- Comportamentos críticos e casos limite
-- Stack (Python/Java/Airflow/dbt)
+- Caminho do código sob teste (`domain/`, `transforms/`, `tasks.py`, etc.)
+- Comportamentos críticos e casos de borda
+- Ferramenta: pytest, JUnit 5, unittest dbt, dag_bag
+- Meta mutation (domain/application) se aplicável
 
-## Passo a passo
+## Procedimento
 
-1. Mapear comportamentos observáveis (não implementação).
-2. Nomear `deve_{resultado}_quando_{condição}`.
-3. Given/When/Then em estrutura ou comentários.
-4. Mock só na borda (I/O, AWS, DB).
-5. Rodar cobertura; fechar gaps em lógica de negócio.
-6. Justificar exceções (DTO, bootstrap) no PR.
+### 1. O que testar (por stack)
 
-## Checklist de qualidade
+| Stack | Alvo unitário | Evitar |
+|-------|---------------|--------|
+| Lambda Python | `domain/`, `application/` | boto3 real |
+| Spring | use cases, domain | `@SpringBootTest` para unit |
+| Airflow | `tasks.py`, parse DAG | cluster Airflow |
+| Glue | `transforms/` | Spark cluster |
+| dbt | SQL com inputs YAML | warehouse real |
+| Terraform | `tftest.hcl` | apply em prod |
 
-- [ ] Assert em resultado observável
-- [ ] Independente e determinístico
-- [ ] Sem duplicação excessiva
-
-## Checklist de testes
-
-- [ ] Line coverage ≥90%
-- [ ] Branch coverage se disponível
-- [ ] Casos limite e erro
-
-## Checklist de observabilidade
-
-- N/A para unitários puros (validar em TaaC)
-
-## Checklist de performance
-
-- [ ] Testes rápidos (<1s cada quando possível)
-
-## Armadilhas comuns
-
-- `assert_called_once` como único assert
-- Testar getter/setter trivial
-- Fixture gigante compartilhada com efeito colateral
-
-## Resultado esperado
-
-Suite rápida, ≥90% cov, prova comportamento crítico.
-
-## Exemplo de prompt
+### 2. Estrutura
 
 ```
-Use criar-testes-unitarios. Cobrir domain/calculo.py com pytest, 90% cov,
-casos valor negativo e lista vazia. Sem mock no domínio.
+tests/unit/test_{modulo}.py
+tests/conftest.py          # fixtures compartilhadas
+tests/fixtures/            # JSON/YAML de entrada
+```
+
+### 3. Padrão de teste
+
+```python
+def test_rejeita_pedido_sem_id():
+    with pytest.raises(ValidationError, match="pedido_id"):
+        validar_pedido(Pedido(pedido_id=None, status="APROVADO"))
+```
+
+- Arrange / Act / Assert explícitos.
+- Um conceito por teste; nome descreve comportamento.
+- Parametrize para matriz de entradas equivalentes.
+
+### 4. Mocks
+
+- Mock só na **borda** (boto3, HTTP, DB).
+- Não mockar a unidade sob teste.
+- Evitar assert em ordem interna de chamadas frágil.
+
+### 5. Cobertura e mutation
+
+```bash
+# Python
+pytest tests/unit/ --cov=src/domain --cov-fail-under=90
+mutmut run --paths-to-mutate src/domain/
+
+# Java
+./mvnw test jacoco:report
+
+# Airflow
+pytest tests/dags/ tests/unit/
+```
+
+- Justificar no PR se < 90% em módulo legado (plano de remediação).
+
+### 6. Multi-repo
+
+Testes unitários vivem no **mesmo repo** do código. Não criar pasta de testes no repo de padrões.
+
+Se o teste precisa de integração real → skill `criar-taac`.
+
+### 7. Documentação
+
+- Comentário mínimo; nome do teste deve bastar.
+- README ou PR: comando para rodar subset de testes.
+
+## Checklists
+
+- Transversal: `docs/padroes/checklist-transversal.md`
+- Stack: `checklists/code-review-testes.md` + checklist da stack afetada
+
+## Armadilhas
+
+| Sintoma | Correção |
+|---------|----------|
+| Teste sem assert relevante | Assert resultado ou exceção |
+| Cobertura fake (só import) | Testar comportamento |
+| Teste flaky (sleep, rede) | Unit puro ou TaaC |
+| Mock excessivo no domain | Testar lógica real |
+| 100% no handler | Focar domain/application |
+
+## Reporte Claude
+
+- Arquivos de teste criados
+- Comando executado + cobertura obtida
+- Gaps conhecidos e justificativa
+- Mutation score se rodado
+
+## Prompt
+
+```
+Repo datalake-lambda-processa-vendas. Skill criar-testes-unitarios.
+Cobrir domain/validacao.py: casos APROVADO, REJEITADO, pedido inválido.
+pytest --cov=src/domain --cov-fail-under=90. mutmut em domain/.
 ```

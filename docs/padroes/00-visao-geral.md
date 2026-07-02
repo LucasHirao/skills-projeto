@@ -45,18 +45,12 @@ examples/             ← código mínimo de referência
 
 ## Para agentes de IA
 
-| Ferramenta | Comece por |
-|------------|------------|
-| Cursor | [`CURSOR.md`](../../CURSOR.md) na raiz |
-| Claude Code | [`CLAUDE.md`](../../CLAUDE.md) na raiz |
-| Devin | [`DEVIN.md`](../../DEVIN.md) na raiz |
-| Qualquer agente | [`AGENTS.md`](../../AGENTS.md) na raiz |
+| IA | Guia | Artefatos |
+|----|------|-----------|
+| Claude Code | [CLAUDE.md](../../CLAUDE.md) | `.claude/` |
+| Devin | [DEVIN.md](../../DEVIN.md) | `devin/` |
 
-Depois:
-
-1. Consulte `docs/padroes/` da stack relevante.
-2. Use skill em `.claude/skills/` (Claude) ou `.agents/skills/` (Devin).
-3. Siga Definition of Done em `16-definition-of-done.md`.
+**Não misture pastas.** Padrões técnicos: `docs/padroes/{stack}.md` — um por tarefa.
 
 ## Trade-off: velocidade vs. padronização
 

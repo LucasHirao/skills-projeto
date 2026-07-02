@@ -2,22 +2,18 @@
 
 **Doc:** `docs/padroes/11-observabilidade.md` | **Checklist:** `checklists/code-review-observabilidade.md`
 
-## Campos mínimos de log
+## Campos mínimos de log JSON
 
 `timestamp`, `level`, `service`, `environment`, `correlation_id`, `operation`, `status`, `duration_ms`
 
 ## Faça
 
-- JSON estruturado
-- Métricas: sucesso, erro, duração, volume
-- Propagar correlation_id entre componentes
-- Alerta com runbook em fluxo crítico
+- Propagar `correlation_id` entre Airflow conf → Glue/Lambda → logs.
+- Métricas: sucesso, erro, duração, volume.
+- Alerta com sintoma operacional + link runbook.
+- Mascarar PII; hash em business keys.
 
 ## Não faça
 
-- Remover telemetria existente
-- Logar PII/secrets/payload completo
-
-## Alertas
-
-Sintoma operacional (atraso, erro), não só exceção técnica
+- Remover telemetria existente.
+- Logar payload completo ou credencial.

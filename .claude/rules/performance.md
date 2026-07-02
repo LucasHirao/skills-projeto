@@ -2,23 +2,23 @@
 
 **Doc:** `docs/padroes/12-performance.md` | **Checklist:** `checklists/code-review-performance.md`
 
-## Antes de codificar
+## Antes de implementar
 
-Pergunte: volume? cardinalidade? custo AWS?
+Volume? Cardinalidade? Custo AWS? Concorrência?
 
 ## Faça
 
-- Batch/paginação/stream em vez de loop I/O
-- Filtro cedo (SQL/Spark)
-- Timeouts + retry com jitter
-- Baseline em mudança crítica
+- Batch/paginação/stream vs loop I/O.
+- Filtro cedo (SQL/Spark).
+- Timeouts + retry com jitter.
+- Dimensionar Lambda/Glue/DPU com justificativa.
 
 ## Não faça
 
-- N+1 (DB, DynamoDB, S3)
-- Full scan evitável
-- Cache sem TTL/invalidação
+- N+1 DynamoDB/HTTP/DB.
+- Full scan evitável.
+- Cache sem TTL.
 
-## Por stack
+## Sinais de alerta em review
 
-Lambda: package/cold start | Spring: pool/N+1 | Glue: partition/pushdown | dbt: incremental
+Loop com `await`/boto3; `select *` em tabela grande; `collect()` Spark em milhões de linhas.

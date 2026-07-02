@@ -4,18 +4,14 @@
 
 ## Faça
 
-- Separar read / transform / write
-- Funções puras em `transforms/` com pytest
-- Funções Spark nativas antes de UDF
-- Escrita particionada (Parquet)
-- Documentar idempotência do write
+- Separar read / transform / write / args.
+- `transforms/` com funções puras + pytest.
+- Spark nativo antes de UDF; sem `collect()` em volume grande.
+- Escrita particionada Parquet; modo write documentado.
+- Job bookmarks se append-only; args via `getResolvedOptions`.
+- Métricas: registros processados/rejeitados.
 
 ## Não faça
 
-- `collect()` em dataset grande
-- Pandas em volume distribuído sem necessidade
-- Job monolítico sem testes
-
-## Performance
-
-- Predicate pushdown, broadcast join em dimensão pequena
+- Script monolítico 500+ linhas.
+- pandas em dataset distribuído sem necessidade.
